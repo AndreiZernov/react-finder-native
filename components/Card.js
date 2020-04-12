@@ -3,17 +3,19 @@ import { Text } from "react-native";
 import styled from 'styled-components/native'
 
 
-const Card = props => (
+const Card = ({data, priceImg}) => (
   <Container>
-    <Image source={require("../assets/logo-react.png"  )} />
+    {/* <Image source={props.image} /> */}
+    <Image />
     <Cover>
-      <Title>React Course</Title>
+      <Name>{data.name}</Name>
+      <Img source={priceImg} />
     </Cover>
     <Content>
-      <Logo source={require("../assets/logo-react.png")} />
+      <Img source={data.img} />
       <Wrapper>
-        <Caption>Author</Caption>
-        <Subtitle>Name of the Course</Subtitle>
+        <Author>{data.author}</Author>
+        <Duration>{data.duration}</Duration>
       </Wrapper>
     </Content>
   </Container>
@@ -24,6 +26,7 @@ const Container = styled.View`
   background-color: white;
   width: 250px;
   height: 250px;
+  border: 1px solid rgb(27, 31, 38);
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(89, 190, 255, 0.15);
   margin-left: 20px;
@@ -33,31 +36,33 @@ const Container = styled.View`
 
 const Cover = styled.View`
   width: 100%;
-  height: 170px;
+  height: 150px;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 20px;
 `;
 
 const Image = styled.Image`
   background: rgb(47, 54, 65);
   position: absolute;
-  filter: brightness(0.4);
   top: 0;
   left: 0;
-  width: 130%;
+  width: 100%;
   height: 100%;
 `;
 
-const Title = styled.Text`
+const Name = styled.Text`
   z-index: 12;
   color: white;
   font-size: 24px;
   font-weight: bold;
   width: 170px;
-  margin-top: 20px;
-  margin-left: 20px;
-`;
+  margin-right: 10px;
 
+`;
 
 const Content = styled.View`
   padding-left: 20px;
@@ -70,21 +75,21 @@ const Wrapper = styled.View`
   margin-left: 10px;
 `;
 
-const Logo = styled.Image`
-  width: 44px;
-  height: 44px;
+const Img = styled.Image`
+  width: 35px;
+  height: 35px;
 `;
 
-const Caption = styled.Text`
+const Author = styled.Text`
   color: white;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const Subtitle = styled.Text`
-  color: white;
-  font-weight: 600;
   font-size: 15px;
+  font-weight: 600;
+`;
+
+const Duration = styled.Text`
+  color: #b8bece;
+  font-weight: 600;
+  font-size: 12px;
   text-transform: uppercase;
   margin-top: 4px;
 `;
