@@ -22,10 +22,15 @@ const reducer = (state = initialState, action) => {
 
 const store = createStore(reducer);
 
-const App = () => (
-  <Provider store={store}>
-    <AppNavigator />
-  </Provider>
-);
+const App = () => {
+
+
+  return(
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+  )
+}
+
 
 export default App;

@@ -12,7 +12,7 @@ const Card = ({data, priceImg}) => (
       <Img source={priceImg} />
     </Cover>
     <Content>
-      <Img source={data.img} />
+      <Img source={{uri: data.img}} />
       <Wrapper>
         <Author>{data.author}</Author>
         <Duration>{data.duration}</Duration>

@@ -3,13 +3,20 @@ import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar
 import styled from 'styled-components/native'
 import Card from '../components/Card'
 import Logo from '../components/Logo'
-import CoursesData from '../data/CoursesData'
 import QuickFacts from '../data/QuickFacts'
 import Course from '../components/Course'
-import Menu from "../components/Menu";
-import { Ionicons } from '@expo/vector-icons';
+import Menu from "../components/Menu"
+import LoadingData from "../components/Loading"
+import { Ionicons } from '@expo/vector-icons'
 import { NotificationIcon } from '../components/Icons'
 import { connect } from 'react-redux'
+
+
+const contentful = require('contentful/dist/contentful.browser.min.js');
+const Client = contentful.createClient({
+  space: "unj2bb6d61ak",
+  accessToken: "Q5wSfpnDYJCSNHiDEPZ0CfA-fnSNH_d8P0mK04byPgw"
+})
 
 
 const mapStateToProps = state => {
@@ -31,10 +38,50 @@ class HomeScreen extends React.Component {
 
   state = {
     scale: new Animated.Value(1),
-    opacity: new Animated.Value(1)
+    opacity: new Animated.Value(1),
+    CoursesData: {},
+    loading: true
   }
 
-  componentDidMount() { StatusBar.setBarStyle("dark-content", true) }
+
+
+  getData = async () => {
+    try {
+      let response = await Client.getEntries()
+      let CoursesData = this.formatData(response.items)
+      this.setState({
+        CoursesData,
+        loading: false
+      })
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  componentDidMount() {
+    this.getData()
+  }
+
+  formatData(items) {
+    let tempItems = items.map(item => {
+      let img = 'http:' + item.fields.img.fields.file.url
+      let course = { ...item.fields, img }
+      return course
+    })
+    let newData = {
+      react: tempItems.filter(course => course.parent1 === "react"),
+      react_native: tempItems.filter(course => course.parent1 === "react_native"),
+      redux: tempItems.filter(course => course.parent1 === "redux"),
+      graphql: tempItems.filter(course => course.parent1 === "graphql"),
+      pathway: tempItems.filter(course => course.parent1 === "pathway")
+    }
+    return newData
+  }
+
+
+
+
   componentDidUpdate() { this.toggleMenu() }
 
   toggleMenu = () => {
@@ -49,10 +96,7 @@ class HomeScreen extends React.Component {
       Animated.spring(this.state.opacity, {
         toValue: 0.5
       }).start()
-
-      StatusBar.setBarStyle("light-content", true)
     }
-
 
     if (this.props.action === "closeMenu") {
       Animated.timing(this.state.scale, {
@@ -66,14 +110,49 @@ class HomeScreen extends React.Component {
         toValue: 1
       }).start()
 
-      StatusBar.setBarStyle("dark-content", true)
-
     }
   }
 
   render() {
+      let newArr = []
+      for (let [key, value] of Object.entries(this.state.CoursesData)) {
+          newArr.push(
+            <Cover key={key}>
+              <Subtitle>{key.replace(key[0], key[0].toUpperCase())} Learning</Subtitle>
+              <ScrollView
+                horizontal={true}
+                style={{ paddingBottom: 30 }}
+                showsHorizontalScrollIndicator={false}
+              >
+                {value.map(course => {
+                  console.log(course.img)
+                  return(
+                    <TouchableOpacity
+                      key={course.id}
+                      onPress={() => {
+                        this.props.navigation.push("Section", {
+                          course, key
+                        })
+                      }}
+                    >
+                      <Card
+                        data={course}
+                        priceImg={require("../assets/free.png")}
+                      />
+                    </TouchableOpacity>
+
+                  )
+                }
+                )}
+              </ScrollView>
+            </Cover>
+          )
+        }
+
+
     return (
       <RootView>
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
         <Menu />
         <AnimatedContainer
           style={{ transform:
@@ -104,9 +183,13 @@ class HomeScreen extends React.Component {
                   <Logo key={logo.text} image={logo.image} text={logo.text} />
                 )}
               </ScrollView>
-              <CourseCardsData data={CoursesData} navigation={this.props.navigation} />
+              {
+                this.state.loading ?
+                  <LoadingData /> :
+                  newArr
+              }
 
-                {/* <Subtitle>Popular Courses</Subtitle>
+              {/* <Subtitle>Popular Courses</Subtitle>
                   {CoursesData.react.map(course =>
                   <Course data={course} key={course.id}/>
               )} */}
@@ -124,38 +207,6 @@ class HomeScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
-
-
-const CourseCardsData = ({data, navigation}) => {
-  let newArr = []
-  for (let [key, value] of Object.entries(data)) {
-      newArr.push(
-        <>
-          <Subtitle>{key.replace(key[0], key[0].toUpperCase())} Learning</Subtitle>
-          <ScrollView
-            horizontal={true}
-            style={{ paddingBottom: 30}}
-            showsHorizontalScrollIndicator={false}
-          >
-            {value.map(course =>
-              <TouchableOpacity
-                key={course.id}
-                onPress={() => {
-                  navigation.push("Section")
-                }}
-              >
-                <Card
-                  data={course}
-                  priceImg={require("../assets/free.png")}
-                />
-              </TouchableOpacity>
-            )}
-          </ScrollView>
-        </>
-      )
-    }
-  return newArr
-}
 
 
 const RootView = styled.View`
@@ -204,6 +255,7 @@ const Name = styled.Text`
   margin: 0 auto 10px;
 `;
 
+const Cover = styled.View``;
 
 const Subtitle = styled.Text`
   color: #b8bece;
