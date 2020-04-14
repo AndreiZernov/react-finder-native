@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Animated, TouchableOpacity, Dimensions } from "react-native"
+import { Animated, TouchableOpacity, Dimensions, ScrollView } from "react-native"
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from './MenuItem'
 import { connect } from 'react-redux'
@@ -17,21 +17,21 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-
+const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
+let cardWidth = screenWidth
+if (screenWidth > 500) {
+  cardWidth = 500
+}
+
 
 class Menu extends React.Component {
   state = {
     top: new Animated.Value(screenHeight)
   };
 
-  componentDidMount() {
-    this.toggleMenu()
-  }
-
-  componentDidUpdate() {
-    this.toggleMenu()
-  }
+  componentDidMount() { this.toggleMenu() }
+  componentDidUpdate() { this.toggleMenu() }
 
   toggleMenu = () => {
     if (this.props.action === "openMenu") {
@@ -49,38 +49,44 @@ class Menu extends React.Component {
 
   render() {
     return (
+
       <AnimatedContainer style={{ top: this.state.top }}>
-        <Cover>
-          {/* <Image source={require('../assets/background2.jpg')} /> */}
-          <Title>Andrew Z</Title>
-          <Subtitle>React Finder</Subtitle>
-        </Cover>
-        <TouchableOpacity
-          onPress={this.props.closeMenu}
-          style={{
-            position: "absolute",
-            top: 120,
-            left: "50%",
-            marginLeft: -22,
-            zIndex: 1
-          }}
+        <ScrollView
+          style={{ height: "100%" }}
+          showsHorizontalScrollIndicator={true}
         >
-          <CloseView>
-            <Ionicons name="ios-close" size={44} color="#546bfb" />
-          </CloseView>
-        </TouchableOpacity>
-        <Content>
+          <Cover>
+            {/* <Image source={require('../assets/background2.jpg')} /> */}
+            <Title>Andrew Z</Title>
+            <Subtitle>React Finder</Subtitle>
+          </Cover>
+          <TouchableOpacity
+            onPress={this.props.closeMenu}
+            style={{
+              position: "absolute",
+              top: 120,
+              left: "50%",
+              marginLeft: -22,
+              zIndex: 1
+            }}
+          >
+            <CloseView>
+              <Ionicons name="ios-close" size={44} color="#546bfb" />
+            </CloseView>
+          </TouchableOpacity>
           <Content>
-            {items.map((item, index) => (
-              <MenuItem
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                text={item.text}
-              />
-            ))}
+            <Content>
+              {items.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  text={item.text}
+                />
+              ))}
+            </Content>
           </Content>
-        </Content>
+        </ScrollView>
       </AnimatedContainer>
     );
   }
@@ -92,7 +98,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 const Container = styled.View`
   position: absolute;
   background: white;
-  width: 100%;
+  width: ${cardWidth};
+  align-self: center;
   height: 100%;
   z-index: 100;
   border-radius: 10px;
@@ -129,8 +136,8 @@ const Subtitle = styled.Text`
 
 const Content = styled.View`
   height: ${screenHeight};
-  background: #f0f3f5;
-  padding: 50px;
+  padding: 30px;
+  height: 100%;
 `;
 
 

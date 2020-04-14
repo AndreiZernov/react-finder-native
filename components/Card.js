@@ -24,13 +24,13 @@ const Card = ({data, priceImg}) => (
 
 const Container = styled.View`
   background-color: white;
-  width: 250px;
+  width: 260px;
   height: 250px;
   border: 1px solid rgb(27, 31, 38);
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(89, 190, 255, 0.15);
   margin-left: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
   overflow: hidden;
 `
 

@@ -28,9 +28,7 @@ HomeStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true
   const routeName = navigation.state.routes[navigation.state.index].routeName
 
-  if (routeName === "Section") {
-    tabBarVisible = false
-  }
+
 
   return {
     tabBarVisible,
@@ -48,6 +46,24 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
 
+const ResourcesStack = createStackNavigator({
+  Resources: ResourcesScreen
+});
+
+
+ResourcesStack.navigationOptions = {
+  tabBarLabel: "Resources",
+  tabBarIcon: ({ focused }) => (
+    <Ionicons
+      name="ios-folder"
+      size={26}
+      color={focused ? activeColor : inactiveColor}
+    />
+  )
+};
+
+
+
 const CoursesStack = createStackNavigator({
   Courses: CoursesScreen
 });
@@ -62,35 +78,17 @@ CoursesStack.navigationOptions = {
     />
   )
 };
-
-
-
-
-const ResourcesStack = createStackNavigator({
-  Projects: ResourcesScreen
-});
-
-
-ResourcesStack.navigationOptions = {
-  tabBarLabel: "Projeccts",
-  tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-folder"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
-  )
+CoursesScreen.navigationOptions = {
+  headerShown: false
 };
-
-
 
 
 
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
-    CoursesStack,
-    ResourcesStack
+    ResourcesStack,
+    CoursesStack
   },
   {
     tabBarOptions: {

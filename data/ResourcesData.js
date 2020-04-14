@@ -182,7 +182,6 @@ const ResourcesData = {
       name: "React Round Up",
       description: "A weekly discussion with React developers",
       link: "https://devchat.tv/react-round-up/",
-      img: "https://devchat.tv/images/podcasts/reactroundup-500.jpg",
       parent1: "podcasts",
       parent2: "resourcesData"
     }

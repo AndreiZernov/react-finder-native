@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 class ResourcesScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    headerShown: false
   };
 
   render() {

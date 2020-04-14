@@ -1,21 +1,56 @@
 import React from "react";
 import styled from "styled-components";
+import { Dimensions } from 'react-native';
 
-const Course = ({data}) => (
-  <Container>
-    <Cover>
-      {/* <Image source={data.img} /> */}
-      <Img source={data.img} resizeMode="contain" />
-      <Duration>{data.duration}</Duration>
-      <Name>{data.name}</Name>
-    </Cover>
-    <Content>
-      <Avatar source={data.img} />
-      <Description>{data.description}</Description>
-      <Author>Taught by {data.author}</Author>
-    </Content>
-  </Container>
-);
+const screenWidth = Dimensions.get('window').width
+
+
+const getCourseWidth = (screenWidth) => {
+  let cardWidth = screenWidth - 40
+  if (screenWidth >= 700) {
+    cardWidth = (screenWidth - 60) / 2
+  }
+  if (screenWidth >= 1024) {
+    cardWidth = (screenWidth - 80) / 3
+  }
+  return cardWidth
+}
+
+class Course extends React.Component {
+  state = {
+    cardWidth: getCourseWidth(screenWidth)
+  }
+
+  componentDidMount() {
+    Dimensions.addEventListener("change", this.adaptLayout)
+  }
+
+  adaptLayout = dimensions => {
+    this.setState({
+      cardWidth: getCourseWidth(dimensions.window.width)
+    })
+  }
+
+  render() {
+    let { data } = this.props
+    return (
+      <Container style={{ width: this.state.cardWidth }}>
+        <Cover>
+          <Image source={{uri:data.img}} />
+          {/* <Img source={{uri:data.img}} resizeMode="contain" /> */}
+          <Duration>{data.duration}</Duration>
+          <Name>{data.name}</Name>
+        </Cover>
+        <Content>
+          <Avatar source={{uri:data.img}} />
+          <Description>{data.description.substring(0, 60)+'...'}</Description>
+          <Author>Taught by {data.author}</Author>
+        </Content>
+      </Container>
+    )
+  }
+}
+
 
 export default Course;
 
@@ -26,7 +61,7 @@ const Container = styled.View`
   border-radius: 14px;
   background: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  margin: 15px 10px;
+  margin: 10px auto;
 `;
 
 const Cover = styled.View`
@@ -87,7 +122,6 @@ const Avatar = styled.Image`
   position: absolute;
   top: 20px;
   left: 20px;
-  border-radius: 16px;
 `;
 
 const Description = styled.Text`

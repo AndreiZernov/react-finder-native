@@ -1,14 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, StatusBar, Linking, Dimensions  } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from "react-native";
+
+
+const screenHeight = Dimensions.get("window").height
 
 
 class SectionScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    headerShown: false
   };
+
+  _goToURL(url) {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log('Don\'t know how to open URI: ' + url);
+      }
+    });
+  }
 
   render() {
     const { navigation } = this.props
@@ -21,17 +33,15 @@ class SectionScreen extends React.Component {
         <Cover>
           <Img source={{uri: course.img}} />
           <Wrapper>
-            <Logo source={course.img} />
+            <Logo source={{ uri: course.img}} />
             <Topic>{topic}</Topic>
           </Wrapper>
           <Name>{course.name}</Name>
           <Author>{course.author}</Author>
-          
+
         </Cover>
         <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.goBack();
-          }}
+          onPress={() => navigation.goBack() }
           style={{
             position: "absolute",
             top: 40,
@@ -47,6 +57,16 @@ class SectionScreen extends React.Component {
             />
           </CloseView>
         </TouchableOpacity>
+        <Content>
+          <Subtitle>Short Description:</Subtitle>
+          <Text>{course.description}</Text>
+          <Subtitle>Price:</Subtitle>
+          <Text>{course.price}</Text>
+          <Subtitle>Duration:</Subtitle>
+          <Text>{course.duration}</Text>
+          <Subtitle>Link to Resource:</Subtitle>
+          <Link style={{color: "blue"}} onPress={() => this._goToURL(course.link)}>Go to Start Learning Right Now!</Link>
+        </Content>
       </Container>
     );
   }
@@ -121,4 +141,31 @@ const Topic = styled.Text`
   color: rgba(255, 255, 255, 0.8);
   margin-left: 5px;
   text-transform: uppercase;
+`;
+
+const Content = styled.View`
+  height: 90%;
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+`;
+
+const Subtitle = styled.Text`
+  color: #8b91a2;
+  font-weight: 800;
+  font-size: 15px;
+  margin-top: 20px;
+  text-transform: uppercase;
+`;
+
+const Text = styled.Text`
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8);
+`;
+
+const Link = styled.Text`
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8);
 `;

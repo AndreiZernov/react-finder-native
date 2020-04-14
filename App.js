@@ -2,6 +2,8 @@ import React from "react"
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import AppNavigator from './navigator/AppNavigator'
+import { DataItemsProvider } from './contexts/dataItemsContext'
+
 
 
 const initialState = {
@@ -26,9 +28,11 @@ const App = () => {
 
 
   return(
+    <DataItemsProvider>
       <Provider store={store}>
         <AppNavigator />
       </Provider>
+    </DataItemsProvider>
   )
 }
 
