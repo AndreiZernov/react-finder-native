@@ -1,9 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import { Animated, TouchableOpacity, Dimensions, ScrollView } from "react-native"
+import { Animated, TouchableOpacity, Dimensions, ScrollView, AsyncStorage } from "react-native"
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from './MenuItem'
 import { connect } from 'react-redux'
+
 
 const mapStateToProps = state => {
   return { action: state.action }
@@ -13,7 +14,12 @@ const mapDispatchToProps = dispatch => {
   return {
     closeMenu: () => dispatch({
       type: "CLOSE_MENU"
-    })
+    }),
+    updateName: name =>
+      dispatch({
+        type: "UPDATE_NAME",
+        name
+      })
   }
 }
 
@@ -47,9 +53,17 @@ class Menu extends React.Component {
     }
   }
 
+  handleMenu = index => {
+    if (index === 3) {
+      this.props.closeMenu();
+      this.props.updateName("User");
+      AsyncStorage.clear();
+    }
+  };
+
+
   render() {
     return (
-
       <AnimatedContainer style={{ top: this.state.top }}>
         <ScrollView
           style={{ height: "100%" }}
@@ -77,12 +91,14 @@ class Menu extends React.Component {
           <Content>
             <Content>
               {items.map((item, index) => (
-                <MenuItem
+                <TouchableOpacity
                   key={index}
-                  icon={item.icon}
-                  title={item.title}
-                  text={item.text}
-                />
+                  onPress={() => {
+                    this.handleMenu(index);
+                  }}
+                >
+                  <MenuItem icon={item.icon} title={item.title} text={item.text} />
+                </TouchableOpacity>
               ))}
             </Content>
           </Content>

@@ -11,11 +11,6 @@ const Logo = props => (
 export default Logo;
 
 
-const LogosWrapper = styled.View`
-  flex-direction: row;
-  padding: 20px 12px;
-`;
-
 const Container = styled.View`
   padding: 12px 16px 12px;
   height: 60px;

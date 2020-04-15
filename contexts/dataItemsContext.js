@@ -5,34 +5,46 @@ const DataItemsContext = createContext()
 
 const useDataItems = () => useContext(DataItemsContext)
 
-
 const DataItemsProvider = ({children}) => {
   const [ coursesData, setCoursesData] = useState({})
   const [ resourcesData, setResourcesData] = useState({})
   const [ loading, setLoading] = useState(true)
 
-
   useEffect(() => {
+    async function getData() {
+      try {
+        let respReact = await Client.getEntries({ "content_type" : "coursesData" })
+        let respReactNative = await Client.getEntries({ "content_type" : "reactNative" })
+        let respRedux = await Client.getEntries({ "content_type" : "redux" })
+        let respGraphQl = await Client.getEntries({ "content_type" : "graphql" })
+        let respPathway = await Client.getEntries({ "content_type" : "pathway" })
+        let respResources = await Client.getEntries({ "content_type" : "resources" })
+        let respJobSearch = await Client.getEntries({ "content_type" : "jobSearch" })
+        let respHtmlCss = await Client.getEntries({ "content_type" : "htmlCss" })
+        let respPodcasts = await Client.getEntries({ "content_type" : "podcasts" })
+
+        setCoursesData({
+          react: FormatData(respReact.items),
+          react_native: FormatData(respReactNative.items),
+          redux: FormatData(respRedux.items),
+          graphql: FormatData(respGraphQl.items),
+          pathway: FormatData(respPathway.items)
+        })
+        setResourcesData({
+          resources: FormatData(respResources.items),
+          job_search: FormatData(respJobSearch.items),
+          podcasts: FormatData(respHtmlCss.items),
+          html_css: FormatData(respPodcasts.items)
+        })
+        setLoading(false)
+      } catch (e) {
+        console.log(e)
+      }
+    }
     getData()
   }, [])
 
 
-  const getData = async () => {
-    try {
-      let response = await Client.getEntries({
-        // "content_type" : "redux"
-      })
-
-      let CoursesData = FormatData(response.items).coursesData
-      let ResourcesData = FormatData(response.items).resourcesData
-
-      setCoursesData(CoursesData)
-      setResourcesData(ResourcesData)
-      setLoading(false)
-    } catch (e) {
-      console.log(e)
-    }
-  }
 
 
   const FormatData = (items) => {
@@ -41,21 +53,7 @@ const DataItemsProvider = ({children}) => {
       let course = { ...item.fields, img }
       return course
     })
-    let coursesData = {
-      react: tempItems.filter(course => course.parent1 === "react"),
-      react_native: tempItems.filter(course => course.parent1 === "react_native"),
-      redux: tempItems.filter(course => course.parent1 === "redux"),
-      graphql: tempItems.filter(course => course.parent1 === "graphql"),
-      pathway: tempItems.filter(course => course.parent1 === "pathway")
-    }
-    let resourcesData = {
-      resources: tempItems.filter(course => course.parent1 === "resources"),
-      job_search: tempItems.filter(course => course.parent1 === "job_search"),
-      podcasts: tempItems.filter(course => course.parent1 === "podcasts"),
-      html_css: tempItems.filter(course => course.parent1 === "html_css")
-    }
-    let data = { coursesData, resourcesData}
-    return data
+    return tempItems
   }
 
   return (

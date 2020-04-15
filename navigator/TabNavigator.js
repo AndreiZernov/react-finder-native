@@ -1,12 +1,12 @@
-import React from "react";
-import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createAppContainer } from "react-navigation";
-import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from "../screens/HomeScreen";
-import SectionScreen from "../screens/SectionScreen";
-import CoursesScreen from "../screens/CoursesScreen";
-import ResourcesScreen from "../screens/ResourcesScreen";
+import React from "react"
+import { createStackNavigator } from "react-navigation-stack"
+import { createBottomTabNavigator } from "react-navigation-tabs"
+import { createAppContainer } from "react-navigation"
+import { Ionicons } from '@expo/vector-icons'
+import HomeScreen from "../screens/HomeScreen"
+import SectionScreen from "../screens/SectionScreen"
+import CardsScreen from "../screens/CardsScreen"
+import CoursesScreen from "../screens/CoursesScreen"
 
 
 
@@ -17,7 +17,8 @@ const inactiveColor = "#b8bece";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Section: SectionScreen
+  Section: SectionScreen,
+  Cards: CardsScreen
 }, {
   mode: "modal"
 });
@@ -28,6 +29,9 @@ HomeStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true
   const routeName = navigation.state.routes[navigation.state.index].routeName
 
+  // if (routeName === "Section") {
+  //   tabBarVisible = false;
+  // }
 
 
   return {
@@ -46,13 +50,13 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
 
-const ResourcesStack = createStackNavigator({
-  Resources: ResourcesScreen
+const CoursesStack = createStackNavigator({
+  Courses: CoursesScreen
 });
 
 
-ResourcesStack.navigationOptions = {
-  tabBarLabel: "Resources",
+CoursesStack.navigationOptions = {
+  tabBarLabel: "Courses",
   tabBarIcon: ({ focused }) => (
     <Ionicons
       name="ios-folder"
@@ -64,31 +68,31 @@ ResourcesStack.navigationOptions = {
 
 
 
-const CoursesStack = createStackNavigator({
-  Courses: CoursesScreen
-});
-
-CoursesStack.navigationOptions = {
-  tabBarLabel: "Courses",
-  tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-albums"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
-  )
-};
-CoursesScreen.navigationOptions = {
-  headerShown: false
-};
+// const CardsStack = createStackNavigator({
+//   Cards: CardsScreen
+// });
+//
+// CardsStack.navigationOptions = {
+//   tabBarLabel: "Cards",
+//   tabBarIcon: ({ focused }) => (
+//     <Ionicons
+//       name="ios-albums"
+//       size={26}
+//       color={focused ? activeColor : inactiveColor}
+//     />
+//   )
+// };
+// CardsScreen.navigationOptions = {
+//   headerShown: false
+// };
 
 
 
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
-    ResourcesStack,
     CoursesStack
+    // CardsStack
   },
   {
     tabBarOptions: {

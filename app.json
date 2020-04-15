@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-finder-native",
-    "slug": "react-finder-native",
+    "name": "React+Finder",
+    "slug": "react-finder-native-app",
     "platforms": [
       "ios",
       "android",
@@ -22,7 +22,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "react.finder"
+    },
+    "android": {
+      "package": "react.finder"
     }
   }
 }
