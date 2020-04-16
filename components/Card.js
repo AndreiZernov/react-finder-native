@@ -1,5 +1,4 @@
 import React from "react";
-import { Text } from "react-native";
 import styled from 'styled-components/native'
 
 
@@ -16,7 +15,6 @@ const Card = ({data, priceImg}) => (
     <Image />
     <Cover>
       <Name>{data.name}</Name>
-      <Img source={priceImg} />
     </Cover>
     <Content>
       <Img source={{uri: data.img}} />

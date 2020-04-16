@@ -17,8 +17,8 @@ const inactiveColor = "#b8bece";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Section: SectionScreen,
-  Cards: CardsScreen
+  Cards: CardsScreen,
+  Courses: CoursesScreen
 }, {
   mode: "modal"
 });
@@ -53,19 +53,24 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
 const CoursesStack = createStackNavigator({
-  Courses: CoursesScreen
+  Courses: CoursesScreen,
+  Section: SectionScreen
+}, {
+  mode: "card"
 });
 
 
-CoursesStack.navigationOptions = {
-  tabBarLabel: "Courses",
-  tabBarIcon: ({ focused }) => (
-    <Ionicons
+CoursesStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarLabel: "Courses",
+    tabBarIcon: ({ focused }) => (
+      <Ionicons
       name="ios-folder"
       size={26}
       color={focused ? activeColor : inactiveColor}
-    />
-  )
+      />
+    )
+  }
 };
 
 

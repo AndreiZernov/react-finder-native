@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 
 const mapStateToProps = state => {
-  return { action: state.action }
+  return { action: state.action, name: state.name }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -71,7 +71,7 @@ class Menu extends React.Component {
         >
           <Cover>
             {/* <Image source={require('../assets/background2.jpg')} /> */}
-            <Title>Andrew Z</Title>
+            <Title>{this.props.name}</Title>
             <Subtitle>React Finder</Subtitle>
           </Cover>
           <TouchableOpacity

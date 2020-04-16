@@ -1,14 +1,12 @@
 import React from "react";
 import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar } from "react-native";
 import styled from 'styled-components/native'
-import Card from '../components/Card'
+import Topics from '../components/Topics'
 import Logo from '../components/Logo'
-import QuickFacts from '../data/QuickFacts'
 import Course from '../components/Course'
 import Menu from "../components/Menu"
 import LoadingData from "../components/LoadingData"
 import ModalLogin from "../components/ModalLogin"
-import { NotificationIcon } from '../components/Icons'
 import { connect } from 'react-redux'
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import NotificationButton from "../components/NotificationButton";
@@ -74,30 +72,6 @@ class HomeScreen extends React.Component {
 
 
   render() {
-    let newArr = []
-    for (let [key, value] of Object.entries(this.context.coursesData)) {
-      newArr.push(
-        <Cover key={key}>
-          <Subtitle>{key.replace(key[0], key[0].toUpperCase()).replace('_', " ")} Learning</Subtitle>
-          <ScrollView
-            horizontal={true}
-            style={{ paddingBottom: 30 }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {value.map(course => {
-              return(
-                <CardsContainer key={course.id}>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.push("Section", { course, key })}
-                  >
-                    <Card data={course} priceImg={require("../assets/free.png")} />
-                  </TouchableOpacity>
-                </CardsContainer>
-              )})}
-          </ScrollView>
-        </Cover>
-      )
-    }
     return (
       <RootView>
         {   this.context.loading ?
@@ -113,11 +87,6 @@ class HomeScreen extends React.Component {
             >
               <SafeAreaView>
                 <ScrollView style={{ height: "100%" }}>
-                  <TouchableOpacity
-                    onPress={this.props.openMenu}
-                  >
-                    <Title>React <LogoTitle source={require('../assets/react.png')} /> Finder</Title>
-                  </TouchableOpacity>
                   <Header>
                     <TitleBar>
                       <TouchableOpacity
@@ -126,7 +95,7 @@ class HomeScreen extends React.Component {
                       >
                         <Avatar  source={require('../assets/account.png')} />
                         <TitleWrap>
-                          <TitleTop>Welcome back,</TitleTop>
+                          <TitleTop>{this.props.name === "User" ? "Please Login" : "Welcome back," }</TitleTop>
                           <NameTop>{this.props.name}</NameTop>
                         </TitleWrap>
                       </TouchableOpacity>
@@ -137,31 +106,41 @@ class HomeScreen extends React.Component {
                       </TouchableOpacity>
                     </TitleBar>
                   </Header>
+                  <TouchableOpacity
+                    onPress={this.props.openMenu}
+                  >
+                    <Title>React <LogoTitle source={require('../assets/react.png')} /> Finder</Title>
+                  </TouchableOpacity>
                   <ScrollView
                     style={{ flexDirection: "row", padding: 20, paddingLeft: 12, paddingTop: 30 }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                   >
                     {Logos.map(logo => {
-                      let topic = logo.text.toLowerCase().replace(" ", "_")
+                      let topic = logo.toLowerCase().replace(" ", "_")
                       return (
                         <TouchableOpacity
-                          key={logo.text}
-                          onPress={() => this.props.navigation.push("Cards", { topic })}
+                          key={logo}
+                          // onPress={() => this.props.navigation.push("Cards", { topic })}
                         >
-                          <Logo key={logo.text} image={logo.image} text={logo.text} />
+                          <Logo text={logo} />
                         </TouchableOpacity>
                       )})
                     }
                   </ScrollView>
-                  { newArr }
+                  <Subtitle>Continue Learning</Subtitle>
+                  <Topics data={this.context.coursesData} navigation={this.props.navigation}/>
+                  <Subtitle>Courses By Platform</Subtitle>
+                  <Topics data={this.context.coursesData} navigation={this.props.navigation}/>
+                  <Subtitle>New Courses</Subtitle>
+                  <Topics data={this.context.coursesData} navigation={this.props.navigation}/>
 
-                  <Subtitle>Future Articles</Subtitle>
+                  <Subtitle>Articles</Subtitle>
                   <CoursesContainer>
                     {this.context.coursesData.redux.map(course => {
                       let key = "redux"
                       return (
-                        <CourseWrapper>
+                        <CourseWrapper key={course.id}>
                           <TouchableOpacity
                             onPress={() => this.props.navigation.push("Section", { course, key })}
                           >
@@ -172,11 +151,6 @@ class HomeScreen extends React.Component {
                     }
                   </CoursesContainer>
 
-                  {/* <Overview>{QuickFacts.overview.title}</Overview> */}
-                  {/* <Subtitle
-                    style={{textAlign:"justify", width:"90%"}}>
-                    {QuickFacts.overview.subtitle}
-                  </Subtitle> */}
                 </ScrollView>
               </SafeAreaView>
             </AnimatedContainer>
@@ -184,8 +158,9 @@ class HomeScreen extends React.Component {
           </>
         }
       </RootView>
-    );
-  }
+      );
+
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
@@ -217,16 +192,16 @@ const BackImg = styled.Image`
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
 
 const Title = styled.Text`
-text-align: center;
-align-self: center;
-font-size: 30px;
-color: #b8bece;
-font-weight: 700;
+  text-align: center;
+  align-self: center;
+  font-size: 30px;
+  color: #b8bece;
+  font-weight: 700;
 `;
 
 const LogoTitle = styled.Image`
-width: 40px;
-height: 36px;
+  width: 40px;
+  height: 36px;
 `;
 
 const Header = styled.View`
@@ -265,8 +240,8 @@ const NameTop = styled.Text`
 `;
 
 
-
 const Cover = styled.View``;
+
 const CourseWrapper = styled.View`
    margin: 10px auto;
 `;
@@ -297,10 +272,4 @@ const Overview = styled.Text`
 `;
 
 
-const Logos = [
-  {image: require("../assets/react.png"), text: "React"},
-  {image: require("../assets/react_native.png"), text: "React Native"},
-  {image: require("../assets/redux.png"), text: "Redux"},
-  {image: require("../assets/graphql.png"), text: "Graphql"},
-  {image: require("../assets/pathway.png"), text: "Pathway"},
-]
+const Logos = [ "Resources", "Job Search", "Podcasts", "HTML CSS" ]

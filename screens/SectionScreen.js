@@ -24,7 +24,7 @@ class SectionScreen extends React.Component {
   render() {
     const { navigation } = this.props
     const course = navigation.getParam("course")
-    const topic = navigation.getParam("key")
+    const topic = navigation.getParam("topic")
     const BackColor = () => {
       return topic === "react" ?  "rgb(20, 20, 20)" :
         topic === "react_native" ?  "rgba(38, 48, 52, 1)" :
@@ -34,10 +34,7 @@ class SectionScreen extends React.Component {
     }
 
     return (
-      <ScrollView
-        style={{ height: "100%" }}
-        showsHorizontalScrollIndicator={true}
-      >
+
         <Container style={{backgroundColor: BackColor()}} >
           <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
           <Cover>
@@ -60,7 +57,7 @@ class SectionScreen extends React.Component {
           </Cover>
           <TouchableOpacity
             onPress={() => navigation.goBack() }
-            style={{ position: "absolute", top: 40, right: 20 }}
+            style={{ position: "absolute", top: 60, right: 20 }}
           >
             <CloseView>
               <Ionicons name="ios-close" size={36} style={{ marginTop: -2 }} color="#4775f2" />
@@ -77,7 +74,6 @@ class SectionScreen extends React.Component {
             <Link onPress={() => this._goToURL(course.link)}>Start Learning Right Now!</Link>
           </Content>
         </Container>
-      </ScrollView>
     );
   }
 }
@@ -91,7 +87,7 @@ const Container = styled.View`
 `;
 
 const Cover = styled.View`
-  height: 350px;
+  height: 370px;
   background: #3c4560;
   justify-content: center;
   align-items: center;
@@ -100,6 +96,7 @@ const Cover = styled.View`
 const Img = styled.Image`
   height: 100%;
   width: 100%;
+  top: 0;
   position: absolute;
   background: #3c4560;
 `;
@@ -134,19 +131,19 @@ const CloseView = styled.View`
 `;
 
 const LogoWrapper = styled.View`
-    width: 100px;
-    height: 90px;
+  width: 100px;
+  height: 90px;
 `;
 
 const Logo = styled.Image`
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
 const Content = styled.View`
-  height: 90%;
+  height: 100%;
   width: 90%;
-  margin: 10px auto 52px;
+  margin: 10px auto 20%;
 `;
 
 const Subtitle = styled.Text`

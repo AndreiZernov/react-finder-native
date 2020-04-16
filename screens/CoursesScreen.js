@@ -1,50 +1,67 @@
-import React from "react";
-import { Dimensions } from "react-native";
-import styled from "styled-components";
-import { LinearGradient } from 'expo-linear-gradient';
-import CourseSection from "../components/CourseSection";
-import Courses from "../components/Courses";
+import React from "react"
+import { Dimensions, ScrollView, TouchableOpacity, StatusBar } from "react-native"
+import styled from "styled-components"
+import { DataItemsContext } from "../contexts/dataItemsContext"
+import QuickFacts from '../data/QuickFacts'
+import Card from '../components/Card'
+import { Ionicons } from '@expo/vector-icons'
+
 
 let screenWidth = Dimensions.get("window").width;
 
 class CoursesScreen extends React.Component {
   static navigationOptions = { headerShown: false  };
+  static contextType = DataItemsContext
 
   render() {
+    let topic = ''
+    if (this.props.navigation.getParam("topic")) {
+      topic = this.props.navigation.getParam("topic")
+    } else if (this.props.navigation.getParam("nextTopic")) {
+      topic = this.props.navigation.getParam("nextTopic")
+    } else if (this.props.navigation.getParam("prevTopic")) {
+      topic = this.props.navigation.getParam("prevTopic")
+    } else {
+      topic = 'react'
+    }
+    const nextTopic = nextTopicFunc(topic)
+    const prevTopic = prevTopicFunc(topic)
     return (
       <Container>
-        <ScrollView>
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+        <ScrollView style={{ height: "100%" }}>
           <Hero>
-            <Background source={require("../assets/background12.jpg")} />
-            <LinearGradient
-              colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]}
-              style={{ position: "absolute", width: screenWidth, height: 460 }}
-            />
-            <Logo source={require("../assets/logo-react.png")} />
-            <Caption>12 Sections</Caption>
-            <Title>React Native for Designers</Title>
-            <Sections>
-              <SectionScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
+            <Background source={ require("../assets/background6.jpg") } />
+            <Title>{QuickFacts[topic].title}</Title>
+            <Text>{QuickFacts[topic].subtitle}</Text>
+            {QuickFacts[topic].list.map(item =>
+              <TextList key={item}>{item}</TextList>
+            )}
+
+            <Name>Number of courses: {this.context.coursesData[topic].length}</Name>
+            <IconsWrapper>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.push("Courses", { prevTopic })}
               >
-                {sections.map((section, index) => (
-                  <CourseSection
-                    key={index}
-                    title={section.title}
-                    image={section.image}
-                    progress={section.progress}
-                  />
-                ))}
-              </SectionScrollView>
-            </Sections>
-            <Author>
-              <Avatar source={require("../assets/account.png")} />
-              <Name>Taught by Meng To</Name>
-            </Author>
+                <IconView>
+                  <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
+                </IconView>
+
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.push("Courses", { nextTopic })}
+              >
+                <IconView>
+                  <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
+                </IconView>
+              </TouchableOpacity>
+            </IconsWrapper>
           </Hero>
-          <Subtitle>Latest Courses</Subtitle>
-          <Courses />
+          <CoursesByTopic
+            data={this.context.coursesData[topic]}
+            navigation={this.props.navigation}
+            topic={topic}
+          />
         </ScrollView>
       </Container>
     );
@@ -53,80 +70,112 @@ class CoursesScreen extends React.Component {
 
 export default CoursesScreen;
 
-const Container = styled.View`
-  background: #f0f3f5;
-`;
 
-const ScrollView = styled.ScrollView`
-  width: 100%;
-  height: 100%;
+const CoursesByTopic = ({topic, data, navigation}) =>
+  <Cover>
+    <Subtitle>{topic.replace(topic[0], topic[0].toUpperCase()).replace('_', " ")} Learning</Subtitle>
+    <ScrollView
+      horizontal={true}
+      style={{ paddingBottom: 30 }}
+      showsHorizontalScrollIndicator={false}
+    >
+      {data.map(course => {
+        return(
+          <CardsContainer key={course.id}>
+            <TouchableOpacity
+              onPress={() => navigation.push("Section", { course, topic })}
+            >
+              <Card data={course} />
+            </TouchableOpacity>
+          </CardsContainer>
+        )})}
+    </ScrollView>
+  </Cover>
+
+
+const nextTopicFunc = (topic) => {
+  return topic === "react" ?  "react_native" :
+    topic === "react_native" ?  "redux" :
+    topic === "redux" ?  "graphql" :
+    topic === "graphql" ?  "pathway" :
+    topic === "pathway" ?  "react" : "react"
+}
+
+const prevTopicFunc = (topic) => {
+  return topic === "react" ?  "pathway" :
+    topic === "pathway" ?  "graphql" :
+    topic === "graphql" ?  "redux" :
+    topic === "redux" ?  "react_native" :
+    topic === "react_native" ?  "react" : "react"
+}
+
+
+
+const Container = styled.View`
+  background: rgb(18, 21, 26);
 `;
 
 const Hero = styled.View`
-  height: 460px;
-  background: #3c4560;
+  height: 450px;
+  background: rgb(27, 31, 38);
+  overflow: hidden;
 `;
 
 const Background = styled.Image`
   position: absolute;
-  top: 0;
   left: 0;
   width: ${screenWidth};
-  height: 460px;
+  height: 100%;
 `;
 
-const Logo = styled.Image`
-  width: 48px;
-  height: 48px;
-  margin-top: 50px;
-  margin-left: 20px;
-  align-self: center;
+const IconsWrapper = styled.View`
+  flex-direction: row;
+  position: absolute;
+  top: 78%;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+  opacity: 0.2;
+
+`;
+const IconView = styled.View``;
+const Cover = styled.View`
+  background-color: rgb(22, 22, 22);
 `;
 
-const Caption = styled.Text`
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #b8bece;
-  margin-top: 20px;
-  margin-left: 20px;
+const CardsContainer = styled.View`
+  flex-direction: row;
 `;
 
 const Title = styled.Text`
-  font-size: 32px;
+  font-size: 30px;
   color: white;
   font-weight: 600;
-  margin-top: 4px;
-  margin-left: 20px;
-  width: 220px;
+  margin: 45px auto 15px;
+  width: 94%;
+  text-align: center;
 `;
 
-const Sections = styled.View`
-  margin-top: 20px;
-  flex-direction: row;
-`;
-
-const SectionScrollView = styled.ScrollView`
-  padding: 10px 0;
-`;
-
-const Author = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  align-items: center;
-  margin-left: 20px;
-`;
-
-const Avatar = styled.Image`
-  width: 22px;
-  height: 22px;
-  border-radius: 11px;
-  background: white;
-`;
+const Text = styled.Text`
+  text-align: justify;
+  font-size: 14px;
+  color: #b8bece;
+  margin-left: 10px;
+  width: 94%;
+`
+const TextList = styled.Text`
+  font-size: 12px;
+  color: #b8bece;
+  margin: 5px auto 0;
+  width: 94%;
+`
 
 const Name = styled.Text`
   margin-left: 8px;
-  color: #b8bece;
+  color: tomato
+  margin: 20px;
+  margin-top: auto;
+
 `;
 
 const Subtitle = styled.Text`
@@ -136,31 +185,3 @@ const Subtitle = styled.Text`
   color: #b8bece;
   margin: 20px 0 0 20px;
 `;
-
-const sections = [
-  {
-    title: "React Native for Designers",
-    progress: 0.2,
-    image: require("../assets/background1.jpg")
-  },
-  {
-    title: "Styled Components",
-    progress: 0.3,
-    image: require("../assets/background2.jpg")
-  },
-  {
-    title: "Assets, Icons and SVG",
-    progress: 0.9,
-    image: require("../assets/background3.jpg")
-  },
-  {
-    title: "Props and Data",
-    progress: 0.5,
-    image: require("../assets/background4.jpg")
-  },
-  {
-    title: "States and Layout Animation",
-    progress: 0.1,
-    image: require("../assets/background6.jpg")
-  }
-];

@@ -33,7 +33,7 @@ class LoadingLogin extends React.Component {
         style={{ top: this.state.top, opacity: this.state.opacity }}
       >
         <LottieView
-          source={require("../assets/lottie-loading-fluid.json")}
+          source={require("../assets/lottie-react-firebase.json")}
           autoPlay={false}
           loop={true}
           ref={animation => { this.animation = animation }}

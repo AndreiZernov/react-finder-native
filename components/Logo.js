@@ -1,10 +1,9 @@
 import React from "react";
 import styled from 'styled-components/native'
 
-const Logo = props => (
+const Logo = ({text}) => (
     <Container>
-      <Image source={props.image} resizeMode="contain" />
-      <Text>{props.text}</Text>
+      <Text>{text}</Text>
     </Container>
 );
 
