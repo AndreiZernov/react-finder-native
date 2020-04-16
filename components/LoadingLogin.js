@@ -11,10 +11,6 @@ class LoadingLogin extends React.Component {
     opacity: new Animated.Value(0)
   };
 
-  componentDidMount() {
-
-  }
-
   componentDidUpdate() {
     if (this.props.isActive) {
       Animated.timing(this.state.top, { toValue: 0, duration: 0 }).start();

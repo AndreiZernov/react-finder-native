@@ -97,8 +97,6 @@ class CardsScreen extends React.Component {
   });
 
   render() {
-    console.log(this.props.navigation.getParam("topic"))
-    console.log(this.context.coursesData)
 
     return (
       <Container>
@@ -116,7 +114,6 @@ class CardsScreen extends React.Component {
               data={this.context.coursesData[this.props.navigation.getParam("topic")]
                 .filter(course => course.id === this.state.index)}
               canOpen={true}
-
             />}
 
         </Animated.View>

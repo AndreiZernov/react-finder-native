@@ -33,8 +33,6 @@ class SectionScreen extends React.Component {
         topic === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
     }
 
-
-
     return (
       <ScrollView
         style={{ height: "100%" }}

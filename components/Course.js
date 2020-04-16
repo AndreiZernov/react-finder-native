@@ -24,6 +24,9 @@ class Course extends React.Component {
   componentDidMount() {
     Dimensions.addEventListener("change", this.adaptLayout)
   }
+  componentWillUnmoung() {
+    Dimensions.removeEventListener("change", this.adaptLayout)
+  }
 
   adaptLayout = dimensions => {
     this.setState({

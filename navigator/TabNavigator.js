@@ -7,7 +7,7 @@ import HomeScreen from "../screens/HomeScreen"
 import SectionScreen from "../screens/SectionScreen"
 import CardsScreen from "../screens/CardsScreen"
 import CoursesScreen from "../screens/CoursesScreen"
-
+import ResourcesScreen from "../screens/ResourcesScreen"
 
 
 const activeColor = "#4775f2";
@@ -26,6 +26,7 @@ const HomeStack = createStackNavigator({
 
 
 HomeStack.navigationOptions = ({ navigation }) => {
+
   let tabBarVisible = true
   const routeName = navigation.state.routes[navigation.state.index].routeName
 
@@ -50,6 +51,7 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
 
+
 const CoursesStack = createStackNavigator({
   Courses: CoursesScreen
 });
@@ -65,6 +67,25 @@ CoursesStack.navigationOptions = {
     />
   )
 };
+
+
+
+const ResourcesStack = createStackNavigator({
+  Resources: ResourcesScreen
+});
+
+
+ResourcesStack.navigationOptions = {
+  tabBarLabel: "Resources",
+  tabBarIcon: ({ focused }) => (
+    <Ionicons
+      name="ios-folder"
+      size={26}
+      color={focused ? activeColor : inactiveColor}
+    />
+  )
+};
+
 
 
 
@@ -91,8 +112,8 @@ CoursesStack.navigationOptions = {
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
-    CoursesStack
-    // CardsStack
+    CoursesStack,
+    ResourcesStack
   },
   {
     tabBarOptions: {

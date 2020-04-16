@@ -80,30 +80,46 @@ class Cards extends React.Component {
 
 
   render() {
+    const { data } = this.props
+
+    const BackColor = () => {
+      return data[0].parent1 === "react" ?  "rgb(20, 20, 20)" :
+        data[0].parent1 === "react_native" ?  "rgba(38, 48, 52, 1)" :
+        data[0].parent1 === "redux" ?  "rgb(3, 3, 3)" :
+        data[0].parent1 === "graphql" ?  "rgb(5, 5, 5)" :
+        data[0].parent1 === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
+    }
+
     return(
       <TouchableWithoutFeedback onPress={this.openCard}>
         <AnimatedContainer style={{
           width: this.state.cardWidth,
-          height: this.state.cardHeight
+          height: this.state.cardHeight,
+          backgroundColor: BackColor()
         }}>
           <Cover>
-            <Image source={require("../assets/background1.jpg")} />
+            <Image source={ data[0].parent1 === "react" ? require("../assets/background1.jpg") :
+              data[0].parent1 === "react_native" ? require("../assets/background10.jpg") :
+              data[0].parent1 === "redux" ? require("../assets/background9.jpg") :
+              data[0].parent1 === "graphql" ? require("../assets/background8.jpg") :
+              data[0].parent1 === "pathway" ? require("../assets/background4.jpg") :
+              require("../assets/background1.jpg")} />
             <AnimatedTitle
               style={{top: this.state.titleTop}}>
-              {this.props.data[0].name}
+              {data[0].name}
             </AnimatedTitle>
-            <Img source={{uri: this.props.data[0].img}} />
-            <Author>{this.props.data[0].author}</Author>
+            <Img source={{uri: data[0].img}} />
+            <Author>{data[0].author}</Author>
           </Cover>
           <AnimatedContent style={{ height: this.state.textHeight }}>
             <Subtitle>Short Description:</Subtitle>
-            <Text>{this.props.data[0].description}</Text>
+            <Text>{data[0].description}</Text>
             <Subtitle>Price:</Subtitle>
-            <Text style={{color:"tomato"}}>{this.props.data[0].price}</Text>
+            <Text style={{color:"tomato"}}>{data[0].price}</Text>
             <Subtitle>Duration:</Subtitle>
-            <Text>{this.props.data[0].duration}</Text>
+            <Text>{data[0].duration}</Text>
             <Subtitle>Link to Resource:</Subtitle>
-            <Link onPress={() => this._goToURL(this.props.data[0].link)}>Start Learning Right Now!</Link>
+            <Link onPress={() => this._goToURL(data[0].link)}>Start Learning Right Now!</Link>
           </AnimatedContent>
           <AnimatedLinearGradient
             colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}

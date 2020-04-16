@@ -5,7 +5,7 @@ import { useDataItems } from "../contexts/dataItemsContext"
 
 
 const Courses = () => {
-    const { loading, coursesData } = useDataItems()
+  const { loading, coursesData } = useDataItems()
 
   return (
     <CoursesContainer>

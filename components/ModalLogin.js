@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions, AsyncStorage } from 'react-native'
 import { BlurView } from 'expo-blur'
-import Loading from "../components/Loading"
+import LoadingData from "../components/LoadingData"
 import Success from "../components/Success"
 import LoadingLogin from "../components/LoadingLogin"
 import { connect } from 'react-redux'
@@ -60,7 +60,6 @@ class ModalLogin extends React.Component {
       const name = await AsyncStorage.getItem('name');
       if (value !== null) {
         this.props.updateName(name);
-        console.log(name);
       }
     } catch (error) {
       // Error retrieving data

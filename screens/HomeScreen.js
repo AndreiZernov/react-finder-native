@@ -6,14 +6,13 @@ import Logo from '../components/Logo'
 import QuickFacts from '../data/QuickFacts'
 import Course from '../components/Course'
 import Menu from "../components/Menu"
-import LoadingData from "../components/Loading"
+import LoadingData from "../components/LoadingData"
 import ModalLogin from "../components/ModalLogin"
 import { NotificationIcon } from '../components/Icons'
 import { connect } from 'react-redux'
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import NotificationButton from "../components/NotificationButton";
 import Notifications from "../components/Notifications";
-
 
 
 const mapStateToProps = state => { return { action: state.action, name: state.name } }
@@ -69,11 +68,8 @@ class HomeScreen extends React.Component {
 
 
   handleAvatar = () => {
-    if (this.props.name !== "User") {
-      this.props.openMenu();
-    } else {
-      this.props.openLogin();
-    }
+    if (this.props.name !== "User") { this.props.openMenu(); }
+    else { this.props.openLogin(); }
   };
 
 
@@ -104,95 +100,89 @@ class HomeScreen extends React.Component {
     }
     return (
       <RootView>
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-        <Menu />
-
-        <Notifications />
-        <AnimatedContainer
-          style={{ transform: [{ scale: this.state.scale }],
-            opacity: this.state.opacity
-          }}
-        >
-          <BackImg source={require("../assets/background6.jpg")} />
-          <SafeAreaView>
-            <ScrollView style={{ height: "100%" }}>
-              <TouchableOpacity
-                onPress={() => this.props.openNotif()}
-                style={{ position: "absolute", right: 10, top: 30 }}
-              >
-                <NotificationButton />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.handleAvatar}
-                style={{ position:'absolute', top: 35, left: 15}}
-              >
-                <Avatar  source={require('../assets/account.png')} />
-                <TitleTop>Welcome back,</TitleTop>
-                <NameTop>{this.props.name}</NameTop>
-              </TouchableOpacity>
-              <TitleBar>
-
-                <TouchableOpacity
-                  onPress={this.props.openMenu}
-                >
-                  <Avatar source={require('../assets/react.png')} />
-
-                </TouchableOpacity>
-                <Title>React Finder</Title>
-                <Name>Your guide to React JavaScript library Everything about Learning React for Free at one place</Name>
-              </TitleBar>
-              <ScrollView
-                style={{ flexDirection: "row", padding: 20, paddingLeft: 12, paddingTop: 30 }}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
-                {Logos.map(logo => {
-                  let topic = logo.text.toLowerCase().replace(" ", "_")
-                  return (
-
-                    <TouchableOpacity
-                      key={logo.text}
-                      onPress={() => this.props.navigation.push("Cards", { topic })}
-                    >
-                      <Logo key={logo.text} image={logo.image} text={logo.text} />
-                    </TouchableOpacity>
-                  )
-                }
-
-                )}
-              </ScrollView>
-              {
-                this.context.loading ?
-                  <LoadingData /> :
-                newArr
-              }
-
-              <Subtitle>Popular Courses</Subtitle>
-              <CoursesContainer>
-                {!this.context.loading && this.context.coursesData.redux.map(course => {
-                  let key = "redux"
-                  return (
-                    <CourseWrapper>
+        {   this.context.loading ?
+          <LoadingData /> :
+          <>
+            <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+            <Menu />
+            <Notifications />
+            {/* <BackImg source={require("../assets/background6.jpg")} /> */}
+            <AnimatedContainer
+              style={{ transform: [{ scale: this.state.scale }],
+              opacity: this.state.opacity }}
+            >
+              <SafeAreaView>
+                <ScrollView style={{ height: "100%" }}>
+                  <TouchableOpacity
+                    onPress={this.props.openMenu}
+                  >
+                    <Title>React <LogoTitle source={require('../assets/react.png')} /> Finder</Title>
+                  </TouchableOpacity>
+                  <Header>
+                    <TitleBar>
                       <TouchableOpacity
-                        onPress={() => this.props.navigation.push("Section", { course, key })}
+                        onPress={this.handleAvatar}
+                        style={{flexDirection: 'row', }}
                       >
-                        <Course data={course} key={course.id}/>
+                        <Avatar  source={require('../assets/account.png')} />
+                        <TitleWrap>
+                          <TitleTop>Welcome back,</TitleTop>
+                          <NameTop>{this.props.name}</NameTop>
+                        </TitleWrap>
                       </TouchableOpacity>
-                    </CourseWrapper>
-                  )
-                }
+                      <TouchableOpacity
+                        onPress={() => this.props.openNotif()}
+                      >
+                        <NotificationButton />
+                      </TouchableOpacity>
+                    </TitleBar>
+                  </Header>
+                  <ScrollView
+                    style={{ flexDirection: "row", padding: 20, paddingLeft: 12, paddingTop: 30 }}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  >
+                    {Logos.map(logo => {
+                      let topic = logo.text.toLowerCase().replace(" ", "_")
+                      return (
+                        <TouchableOpacity
+                          key={logo.text}
+                          onPress={() => this.props.navigation.push("Cards", { topic })}
+                        >
+                          <Logo key={logo.text} image={logo.image} text={logo.text} />
+                        </TouchableOpacity>
+                      )})
+                    }
+                  </ScrollView>
+                  { newArr }
 
-                )}
-              </CoursesContainer>
-              <Overview>{QuickFacts.overview.title}</Overview>
-              <Name
-                style={{textAlign:"justify", width:"90%"}}>
-                {QuickFacts.overview.subtitle}
-              </Name>
-            </ScrollView>
-          </SafeAreaView>
-        </AnimatedContainer>
-        <ModalLogin />
+                  <Subtitle>Future Articles</Subtitle>
+                  <CoursesContainer>
+                    {this.context.coursesData.redux.map(course => {
+                      let key = "redux"
+                      return (
+                        <CourseWrapper>
+                          <TouchableOpacity
+                            onPress={() => this.props.navigation.push("Section", { course, key })}
+                          >
+                            <Course data={course} key={course.id}/>
+                          </TouchableOpacity>
+                        </CourseWrapper>
+                      )})
+                    }
+                  </CoursesContainer>
+
+                  {/* <Overview>{QuickFacts.overview.title}</Overview> */}
+                  {/* <Subtitle
+                    style={{textAlign:"justify", width:"90%"}}>
+                    {QuickFacts.overview.subtitle}
+                  </Subtitle> */}
+                </ScrollView>
+              </SafeAreaView>
+            </AnimatedContainer>
+            <ModalLogin />
+          </>
+        }
       </RootView>
     );
   }
@@ -202,17 +192,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 
 const RootView = styled.View`
-  background: black;
+  background: rgb(27, 31, 38);
   flex: 1;
 `;
 
-const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
-  margin: 0 auto 30px;
+const Container = styled.View`
+  flex: 1;
+  padding-top: 40px;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
-
 
 const BackImg = styled.Image`
   width: 100%;
@@ -223,58 +214,57 @@ const BackImg = styled.Image`
   top: 0;
 `;
 
-const Container = styled.View`
-  flex: 1;
-  background: rgb(27, 31, 38);
-  padding-top: 40px;
-  justify-content: center;
-  align-items: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
 
+const Title = styled.Text`
+text-align: center;
+align-self: center;
+font-size: 30px;
+color: #b8bece;
+font-weight: 700;
+`;
+
+const LogoTitle = styled.Image`
+width: 40px;
+height: 36px;
+`;
+
+const Header = styled.View`
+  margin: 10px auto 10px;
+  justify-content: center;
+`;
+
 const TitleBar = styled.View`
-  padding-top: 100px;
-  width: 80%;
-  margin: 0 auto;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px 0 20px;
+  margin: 10px auto;
+`;
+
+const TitleWrap = styled.View``;
+
+const Avatar = styled.Image`
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  margin-right: 15px;
 `;
 
 const TitleTop = styled.Text`
   font-size: 16px;
   font-weight: 500;
   color: #848b9f;
-  position: absolute;
   width: 150px;
-  top: 0;
-  left: 60px;
 `;
 
 const NameTop = styled.Text`
   font-size: 15px;
   width: 150px;
   color: #b8bece;
-  position: absolute;
-  top: 20px;
-  left: 60px;
 `;
 
-const Title = styled.Text`
-  font-size: 40px;
-  text-align: center;
-  color: #b8bece;
-  font-weight: 700;
-`;
 
-const Name = styled.Text`
-  text-align: center;
-  font-size: 12px;
-  color: rgb(89, 190, 255);
-  font-weight: bold;
-  width: 220px;
-  margin: 0 auto 10px;
-`;
 
 const Cover = styled.View``;
 const CourseWrapper = styled.View`

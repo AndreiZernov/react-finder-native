@@ -5,7 +5,14 @@ import styled from 'styled-components/native'
 
 const Card = ({data, priceImg}) => (
   <Container>
-    {/* <Image source={props.image} /> */}
+    <Image source={
+      data.parent1 === "react" ? require("../assets/background1.jpg") :
+      data.parent1 === "react_native" ? require("../assets/background10.jpg") :
+      data.parent1 === "redux" ? require("../assets/background9.jpg") :
+      data.parent1 === "graphql" ? require("../assets/background8.jpg") :
+      data.parent1 === "pathway" ? require("../assets/background4.jpg") :
+      require("../assets/background1.jpg")
+    } />
     <Image />
     <Cover>
       <Name>{data.name}</Name>
@@ -23,12 +30,10 @@ const Card = ({data, priceImg}) => (
 
 
 const Container = styled.View`
-  background-color: white;
-  width: 260px;
-  height: 250px;
-  border: 1px solid rgb(27, 31, 38);
+  width: 210px;
+  height: 200px;
+  border: .5px solid rgb(44, 48, 55);
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(89, 190, 255, 0.15);
   margin-left: 20px;
   margin-top: 10px;
   overflow: hidden;
@@ -36,7 +41,7 @@ const Container = styled.View`
 
 const Cover = styled.View`
   width: 100%;
-  height: 150px;
+  height: 100px;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   display: flex;
@@ -46,7 +51,6 @@ const Cover = styled.View`
 `;
 
 const Image = styled.Image`
-  background: rgb(47, 54, 65);
   position: absolute;
   top: 0;
   left: 0;
@@ -57,9 +61,9 @@ const Image = styled.Image`
 const Name = styled.Text`
   z-index: 12;
   color: white;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
-  width: 170px;
+  width: 125px;
   margin-right: 10px;
 
 `;
@@ -82,7 +86,8 @@ const Img = styled.Image`
 
 const Author = styled.Text`
   color: white;
-  font-size: 15px;
+  width: 125px;
+  font-size: 13px;
   font-weight: 600;
 `;
 

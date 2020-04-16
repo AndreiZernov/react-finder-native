@@ -7,7 +7,7 @@ import Courses from "../components/Courses";
 
 let screenWidth = Dimensions.get("window").width;
 
-class CoursesScreen extends React.Component {
+class ResourcesScreen extends React.Component {
   static navigationOptions = { headerShown: false  };
 
   render() {
@@ -43,7 +43,7 @@ class CoursesScreen extends React.Component {
               <Name>Taught by Meng To</Name>
             </Author>
           </Hero>
-          <Subtitle>Latest Courses</Subtitle>
+          <Subtitle>Latest Resources</Subtitle>
           <Courses />
         </ScrollView>
       </Container>
@@ -51,7 +51,7 @@ class CoursesScreen extends React.Component {
   }
 }
 
-export default CoursesScreen;
+export default ResourcesScreen;
 
 const Container = styled.View`
   background: #f0f3f5;
