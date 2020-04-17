@@ -1,51 +1,57 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Linking, ScrollView } from "react-native";
 import styled from "styled-components";
-import { LinearGradient } from 'expo-linear-gradient';
-import CourseSection from "../components/CourseSection";
-import Courses from "../components/Courses";
+import { DataItemsContext } from "../contexts/dataItemsContext"
+import { PodcastsIcon, ResourcesIcon, JobSearchIcon, HtmlCssIcon } from "../components/Icons";
+import LoadingData from "../components/LoadingData"
 
-let screenWidth = Dimensions.get("window").width;
+
 
 class ResourcesScreen extends React.Component {
   static navigationOptions = { headerShown: false  };
+  static contextType = DataItemsContext
+
+  _goToURL(url) {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log('Don\'t know how to open URI: ' + url);
+      }
+    });
+  }
+
 
   render() {
     return (
       <Container>
-        <ScrollView>
-          <Hero>
-            <Background source={require("../assets/background12.jpg")} />
-            <LinearGradient
-              colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]}
-              style={{ position: "absolute", width: screenWidth, height: 460 }}
-            />
-            <Logo source={require("../assets/logo-react.png")} />
-            <Caption>12 Sections</Caption>
-            <Title>React Native for Designers</Title>
-            <Sections>
-              <SectionScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
-                {sections.map((section, index) => (
-                  <CourseSection
-                    key={index}
-                    title={section.title}
-                    image={section.image}
-                    progress={section.progress}
-                  />
-                ))}
-              </SectionScrollView>
-            </Sections>
-            <Author>
-              <Avatar source={require("../assets/account.png")} />
-              <Name>Taught by Meng To</Name>
-            </Author>
-          </Hero>
-          <Subtitle>Latest Resources</Subtitle>
-          <Courses />
-        </ScrollView>
+        { this.context.loading ?
+          <LoadingData /> :
+          <ScrollView style={{ height: "100%" }}>
+            <Background source={require("../assets/background6.jpg")} />
+            <Title>Resources Page</Title>
+            {RecourcesList.map(resource =>
+              <Wrapper key={resource.name} style={{backgroundColor: resource.color}}>
+                <SubWrapper>
+                  {resource.icon}
+                  <Subtitle>{resource.name.replace("_", " ").toUpperCase()}</Subtitle>
+                </SubWrapper>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {this.context.resourcesData[resource.name].map(item =>
+                    <CardsContainer key={item.name}>
+                      <Link onPress={() => this._goToURL(item.link)}>
+                        <Name>{item.name}</Name>
+                      </Link>
+                    </CardsContainer>
+                  )}
+                </ScrollView>
+              </Wrapper>
+            )}
+          </ScrollView>
+        }
       </Container>
     );
   }
@@ -53,114 +59,70 @@ class ResourcesScreen extends React.Component {
 
 export default ResourcesScreen;
 
+
+const RecourcesList = [
+  { name: "resources", icon: <ResourcesIcon />, color: "rgba(244, 151, 168, 0.3)"},
+  { name: "job_search", icon: <JobSearchIcon />, color: "rgba(160, 235, 216, 0.3)"},
+  { name: "podcasts", icon: <PodcastsIcon />, color: "rgba(185, 209, 251, 0.3)"},
+  { name: "html_css", icon: <HtmlCssIcon />, color: "rgba(249, 167, 114, 0.3)"}
+]
+
 const Container = styled.View`
   background: #f0f3f5;
-`;
-
-const ScrollView = styled.ScrollView`
-  width: 100%;
   height: 100%;
-`;
-
-const Hero = styled.View`
-  height: 460px;
-  background: #3c4560;
 `;
 
 const Background = styled.Image`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: ${screenWidth};
-  height: 460px;
-`;
-
-const Logo = styled.Image`
-  width: 48px;
-  height: 48px;
-  margin-top: 50px;
-  margin-left: 20px;
-  align-self: center;
-`;
-
-const Caption = styled.Text`
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #b8bece;
-  margin-top: 20px;
-  margin-left: 20px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Title = styled.Text`
   font-size: 32px;
   color: white;
   font-weight: 600;
-  margin-top: 4px;
-  margin-left: 20px;
-  width: 220px;
+  margin: 40px auto 20px;
+  text-align: center;
+  width: 80%;
 `;
 
-const Sections = styled.View`
-  margin-top: 20px;
-  flex-direction: row;
+const Wrapper = styled.View`
+  margin: 15px 0;
 `;
 
-const SectionScrollView = styled.ScrollView`
-  padding: 10px 0;
-`;
-
-const Author = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
+const SubWrapper = styled.View`
+  justify-content: center;
   align-items: center;
-  margin-left: 20px;
+  flex-direction: row;
 `;
 
-const Avatar = styled.Image`
-  width: 22px;
-  height: 22px;
-  border-radius: 11px;
-  background: white;
+
+const Subtitle = styled.Text`
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  margin: 10px;
+  text-align: center;
+`;
+
+const CardsContainer = styled.View`
+  padding: 12px 16px 12px;
+  height: 60px;
+  background: rgb(52, 59, 71);
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
 `;
 
 const Name = styled.Text`
-  margin-left: 8px;
-  color: #b8bece;
-`;
-
-const Subtitle = styled.Text`
-  font-size: 15;
+  font-size: 15px;
   text-transform: uppercase;
   font-weight: 600;
   color: #b8bece;
   margin: 20px 0 0 20px;
 `;
 
-const sections = [
-  {
-    title: "React Native for Designers",
-    progress: 0.2,
-    image: require("../assets/background1.jpg")
-  },
-  {
-    title: "Styled Components",
-    progress: 0.3,
-    image: require("../assets/background2.jpg")
-  },
-  {
-    title: "Assets, Icons and SVG",
-    progress: 0.9,
-    image: require("../assets/background3.jpg")
-  },
-  {
-    title: "Props and Data",
-    progress: 0.5,
-    image: require("../assets/background4.jpg")
-  },
-  {
-    title: "States and Layout Animation",
-    progress: 0.1,
-    image: require("../assets/background6.jpg")
-  }
-];
+const Link = styled.Text``;

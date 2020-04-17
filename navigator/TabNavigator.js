@@ -8,6 +8,8 @@ import SectionScreen from "../screens/SectionScreen"
 import CardsScreen from "../screens/CardsScreen"
 import CoursesScreen from "../screens/CoursesScreen"
 import ResourcesScreen from "../screens/ResourcesScreen"
+import CoursesByPlatformScreen from "../screens/CoursesByPlatformScreen"
+
 
 
 const activeColor = "#4775f2";
@@ -18,7 +20,10 @@ const inactiveColor = "#b8bece";
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Cards: CardsScreen,
-  Courses: CoursesScreen
+  Courses: CoursesScreen,
+  CoursesByPlatform: CoursesByPlatformScreen,
+  Section: SectionScreen,
+  Resources: ResourcesScreen
 }, {
   mode: "modal"
 });
@@ -27,8 +32,7 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = ({ navigation }) => {
 
-  let tabBarVisible = true
-  const routeName = navigation.state.routes[navigation.state.index].routeName
+  // const routeName = navigation.state.routes[navigation.state.index].routeName
 
   // if (routeName === "Section") {
   //   tabBarVisible = false;
@@ -36,7 +40,6 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
   return {
-    tabBarVisible,
     tabBarLabel: "Home",
     tabBarIcon: ({ focused }) => (
       <Ionicons
@@ -56,7 +59,7 @@ const CoursesStack = createStackNavigator({
   Courses: CoursesScreen,
   Section: SectionScreen
 }, {
-  mode: "card"
+  mode: "modal"
 });
 
 
@@ -65,7 +68,7 @@ CoursesStack.navigationOptions = ({ navigation }) => {
     tabBarLabel: "Courses",
     tabBarIcon: ({ focused }) => (
       <Ionicons
-      name="ios-folder"
+        name="ios-school"
       size={26}
       color={focused ? activeColor : inactiveColor}
       />
@@ -84,13 +87,31 @@ ResourcesStack.navigationOptions = {
   tabBarLabel: "Resources",
   tabBarIcon: ({ focused }) => (
     <Ionicons
-      name="ios-folder"
+      name="ios-briefcase"
       size={26}
       color={focused ? activeColor : inactiveColor}
     />
   )
 };
 
+
+
+const CoursesByPlatformStack = createStackNavigator({
+  CoursesByPlatform: CoursesByPlatformScreen,
+  Section: SectionScreen
+});
+
+
+CoursesByPlatformStack.navigationOptions = {
+  tabBarLabel: "CoursesByPlatform",
+  tabBarIcon: ({ focused }) => (
+    <Ionicons
+      name="ios-folder"
+      size={26}
+      color={focused ? activeColor : inactiveColor}
+    />
+  )
+};
 
 
 

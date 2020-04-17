@@ -16,7 +16,7 @@ const getCourseWidth = (screenWidth) => {
   return cardWidth
 }
 
-class Course extends React.Component {
+class Article extends React.Component {
   state = {
     cardWidth: getCourseWidth(screenWidth)
   }
@@ -55,7 +55,7 @@ class Course extends React.Component {
 }
 
 
-export default Course;
+export default Article;
 
 
 const Container = styled.View`

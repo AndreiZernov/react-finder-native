@@ -4,6 +4,8 @@ import { Animated, TouchableOpacity, Dimensions, ScrollView, AsyncStorage } from
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from './MenuItem'
 import { connect } from 'react-redux'
+import firebase from '../firebase'
+
 
 
 const mapStateToProps = state => {
@@ -22,6 +24,8 @@ const mapDispatchToProps = dispatch => {
       })
   }
 }
+
+
 
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
@@ -53,14 +57,35 @@ class Menu extends React.Component {
     }
   }
 
+
+  signOut = () => {
+    firebase.auth().signOut().then(() => {
+      this.props.navigation.navigate('Login')
+    })
+    .catch(error => this.setState({ errorMessage: error.message }))
+  }
+
+
   handleMenu = index => {
     if (index === 3) {
       this.props.closeMenu();
       this.props.updateName("User");
       AsyncStorage.clear();
+      firebase.auth().signOut().then(() => {
+        this.props.navigation.navigate('Login')
+      })
+      .catch(error => this.setState({ errorMessage: error.message }))
     }
   };
 
+
+
+  signOut = () => {
+    firebase.auth().signOut().then(() => {
+      this.props.navigation.navigate('Login')
+    })
+    .catch(error => this.setState({ errorMessage: error.message }))
+  }
 
   render() {
     return (
@@ -70,7 +95,7 @@ class Menu extends React.Component {
           showsHorizontalScrollIndicator={true}
         >
           <Cover>
-            {/* <Image source={require('../assets/background2.jpg')} /> */}
+            <Image source={require('../assets/background2.jpg')} />
             <Title>{this.props.name}</Title>
             <Subtitle>React Finder</Subtitle>
           </Cover>
@@ -114,11 +139,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 const Container = styled.View`
   position: absolute;
   background: white;
-  width: ${cardWidth};
+  width: ${cardWidth}px;
   align-self: center;
+  background: rgb(25, 25,25 );
   height: 100%;
   z-index: 100;
-  border-radius: 10px;
+  border-radius: 30px;
   overflow: hidden;
 `;
 
@@ -126,9 +152,9 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Cover = styled.View`
   height: 142px;
-  background: black;
   align-items: center;
   justify-content: center;
+
 `;
 
 const Image = styled.Image`
@@ -144,14 +170,15 @@ const Title = styled.Text`
 `;
 
 const Subtitle = styled.Text`
-  font-size: 13;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
   margin-top: 8px;
+  color: white;
 `;
 
 
 const Content = styled.View`
-  height: ${screenHeight};
+  height: ${screenHeight}px;
   padding: 30px;
   height: 100%;
 `;
@@ -175,14 +202,14 @@ const items = [
     text: "settings"
   },
   {
-    icon: "ios-card",
-    title: "Billing",
-    text: "payments"
+    icon: "ios-school",
+    title: "Courses",
+    text: "start learning"
   },
   {
-    icon: "ios-compass",
-    title: "Learn React",
-    text: "start course"
+    icon: "ios-folder",
+    title: "Helpful Resources",
+    text: "start Using"
   },
   {
     icon: "ios-exit",

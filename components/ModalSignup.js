@@ -1,13 +1,12 @@
-import React from "react"
+import React, { Component } from 'react'
+import { BlurView } from 'expo-blur'
 import styled from "styled-components"
 import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions, AsyncStorage } from 'react-native'
-import { BlurView } from 'expo-blur'
+import firebase from '../firebase'
 import LoadingData from "../components/LoadingData"
 import Success from "../components/Success"
 import LoadingLogin from "../components/LoadingLogin"
 import { connect } from 'react-redux'
-import firebase from '../firebase'
-
 
 let screenHeight = Dimensions.get("window").height;
 
@@ -18,70 +17,89 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    closeLogin: () =>
+    closeSignup: () =>
       dispatch({
-        type: "CLOSE_LOGIN"
-      }),
-    openSIngup: () =>
-      dispatch({
-        type: "OPEN_SIGNUP"
+        type: "CLOSE_SIGNUP"
       }),
     updateName: name =>
       dispatch({
         type: "UPDATE_NAME",
         name
+      }),
+    openLogin: () =>
+      dispatch({
+        type: "OPEN_LOGIN"
+      }),
+    closeLogin: () =>
+      dispatch({
+        type: "CLOSE_LOGIN"
       })
   };
 }
 
 
-class ModalLogin extends React.Component {
+
+class ModalSignup extends Component {
   state = {
-    email: '',
-    password: '',
-    isSuccessful: false,
-    isLoading: false,
-    top: new Animated.Value(screenHeight),
-    scale: new Animated.Value(1.3),
-    translateY: new Animated.Value(0)
+      displayName: '',
+      email: '',
+      password: '',
+      isSuccessful: false,
+      isLoading: false,
+      top: new Animated.Value(screenHeight),
+      scale: new Animated.Value(1.3),
+      translateY: new Animated.Value(0),
+    }
+
+  updateInputVal = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
   }
 
 
+  registerUser = () => {
+    if(this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signup!')
+    } else {
+      this.setState({ isLoading: true })
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((response) => {
+          this.setState({ isLoading: false })
+          console.log(response)
 
-  handleLogin = () => {
-    this.setState({ isLoading: true });
-    Keyboard.dismiss()
+          if (response) {
+            this.setState({ isSuccessful: true })
 
-    const email = this.state.email;
-    const password = this.state.password;
+            this.props.updateName(this.state.displayName)
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
-        Alert.alert("Error", error.message);
+            setTimeout(() => {
+              Alert.alert("Congrats", "You've Sign up successfuly!")
+              this.props.closeSignup()
+              this.props.closeLogin()
+              this.setState({ isSuccessful: false })
+            }, 1000);
+          }
+          if (firebase.auth().currentUser != null) {
+            firebase.auth().currentUser.updateProfile({
+                displayName: this.state.displayName
+            }).then(function () {
+                    console.log("Updated");
+                }, function (error) {
+                    console.log("Error happened");
+                });
+          }
+          console.log('User registered successfully!')
       })
-      .then(response => {
-        this.setState({ isLoading: false });
-
-        if (response) {
-          this.setState({ isSuccessful: true });
-          this.props.updateName(response.user.displayName)
-
-          setTimeout(() => {
-            Alert.alert("Congrats", "You've logged in successfuly!");
-            this.props.closeLogin();
-            this.setState({ isSuccessful: false });
-          }, 1000);
-        }
-      });
+      .catch(error => this.setState({ errorMessage: error.message }))
+    }
   }
-
-
 
 
   componentDidUpdate() {
-    if (this.props.action == "openLogin") {
+    if (this.props.action === "openSignup") {
       Animated.timing(this.state.top, {
         toValue: 0,
         duration: 0
@@ -94,7 +112,7 @@ class ModalLogin extends React.Component {
 
     }
 
-    if (this.props.action == "closeLogin") {
+    if (this.props.action === "closeSignup") {
       setTimeout(() => {
         Animated.timing(this.state.top, {
           toValue: screenHeight,
@@ -110,20 +128,22 @@ class ModalLogin extends React.Component {
     }
   }
 
+
   tapBackground = () => {
     Keyboard.dismiss()
-    this.props.closeLogin()
+    this.props.closeSignup()
   }
 
   handleChange = () => {
     Keyboard.dismiss()
-    this.props.closeLogin()
-    this.props.openSIngup()
+    this.props.openLogin()
+    this.props.closeSignup()
   }
+
 
   render() {
     return (
-      <AnimatedContainer style={{ top: this.state.top }}>
+      <AnimatedContainer style={{ top: this.state.top }} >
         <TouchableWithoutFeedback onPress={this.tapBackground}>
           <BlurView
             tint="default"
@@ -141,24 +161,45 @@ class ModalLogin extends React.Component {
         >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
-          <TextInput onChangeText={email => this.setState({email})} placeholder="Email" keyboardType="email-address" />
-          <TextInput onChangeText={password => this.setState({password})} placeholder="Password" secureTextEntry={true}/>
+          <TextInput
+            placeholder="Name"
+            value={this.state.displayName}
+            onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+          />
+          <TextInput
+            placeholder="Email"
+            value={this.state.email}
+            onChangeText={(val) => this.updateInputVal(val, 'email')}
+            keyboardType="email-address"
+          />
+          <TextInput
+            placeholder="Password"
+            value={this.state.password}
+            onChangeText={(val) => this.updateInputVal(val, 'password')}
+            maxLength={15}
+            secureTextEntry={true}
+          />
+          <IconUser source={require("../assets/account.png")} />
           <IconEmail source={require("../assets/icon-email.png")} />
           <IconPassword source={require("../assets/icon-password.png")} />
-          <TouchableOpacity onPress={this.handleLogin}>
+
+          <TouchableOpacity
+            title="Signup"
+            onPress={() => this.registerUser()}
+          >
             <ButtonView>
-              <ButtonText>Log in</ButtonText>
+              <ButtonText>Sign Up</ButtonText>
             </ButtonView>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.handleChange()}
           >
             <Text>
-              Do not have account yet? Click here!
+              Already Registered? Click here to login
             </Text>
           </TouchableOpacity>
-        </AnimatedModal>
 
+        </AnimatedModal>
         <Success isActive={this.state.isSuccessful}/>
         <LoadingLogin isActive={this.state.isLoading} />
       </AnimatedContainer>
@@ -166,7 +207,8 @@ class ModalLogin extends React.Component {
   }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps)(ModalLogin);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSignup);
 
 
 const Container = styled.View`
@@ -195,11 +237,19 @@ const TextInput = styled.TextInput`
   color: #b8bece;
 `;
 
+const IconUser = styled.Image`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 179px;
+  left: 32px;
+`;
+
 const IconEmail = styled.Image`
   width: 24px;
   height: 16px;
   position: absolute;
-  top: 179px;
+  top: 244px;
   left: 31px;
 `;
 
@@ -207,13 +257,13 @@ const IconPassword = styled.Image`
   width: 18px;
   height: 24px;
   position: absolute;
-  top: 239px;
+  top: 305px;
   left: 35px;
 `;
 
 const Modal = styled.View`
   width: 335px;
-  height: 450px;
+  height: 500px;
   border-radius: 20px;
   background: rgb(27, 31, 38);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -229,13 +279,13 @@ const Logo = styled.Image`
 `;
 
 const Text = styled.Text`
-margin-top: 20px;
-font-size: 13px;
-font-weight: 600;
-text-transform: uppercase;
-width: 200px;
-color: #b8bece;
-text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 160px;
+  color: #b8bece;
+  text-align: center;
 `;
 
 const ButtonView = styled.View`

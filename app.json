@@ -9,7 +9,7 @@
     ],
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-react.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },

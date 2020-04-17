@@ -27,6 +27,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, action: "openLogin" };
     case "CLOSE_LOGIN":
       return { ...state, action: "closeLogin" };
+    case "OPEN_SIGNUP":
+      return { ...state, action: "openSignup" };
+    case "CLOSE_SIGNUP":
+      return { ...state, action: "closeSignup" };
     case "OPEN_NOTIF":
       return { ...state, action: "openNotif" };
     case "CLOSE_NOTIF":

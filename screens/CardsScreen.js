@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Cards from '../components/Cards'
-import { PanResponder, Animated } from 'react-native'
+import { PanResponder, Animated, TouchableOpacity } from 'react-native'
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import { connect } from 'react-redux'
+import { Ionicons } from "@expo/vector-icons";
 
 
 function mapStateToProps(state) {
@@ -29,7 +30,7 @@ class CardsScreen extends React.Component {
 
   getNextIndex = (index) => {
     let nextIndex = index + 1
-    if ( nextIndex > this.context.coursesData[this.props.navigation.getParam("topic")].length - 1 ) {
+    if ( nextIndex > this.context.coursesData["react"].length - 1 ) {
         return 0
     }
     return nextIndex
@@ -100,6 +101,16 @@ class CardsScreen extends React.Component {
 
     return (
       <Container>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
+          style={{
+            position: "absolute", top: 40, right: 10
+          }}
+        >
+          <CloseButton>
+            <Ionicons name="ios-close" size={44} color="black" />
+          </CloseButton>
+        </TouchableOpacity>
         <AnimatedMask style={{ opacity: this.state.opacity }} />
         <BackImg source={require("../assets/background6.jpg")} />
 
@@ -109,13 +120,11 @@ class CardsScreen extends React.Component {
           }}
           {...this.panResponder.panHandlers}
         >
-          {!this.context.loading &&
-            <Cards
-              data={this.context.coursesData[this.props.navigation.getParam("topic")]
-                .filter(course => course.id === this.state.index)}
-              canOpen={true}
-            />}
-
+          <Cards
+            data={this.context.coursesData["react"]
+              .filter(course => course.id === this.state.index)}
+            canOpen={true}
+          />
         </Animated.View>
         <Animated.View
           style={{
@@ -128,11 +137,9 @@ class CardsScreen extends React.Component {
             ]
           }}
         >
-          {!this.context.loading &&
-            <Cards
-              data={this.context.coursesData[this.props.navigation.getParam("topic")].
-                filter(course => course.id === this.getNextIndex(this.state.index))}
-            />}
+          <Cards
+            data={this.context.coursesData["react"].
+              filter(course => course.id === this.getNextIndex(this.state.index))}/>
 
         </Animated.View>
         <Animated.View
@@ -146,7 +153,7 @@ class CardsScreen extends React.Component {
             ]
           }}
         >
-          {!this.context.loading && <Cards data={this.context.coursesData[this.props.navigation.getParam("topic")].filter(course => course.id === this.getNextIndex(this.state.index + 1))}/>}
+          <Cards data={this.context.coursesData["react"].filter(course => course.id === this.getNextIndex(this.state.index + 1))}/>
 
         </Animated.View>
       </Container>
@@ -174,6 +181,16 @@ const Mask = styled.View`
 
 const AnimatedMask = Animated.createAnimatedComponent(Mask);
 
+const CloseButton = styled.View`
+  width: 30px;
+  height: 30px;
+  border-radius: 22px;
+  background: silver;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+`;
 
 const BackImg = styled.Image`
   width: 100%;

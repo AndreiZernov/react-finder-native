@@ -57,10 +57,10 @@ class SectionScreen extends React.Component {
           </Cover>
           <TouchableOpacity
             onPress={() => navigation.goBack() }
-            style={{ position: "absolute", top: 60, right: 20 }}
+            style={{ position: "absolute", top: 50, right: 20 }}
           >
             <CloseView>
-              <Ionicons name="ios-close" size={36} style={{ marginTop: -2 }} color="#4775f2" />
+              <Ionicons name="ios-close" size={36} color="black"  />
             </CloseView>
           </TouchableOpacity>
           <Content>
@@ -113,7 +113,7 @@ const Name = styled.Text`
 
 const Author = styled.Text`
   color: white;
-  font-size: 17;
+  font-size: 17px;
   position: absolute;
   bottom: 20px;
   left: 20px;

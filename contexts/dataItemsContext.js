@@ -6,9 +6,11 @@ const DataItemsContext = createContext()
 const useDataItems = () => useContext(DataItemsContext)
 
 const DataItemsProvider = ({children}) => {
-  const [ coursesData, setCoursesData] = useState({})
-  const [ resourcesData, setResourcesData] = useState({})
-  const [ loading, setLoading] = useState(true)
+  const [ coursesData, setCoursesData ] = useState({})
+  const [ coursesDataByPlatform, setCoursesDataByPlatform ] = useState({})
+  const [ resourcesData, setResourcesData ] = useState({})
+  const [ loading, setLoading ] = useState(true)
+
 
   useEffect(() => {
     async function getData() {
@@ -23,19 +25,33 @@ const DataItemsProvider = ({children}) => {
         let respHtmlCss = await Client.getEntries({ "content_type" : "htmlCss" })
         let respPodcasts = await Client.getEntries({ "content_type" : "podcasts" })
 
-        setCoursesData({
+        let courseObj = {
           react: FormatData(respReact.items),
           react_native: FormatData(respReactNative.items),
           redux: FormatData(respRedux.items),
           graphql: FormatData(respGraphQl.items),
           pathway: FormatData(respPathway.items)
-        })
+        }
+
+        setCoursesData(courseObj)
         setResourcesData({
           resources: FormatData(respResources.items),
           job_search: FormatData(respJobSearch.items),
           podcasts: FormatData(respHtmlCss.items),
           html_css: FormatData(respPodcasts.items)
         })
+
+        setCoursesDataByPlatform({
+          youtube: FilterByPlatform(courseObj,"youtube").flat(),
+          udemy: FilterByPlatform(courseObj,"udemy").flat(),
+          egghead: FilterByPlatform(courseObj,"egghead").flat(),
+          freecodecamp: FilterByPlatform(courseObj,"freecodecamp").flat(),
+          codecademy: FilterByPlatform(courseObj,"codecademy").flat(),
+          edx: FilterByPlatform(courseObj,"edx").flat(),
+          coursera: FilterByPlatform(courseObj,"coursera").flat(),
+          treehouse: FilterByPlatform(courseObj,"treehouse").flat()
+        })
+
         setLoading(false)
       } catch (e) {
         console.log(e)
@@ -44,7 +60,13 @@ const DataItemsProvider = ({children}) => {
     getData()
   }, [])
 
-
+  const FilterByPlatform = (data, name) => {
+    let arr = []
+    for (let [key, value] of Object.entries(data) ) {
+      arr.push(value.filter(course => course.link.includes(name)))
+    }
+    return arr
+  }
 
 
   const FormatData = (items) => {
@@ -58,7 +80,7 @@ const DataItemsProvider = ({children}) => {
 
   return (
     <DataItemsContext.Provider
-      value={{ coursesData, resourcesData, loading }}
+      value={{ coursesData, resourcesData, loading, coursesDataByPlatform }}
     >
       {children}
     </DataItemsContext.Provider>

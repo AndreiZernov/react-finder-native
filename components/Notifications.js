@@ -133,12 +133,12 @@ const CloseButton = styled.View`
 
 const Wrapper = styled.View`
   align-self: center;
-  width: ${cardWith};
+  width: ${cardWith}px;
   padding-top: 50px;
 `;
 
 const Subtitle = styled.Text`
-  font-size: 15;
+  font-size: 15px;
   text-transform: uppercase;
   font-weight: 600;
   color: #b8bece;

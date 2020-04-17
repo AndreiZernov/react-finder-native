@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 const MenuItem = props => (
   <Container>
     <IconView>
-      <Ionicons name={props.icon} size={24} color="#546bfb" />
+      <Ionicons name={props.icon} size={24} color="#b8bece" />
     </IconView>
     <Content>
       <Title>{props.title}</Title>
@@ -22,24 +22,24 @@ const Container = styled.View`
 `;
 
 const IconView = styled.View`
-  width: 32;
-  height: 32;
+  width: 32px;
+  height: 32px;
   justify-content: center;
   align-items: center;
 `;
 
 const Content = styled.View`
-  padding-left: 20;
+  padding-left: 20px;
 `;
 
 const Title = styled.Text`
-  color: #3c4560;
-  font-size: 24;
+color: white;
+  font-size: 24px;
   font-weight: 600;
 `;
 
 const Text = styled.Text`
-  color: #3c4560;
+color: #b8bece;
   font-weight: 600;
   opacity: 0.6;
   margin-top: 5px;

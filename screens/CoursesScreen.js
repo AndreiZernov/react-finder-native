@@ -1,10 +1,12 @@
 import React from "react"
-import { Dimensions, ScrollView, TouchableOpacity, StatusBar } from "react-native"
+import { Dimensions, ScrollView, TouchableOpacity, StatusBar, SafeAreaView } from "react-native"
 import styled from "styled-components"
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import QuickFacts from '../data/QuickFacts'
 import Card from '../components/Card'
 import { Ionicons } from '@expo/vector-icons'
+import LoadingData from "../components/LoadingData"
+import ModalLogin from "../components/ModalLogin"
 
 
 let screenWidth = Dimensions.get("window").width;
@@ -14,56 +16,65 @@ class CoursesScreen extends React.Component {
   static contextType = DataItemsContext
 
   render() {
+    const { loading, coursesData } = this.context
+    const { navigation } = this.props
     let topic = ''
-    if (this.props.navigation.getParam("topic")) {
-      topic = this.props.navigation.getParam("topic")
-    } else if (this.props.navigation.getParam("nextTopic")) {
-      topic = this.props.navigation.getParam("nextTopic")
-    } else if (this.props.navigation.getParam("prevTopic")) {
-      topic = this.props.navigation.getParam("prevTopic")
+    if (navigation.getParam("topic")) {
+      topic = navigation.getParam("topic")
+    } else if (navigation.getParam("nextTopic")) {
+      topic = navigation.getParam("nextTopic")
+    } else if (navigation.getParam("prevTopic")) {
+      topic = navigation.getParam("prevTopic")
     } else {
       topic = 'react'
     }
     const nextTopic = nextTopicFunc(topic)
     const prevTopic = prevTopicFunc(topic)
     return (
-      <Container>
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-        <ScrollView style={{ height: "100%" }}>
-          <Hero>
-            <Background source={ require("../assets/background6.jpg") } />
-            <Title>{QuickFacts[topic].title}</Title>
-            <Text>{QuickFacts[topic].subtitle}</Text>
-            {QuickFacts[topic].list.map(item =>
-              <TextList key={item}>{item}</TextList>
-            )}
+      <>
+        { loading ?
+          <LoadingData /> :
+          <Container>
+            <SafeAreaView>
+              <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+              <ScrollView style={{ height: "100%" }}>
+                <Hero>
+                  <Background source={ require("../assets/background6.jpg") } />
+                  <Title>{QuickFacts[topic].title}</Title>
+                  <Text>{QuickFacts[topic].subtitle}</Text>
+                  {QuickFacts[topic].list.map(item =>
+                    <TextList key={item}>{item}</TextList>
+                  )}
 
-            <Name>Number of courses: {this.context.coursesData[topic].length}</Name>
-            <IconsWrapper>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.push("Courses", { prevTopic })}
-              >
-                <IconView>
-                  <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
-                </IconView>
+                  <Name>Number of courses: {coursesData[topic].length}</Name>
+                  <IconsWrapper>
+                    <TouchableOpacity
+                      onPress={() => navigation.push("Courses", { prevTopic })}
+                    >
+                      <IconView>
+                        <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
+                      </IconView>
 
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.push("Courses", { nextTopic })}
-              >
-                <IconView>
-                  <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
-                </IconView>
-              </TouchableOpacity>
-            </IconsWrapper>
-          </Hero>
-          <CoursesByTopic
-            data={this.context.coursesData[topic]}
-            navigation={this.props.navigation}
-            topic={topic}
-          />
-        </ScrollView>
-      </Container>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => navigation.push("Courses", { nextTopic })}
+                    >
+                      <IconView>
+                        <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
+                      </IconView>
+                    </TouchableOpacity>
+                  </IconsWrapper>
+                </Hero>
+                <CoursesByTopic
+                  data={coursesData[topic]}
+                  navigation={navigation}
+                  topic={topic}
+                />
+              </ScrollView>
+            </SafeAreaView>
+          </Container>
+        }
+      </>
     );
   }
 }
@@ -124,7 +135,7 @@ const Hero = styled.View`
 const Background = styled.Image`
   position: absolute;
   left: 0;
-  width: ${screenWidth};
+  width: ${screenWidth}px;
   height: 100%;
 `;
 
@@ -179,7 +190,7 @@ const Name = styled.Text`
 `;
 
 const Subtitle = styled.Text`
-  font-size: 15;
+  font-size: 15px;
   text-transform: uppercase;
   font-weight: 600;
   color: #b8bece;
