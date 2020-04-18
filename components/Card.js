@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components/native'
 
 
-const Card = ({data, priceImg}) => (
+const Card = ({data}) => (
   <Container>
     <Image source={
       data.parent1 === "react" ? require("../assets/background1.jpg") :

@@ -1,7 +1,7 @@
 import React from "react";
+import { PanResponder, Animated, TouchableOpacity, ScrollView } from 'react-native'
 import styled from "styled-components";
 import Cards from '../components/Cards'
-import { PanResponder, Animated, TouchableOpacity } from 'react-native'
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import { connect } from 'react-redux'
 import { Ionicons } from "@expo/vector-icons";
@@ -30,7 +30,7 @@ class CardsScreen extends React.Component {
 
   getNextIndex = (index) => {
     let nextIndex = index + 1
-    if ( nextIndex > this.context.coursesData["react"].length - 1 ) {
+    if ( nextIndex > this.context.coursesDataNew.length - 1 ) {
         return 0
     }
     return nextIndex
@@ -104,7 +104,7 @@ class CardsScreen extends React.Component {
         <TouchableOpacity
           onPress={() => this.props.navigation.goBack()}
           style={{
-            position: "absolute", top: 40, right: 10
+              position: "absolute", top: 40, right: 10
           }}
         >
           <CloseButton>
@@ -121,41 +121,41 @@ class CardsScreen extends React.Component {
           {...this.panResponder.panHandlers}
         >
           <Cards
-            data={this.context.coursesData["react"]
-              .filter(course => course.id === this.state.index)}
+            data={this.context.coursesDataNew[this.state.index]}
             canOpen={true}
           />
         </Animated.View>
         <Animated.View
           style={{
-            position: 'absolute', top: 0, left: 0, zIndex: -1,
-            width: "100%", height: "100%",
-            justifyContent: 'center', alignItems: 'center',
-            transform: [
+              position: 'absolute', top: 0, left: 0, zIndex: -1,
+              width: "100%", height: "100%",
+              justifyContent: 'center', alignItems: 'center',
+              transform: [
             { scale: this.state.scale },
             { translateY: this.state.translateY }
-            ]
+              ]
           }}
         >
           <Cards
-            data={this.context.coursesData["react"].
-              filter(course => course.id === this.getNextIndex(this.state.index))}/>
+            data={this.context.coursesDataNew[this.getNextIndex(this.state.index)]}/>
 
         </Animated.View>
         <Animated.View
           style={{
-            position: 'absolute', top: 0, left: 0, zIndex: -3,
-            width: "100%", height: "100%",
-            justifyContent: 'center', alignItems: 'center',
-            transform: [
+              position: 'absolute', top: 0, left: 0, zIndex: -3,
+              width: "100%", height: "100%",
+              justifyContent: 'center', alignItems: 'center',
+              transform: [
             { scale: this.state.thirdScale },
             { translateY: this.state.thirdTranslateY }
-            ]
+              ]
           }}
         >
-          <Cards data={this.context.coursesData["react"].filter(course => course.id === this.getNextIndex(this.state.index + 1))}/>
+          <Cards
+            data={this.context.coursesDataNew[this.getNextIndex(this.state.index + 1)]}/>
 
         </Animated.View>
+
       </Container>
   )}
 }
@@ -166,6 +166,9 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
   background: rgb(47, 54, 65);
 `;
 
@@ -182,8 +185,8 @@ const Mask = styled.View`
 const AnimatedMask = Animated.createAnimatedComponent(Mask);
 
 const CloseButton = styled.View`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 22px;
   background: silver;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);

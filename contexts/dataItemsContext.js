@@ -8,7 +8,9 @@ const useDataItems = () => useContext(DataItemsContext)
 const DataItemsProvider = ({children}) => {
   const [ coursesData, setCoursesData ] = useState({})
   const [ coursesDataByPlatform, setCoursesDataByPlatform ] = useState({})
+  const [ coursesDataNew, setCoursesDataNew ] = useState({})
   const [ resourcesData, setResourcesData ] = useState({})
+  const [ articlesData, setArticlesData ] = useState({})
   const [ loading, setLoading ] = useState(true)
 
 
@@ -24,6 +26,7 @@ const DataItemsProvider = ({children}) => {
         let respJobSearch = await Client.getEntries({ "content_type" : "jobSearch" })
         let respHtmlCss = await Client.getEntries({ "content_type" : "htmlCss" })
         let respPodcasts = await Client.getEntries({ "content_type" : "podcasts" })
+        let respArticles = await Client.getEntries({ "content_type" : "articles" })
 
         let courseObj = {
           react: FormatData(respReact.items),
@@ -52,6 +55,10 @@ const DataItemsProvider = ({children}) => {
           treehouse: FilterByPlatform(courseObj,"treehouse").flat()
         })
 
+        setCoursesDataNew(FiterNewCourses(courseObj))
+
+        setArticlesData(FormatData(respArticles.items))
+
         setLoading(false)
       } catch (e) {
         console.log(e)
@@ -68,6 +75,14 @@ const DataItemsProvider = ({children}) => {
     return arr
   }
 
+  const FiterNewCourses = (data) => {
+    let arr = []
+    for (let [key, value] of Object.entries(data) ) {
+      arr.push(value.filter(course => course.new === true))
+    }
+    return arr[0]
+  }
+
 
   const FormatData = (items) => {
     let tempItems = items.map(item => {
@@ -78,9 +93,10 @@ const DataItemsProvider = ({children}) => {
     return tempItems
   }
 
+
   return (
     <DataItemsContext.Provider
-      value={{ coursesData, resourcesData, loading, coursesDataByPlatform }}
+      value={{ coursesData, resourcesData, loading, coursesDataByPlatform, coursesDataNew, articlesData }}
     >
       {children}
     </DataItemsContext.Provider>

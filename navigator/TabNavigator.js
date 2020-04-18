@@ -7,8 +7,10 @@ import HomeScreen from "../screens/HomeScreen"
 import SectionScreen from "../screens/SectionScreen"
 import CardsScreen from "../screens/CardsScreen"
 import CoursesScreen from "../screens/CoursesScreen"
-import ResourcesScreen from "../screens/ResourcesScreen"
 import CoursesByPlatformScreen from "../screens/CoursesByPlatformScreen"
+import CoursesHomePageScreen from "../screens/CoursesHomePageScreen"
+import ResourcesScreen from "../screens/ResourcesScreen"
+import VideoScreen from "../screens/VideoScreen";
 
 
 
@@ -22,21 +24,23 @@ const HomeStack = createStackNavigator({
   Cards: CardsScreen,
   Courses: CoursesScreen,
   CoursesByPlatform: CoursesByPlatformScreen,
+  CoursesHomePageScreen: CoursesHomePageScreen,
   Section: SectionScreen,
-  Resources: ResourcesScreen
+  Resources: ResourcesScreen,
+  Video: VideoScreen
 }, {
-  mode: "modal"
+  mode: "card"
 });
 
 
 
 HomeStack.navigationOptions = ({ navigation }) => {
 
-  // const routeName = navigation.state.routes[navigation.state.index].routeName
+  const routeName = navigation.state.routes[navigation.state.index].routeName
 
-  // if (routeName === "Section") {
-  //   tabBarVisible = false;
-  // }
+  if (routeName == "Section" || routeName == "Video") {
+    tabBarVisible = false;
+  }
 
 
   return {
@@ -59,7 +63,7 @@ const CoursesStack = createStackNavigator({
   Courses: CoursesScreen,
   Section: SectionScreen
 }, {
-  mode: "modal"
+  mode: "card"
 });
 
 
@@ -98,7 +102,8 @@ ResourcesStack.navigationOptions = {
 
 const CoursesByPlatformStack = createStackNavigator({
   CoursesByPlatform: CoursesByPlatformScreen,
-  Section: SectionScreen
+  Section: SectionScreen,
+  Video: VideoScreen
 });
 
 
@@ -114,24 +119,22 @@ CoursesByPlatformStack.navigationOptions = {
 };
 
 
+const CoursesHomePageScreenStack = createStackNavigator({
+  CoursesHomePageScreen: CoursesHomePageScreen
+});
 
-// const CardsStack = createStackNavigator({
-//   Cards: CardsScreen
-// });
-//
-// CardsStack.navigationOptions = {
-//   tabBarLabel: "Cards",
-//   tabBarIcon: ({ focused }) => (
-//     <Ionicons
-//       name="ios-albums"
-//       size={26}
-//       color={focused ? activeColor : inactiveColor}
-//     />
-//   )
-// };
-// CardsScreen.navigationOptions = {
-//   headerShown: false
-// };
+
+CoursesHomePageScreenStack.navigationOptions = {
+  tabBarLabel: "CoursesHomePageScreen",
+  tabBarIcon: ({ focused }) => (
+    <Ionicons
+      name="ios-folder"
+      size={26}
+      color={focused ? activeColor : inactiveColor}
+    />
+  )
+};
+
 
 
 

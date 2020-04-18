@@ -5,24 +5,26 @@ import { PodcastsIcon, ResourcesIcon, JobSearchIcon, HtmlCssIcon } from "./Icons
 
 
 const ResourcesSlideBar = ({navigation}) =>
-  <ScrollView
-    horizontal={true}
-    showsHorizontalScrollIndicator={false}
-  >
-    {  Recources.map(resource => {
-      let topic = resource.name.toLowerCase().replace(" ", "_")
-      return (
-        <TouchableOpacity
-          key={resource.name}
-          onPress={() => navigation.push("Resources")}
-        >
-          <Container>
-            {resource.icon}
-            <Text>{resource.name}</Text>
-          </Container>
-        </TouchableOpacity>
-      )})}
-  </ScrollView>
+  <Cover>
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+    >
+      {  Recources.map(resource => {
+        let topic = resource.name.toLowerCase().replace(" ", "_")
+        return (
+          <TouchableOpacity
+            key={resource.name}
+            onPress={() => navigation.push("Resources")}
+          >
+            <Container>
+              {resource.icon}
+              <Text>{resource.name}</Text>
+            </Container>
+          </TouchableOpacity>
+        )})}
+    </ScrollView>
+  </Cover>
 
 
 export default ResourcesSlideBar;
@@ -34,7 +36,9 @@ const Recources = [
   { name: "Podcasts", icon: <PodcastsIcon />},
   { name: "HTML CSS", icon: <HtmlCssIcon />}
 ]
-
+const Cover = styled.View`
+  margin: 0 auto;
+`;
 
 const Container = styled.View`
   padding: 12px 16px 12px;

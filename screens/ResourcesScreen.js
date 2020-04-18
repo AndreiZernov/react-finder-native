@@ -28,7 +28,7 @@ class ResourcesScreen extends React.Component {
         { this.context.loading ?
           <LoadingData /> :
           <ScrollView style={{ height: "100%" }}>
-            <Background source={require("../assets/background6.jpg")} />
+            <Background source={require("../assets/background6.jpg")} resizeMode="cover" />
             <Title>Resources Page</Title>
             {RecourcesList.map(resource =>
               <Wrapper key={resource.name} style={{backgroundColor: resource.color}}>
@@ -68,7 +68,7 @@ const RecourcesList = [
 ]
 
 const Container = styled.View`
-  background: #f0f3f5;
+  background: rgb(18, 21, 26);
   height: 100%;
 `;
 

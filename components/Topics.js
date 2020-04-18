@@ -16,8 +16,7 @@ const Topics = ({ data, navigation }) => {
           return (
             <TouchableOpacity
               key={topic}
-              // onPress={() => navigation.push("Cards", { topic })}
-              onPress={() => navigation.push("Courses", { topic })}
+              onPress={() => navigation.push("CoursesHomePageScreen", { topic })}
             >
               <Container>
                 <Image source={course.image} />

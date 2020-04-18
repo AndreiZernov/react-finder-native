@@ -3,10 +3,9 @@ import { Dimensions, ScrollView, TouchableOpacity, StatusBar, SafeAreaView } fro
 import styled from "styled-components"
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import QuickFacts from '../data/QuickFacts'
+import LoadingData from "../components/LoadingData"
 import Card from '../components/Card'
 import { Ionicons } from '@expo/vector-icons'
-import LoadingData from "../components/LoadingData"
-import ModalLogin from "../components/ModalLogin"
 
 
 let screenWidth = Dimensions.get("window").width;
@@ -31,50 +30,52 @@ class CoursesScreen extends React.Component {
     const nextTopic = nextTopicFunc(topic)
     const prevTopic = prevTopicFunc(topic)
     return (
-      <>
+      <RootView>
+        <Background source={ require("../assets/background6.jpg") } resizeMode="cover" />
         { loading ?
           <LoadingData /> :
-          <Container>
-            <SafeAreaView>
-              <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-              <ScrollView style={{ height: "100%" }}>
-                <Hero>
-                  <Background source={ require("../assets/background6.jpg") } />
-                  <Title>{QuickFacts[topic].title}</Title>
-                  <Text>{QuickFacts[topic].subtitle}</Text>
-                  {QuickFacts[topic].list.map(item =>
-                    <TextList key={item}>{item}</TextList>
-                  )}
+          <>
+            <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+            <Container>
+              <SafeAreaView>
+                <ScrollView style={{ height: "100%" }}>
+                  <Hero>
+                    <Title>{QuickFacts[topic].title}</Title>
+                    <Text>{QuickFacts[topic].subtitle}</Text>
+                    {QuickFacts[topic].list.map(item =>
+                      <TextList key={item}>{item}</TextList>
+                    )}
 
-                  <Name>Number of courses: {coursesData[topic].length}</Name>
-                  <IconsWrapper>
-                    <TouchableOpacity
-                      onPress={() => navigation.push("Courses", { prevTopic })}
-                    >
-                      <IconView>
-                        <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
-                      </IconView>
+                    <Name>Number of courses: {coursesData[topic].length}</Name>
+                    <IconsWrapper>
+                      <TouchableOpacity
+                        onPress={() => navigation.push("Courses", { prevTopic })}
+                      >
+                        <IconView>
+                          <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
+                        </IconView>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => navigation.push("Courses", { nextTopic })}
-                    >
-                      <IconView>
-                        <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
-                      </IconView>
-                    </TouchableOpacity>
-                  </IconsWrapper>
-                </Hero>
-                <CoursesByTopic
-                  data={coursesData[topic]}
-                  navigation={navigation}
-                  topic={topic}
-                />
-              </ScrollView>
-            </SafeAreaView>
-          </Container>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => navigation.push("Courses", { nextTopic })}
+                      >
+                        <IconView>
+                          <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
+                        </IconView>
+                      </TouchableOpacity>
+                    </IconsWrapper>
+                  </Hero>
+                  <CoursesByTopic
+                    data={coursesData[topic]}
+                    navigation={navigation}
+                    topic={topic}
+                  />
+                </ScrollView>
+              </SafeAreaView>
+            </Container>
+          </>
         }
-      </>
+      </RootView>
     );
   }
 }
@@ -82,7 +83,7 @@ class CoursesScreen extends React.Component {
 export default CoursesScreen;
 
 
-const CoursesByTopic = ({topic, data, navigation}) =>
+export const CoursesByTopic = ({topic, data, navigation}) =>
   <Cover>
     <Subtitle>{topic.replace(topic[0], topic[0].toUpperCase()).replace('_', " ")} Learning</Subtitle>
     <ScrollView
@@ -91,6 +92,7 @@ const CoursesByTopic = ({topic, data, navigation}) =>
       showsHorizontalScrollIndicator={false}
     >
       {data.map(course => {
+        let topic = course.parent1
         return(
           <CardsContainer key={course.id}>
             <TouchableOpacity
@@ -120,23 +122,25 @@ const prevTopicFunc = (topic) => {
     topic === "react_native" ?  "react" : "react"
 }
 
-
+const RootView = styled.View`
+  background: rgb(20, 20, 20);
+  flex: 1;
+  padding-top: 30px;
+`;
 
 const Container = styled.View`
-  background: rgb(18, 21, 26);
 `;
 
 const Hero = styled.View`
   height: 450px;
-  background: rgb(27, 31, 38);
   overflow: hidden;
 `;
 
 const Background = styled.Image`
   position: absolute;
-  left: 0;
-  width: ${screenWidth}px;
+  width: 100%;
   height: 100%;
+  top: 0;
 `;
 
 const IconsWrapper = styled.View`
@@ -150,9 +154,7 @@ const IconsWrapper = styled.View`
 
 `;
 const IconView = styled.View``;
-const Cover = styled.View`
-  background-color: rgb(22, 22, 22);
-`;
+const Cover = styled.View``;
 
 const CardsContainer = styled.View`
   flex-direction: row;
@@ -162,7 +164,7 @@ const Title = styled.Text`
   font-size: 30px;
   color: white;
   font-weight: 600;
-  margin: 45px auto 15px;
+  margin: 5px auto 15px;
   width: 94%;
   text-align: center;
 `;

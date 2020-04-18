@@ -5,21 +5,20 @@ import LottieView from "lottie-react-native"
 
 
 export default function LoadingData() {
-  let tabBarVisible = false;
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-      <BackImg source={require("../assets/background6.jpg")} />
-      <LottieView
-        source={require("../assets/lottie-react-logo.json")}
-        autoPlay={true}
-        loop={true}
-        ref={animation => { this.animation = animation }}
-      />
-      <TitleBar>
-        <Title>React Finder</Title>
-        <Name>Your guide to React JavaScript library Everything about Learning React for Free at one place</Name>
-      </TitleBar>
+        <BackImg source={require("../assets/background6.jpg")} resizeMode="cover" />
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+        <LottieView
+          source={require("../assets/lottie-react-logo.json")}
+          autoPlay={true}
+          loop={true}
+          ref={animation => { this.animation = animation }}
+        />
+        <TitleBar>
+          <Title>React Finder</Title>
+          <Name>Your guide to React JavaScript library Everything about Learning React for Free at one place</Name>
+        </TitleBar>
     </Container>
   )
 }
@@ -38,14 +37,13 @@ const BackImg = styled.Image`
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: -20;
-  opacity: .7;
-  top: 0;
 `;
 
 const TitleBar = styled.View`
   width: 80%;
-  margin: auto auto 35%;
+  position: absolute;
+  z-index: 20;
+  bottom: 20%;
 `;
 
 const Title = styled.Text`

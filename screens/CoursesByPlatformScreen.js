@@ -4,6 +4,7 @@ import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView  } from 'r
 import { Ionicons } from '@expo/vector-icons';
 import TopicsByPlatformCourse from '../components/TopicsByPlatformCourse'
 
+
 const screenHeight = Dimensions.get("window").height
 
 
@@ -34,6 +35,7 @@ class CoursesByPlatformScreen extends React.Component {
             <Cover>
               <Img source={image} />
               <PlatformName>{platform.toUpperCase()} PLATFORM</PlatformName>
+
               <Number>{data[platform].length} courses</Number>
             </Cover>
             <TouchableOpacity

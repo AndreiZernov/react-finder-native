@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar } from "react-native";
+import React from "react"
+import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar } from "react-native"
 import styled from 'styled-components/native'
 import Topics from '../components/Topics'
 import TopicsByPlatform from '../components/TopicsByPlatform'
@@ -9,8 +9,9 @@ import Menu from "../components/Menu"
 import LoadingData from "../components/LoadingData"
 import ModalLogin from "../components/ModalLogin"
 import ModalSignup from "../components/ModalSignup"
-import NotificationButton from "../components/NotificationButton";
-import Notifications from "../components/Notifications";
+import NotificationButton from "../components/NotificationButton"
+import Notifications from "../components/Notifications"
+import { CoursesByTopic } from './CoursesScreen'
 import { connect } from 'react-redux'
 import { DataItemsContext } from "../contexts/dataItemsContext"
 
@@ -77,7 +78,7 @@ class HomeScreen extends React.Component {
   render() {
     const { navigation, name, openMenu, openNotif } = this.props
     const { scale, opacity } = this.state
-    const { loading, coursesData, coursesDataByPlatform } = this.context
+    const { loading, coursesData, coursesDataByPlatform, coursesDataNew, articlesData } = this.context
 
 
     return (
@@ -127,10 +128,9 @@ class HomeScreen extends React.Component {
                   <Subtitle>Courses By Platform</Subtitle>
                   <TopicsByPlatform data={coursesDataByPlatform} navigation={navigation}/>
 
-                  <Subtitle>New Courses</Subtitle>
-                  <Topics data={coursesData} navigation={navigation}/>
+                  <CoursesByTopic data={coursesDataNew} navigation={navigation} topic={"new"}/>
 
-                  <Articles data={coursesData}/>
+                  <Articles data={articlesData}/>
 
                 </ScrollView>
               </SafeAreaView>
@@ -151,15 +151,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 const RootView = styled.View`
   background: rgb(27, 31, 38);
   flex: 1;
+  padding-top: 30px;
 `;
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 40px;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 `;
 
 
@@ -188,7 +186,7 @@ const TitleBar = styled.View`
   justify-content: space-between;
   width: 100%;
   padding: 0 10px 0 20px;
-  margin: 10px auto;
+  margin: auto;
 `;
 
 const TitleWrap = styled.View``;

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView  } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
+import { PlayIcon } from "../components/Icons";
 
 
 const screenHeight = Dimensions.get("window").height
@@ -32,6 +33,8 @@ class SectionScreen extends React.Component {
         topic === "graphql" ?  "rgb(5, 5, 5)" :
         topic === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
     }
+    const videoLink = navigation.state.params.course.link
+
 
     return (
 
@@ -46,9 +49,21 @@ class SectionScreen extends React.Component {
               topic === "pathway" ? require("../assets/background4.jpg") :
               require("../assets/background1.jpg")
             } />
+
             <LogoWrapper style={{ width: topic==="react_native" ? 83 : 100 }}>
               <Logo source={{ uri: course.img}} />
-
+              {videoLink.includes("youtube") &&
+                <PlayWrapper>
+                  <TouchableOpacity
+                    underlayColor="transparent"
+                    onPress={() => navigation.push("Video", {videoLink})}
+                  >
+                    <PlayView>
+                      <PlayIcon style={{ marginLeft: -10 }} />
+                    </PlayView>
+                  </TouchableOpacity>
+                </PlayWrapper>
+              }
             </LogoWrapper>
 
             <Name>{course.name}</Name>
@@ -85,6 +100,7 @@ const Container = styled.View`
   flex: 1;
   height: 100%;
 `;
+
 
 const Cover = styled.View`
   height: 370px;
@@ -166,4 +182,22 @@ const Link = styled.Text`
   font-size: 15px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
+`;
+
+
+const PlayWrapper = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -40px;
+  margin-left: -40px;
+`;
+
+const PlayView = styled.View`
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
 `;

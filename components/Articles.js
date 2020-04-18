@@ -7,14 +7,13 @@ const Articles = ({data}) =>
   <>
     <Subtitle>Articles</Subtitle>
     <ArticlesContainer>
-      {data.redux.map(article => {
-        let key = "redux"
+      {data.map(article => {
         return (
-          <ArticleWrapper key={article.id}>
+          <ArticleWrapper key={article.title}>
             <TouchableOpacity
               // onPress={() => this.props.navigation.push("Section", { article, key })}
             >
-              <Article data={article} key={article.id}/>
+              <Article data={article}/>
             </TouchableOpacity>
           </ArticleWrapper>
         )})
