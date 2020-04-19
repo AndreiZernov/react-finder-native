@@ -2,14 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { PlayIcon } from "../components/Icons";
 
 
 const screenHeight = Dimensions.get("window").height
 
 
 
-class SectionScreen extends React.Component {
+class ArticleScreen extends React.Component {
   static navigationOptions = { headerShown: false };
 
   _goToURL(url) {
@@ -24,50 +23,35 @@ class SectionScreen extends React.Component {
 
   render() {
     const { navigation } = this.props
-    const course = navigation.getParam("course")
-    const topic = navigation.getParam("topic")
-    const BackColor = () => {
-      return topic === "react" ?  "rgb(20, 20, 20)" :
-        topic === "react_native" ?  "rgba(38, 48, 52, 1)" :
-        topic === "redux" ?  "rgb(3, 3, 3)" :
-        topic === "graphql" ?  "rgb(5, 5, 5)" :
-        topic === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
-    }
-    const videoLink = navigation.state.params.course.link
+    // const course = navigation.getParam("course")
+    // const topic = navigation.getParam("topic")
+    // const BackColor = () => {
+    //   return topic === "react" ?  "rgb(20, 20, 20)" :
+    //     topic === "react_native" ?  "rgba(38, 48, 52, 1)" :
+    //     topic === "redux" ?  "rgb(3, 3, 3)" :
+    //     topic === "graphql" ?  "rgb(5, 5, 5)" :
+    //     topic === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
+    // }
+    // const videoLink = navigation.state.params.course.link
 
 
     return (
       <RootView>
-        <Img source={
-          topic === "react" ? require("../assets/background1.jpg") :
-          topic === "react_native" ? require("../assets/background10.jpg") :
-          topic === "redux" ? require("../assets/background9.jpg") :
-          topic === "graphql" ? require("../assets/background8.jpg") :
-          topic === "pathway" ? require("../assets/background4.jpg") :
-          require("../assets/background1.jpg")
-        } />
+        {/* <Img source={ */}
+        {/* // topic === "react" ? require("../assets/background1.jpg") :
+          // topic === "react_native" ? require("../assets/background10.jpg") :
+          // topic === "redux" ? require("../assets/background9.jpg") :
+          // topic === "graphql" ? require("../assets/background8.jpg") :
+          // topic === "pathway" ? require("../assets/background4.jpg") :
+          // require("../assets/background1.jpg")
+        // } /> */}
         <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
         <Container>
           <SafeAreaView>
             <ScrollView style={{ height: "100%" }}>
               <Cover>
-                <LogoWrapper style={{ width: topic==="react_native" ? 83 : 100 }}>
-                  <Logo source={{ uri: course.img}} />
-                  {videoLink.includes("youtube") &&
-                    <PlayWrapper>
-                      <TouchableOpacity
-                        underlayColor="transparent"
-                        onPress={() => navigation.push("Video", {videoLink})}
-                      >
-                        <PlayView>
-                          <PlayIcon style={{ marginLeft: -10 }} />
-                        </PlayView>
-                      </TouchableOpacity>
-                    </PlayWrapper>
-                  }
-                </LogoWrapper>
-                <Name>{course.name}</Name>
-                <Author>{course.author}</Author>
+                {/* <Name>{course.name}</Name> */}
+                {/* <Author>{course.author}</Author> */}
               </Cover>
 
               <TouchableOpacity
@@ -79,15 +63,15 @@ class SectionScreen extends React.Component {
                 </CloseView>
               </TouchableOpacity>
 
-              <Content  style={{backgroundColor: BackColor()}} >
+              <Content >
                 <Subtitle>Short Description:</Subtitle>
-                <Text>{course.description}</Text>
+                {/* <Text>{course.description}</Text> */}
                 <Subtitle>Price:</Subtitle>
-                <Text style={{color:"tomato"}}>{course.price}</Text>
+                {/* <Text style={{color:"tomato"}}>{course.price}</Text> */}
                 <Subtitle>Duration:</Subtitle>
-                <Text>{course.duration}</Text>
+                {/* <Text>{course.duration}</Text> */}
                 <Subtitle>Link to Resource:</Subtitle>
-                <Link onPress={() => this._goToURL(course.link)}>Start Learning Right Now!</Link>
+                {/* <Link onPress={() => this._goToURL(course.link)}>Start Learning Right Now!</Link> */}
               </Content>
             </ScrollView>
           </SafeAreaView>
@@ -97,7 +81,7 @@ class SectionScreen extends React.Component {
   }
 }
 
-export default SectionScreen;
+export default ArticleScreen;
 
 
 const RootView = styled.View`
@@ -149,16 +133,6 @@ const CloseView = styled.View`
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   justify-content: center;
   align-items: center;
-`;
-
-const LogoWrapper = styled.View`
-  width: 100px;
-  height: 90px;
-`;
-
-const Logo = styled.Image`
-  width: 100%;
-  height: 100%;
 `;
 
 const Content = styled.View`

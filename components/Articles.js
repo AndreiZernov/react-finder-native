@@ -3,7 +3,7 @@ import { ScrollView, TouchableOpacity } from "react-native"
 import styled from 'styled-components/native'
 import Article from './Article'
 
-const Articles = ({data}) =>
+const Articles = ({data, navigation}) =>
   <>
     <Subtitle>Articles</Subtitle>
     <ArticlesContainer>
@@ -11,7 +11,7 @@ const Articles = ({data}) =>
         return (
           <ArticleWrapper key={article.title}>
             <TouchableOpacity
-              // onPress={() => this.props.navigation.push("Section", { article, key })}
+              onPress={() => navigation.push("Article")}
             >
               <Article data={article}/>
             </TouchableOpacity>

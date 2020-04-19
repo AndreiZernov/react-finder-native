@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components/native'
 
 
-const Card = ({data}) => (
+const CourseCard = ({data}) => (
   <Container>
     <Image source={
       data.parent1 === "react" ? require("../assets/background1.jpg") :
@@ -98,4 +98,4 @@ const Duration = styled.Text`
 `;
 
 
-export default Card
+export default CourseCard

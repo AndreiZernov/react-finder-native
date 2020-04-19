@@ -22,7 +22,7 @@ const TopicsByPlatform = ({ data, navigation }) => {
               <Container>
                 <Image source={platform.image} />
                 <Name>{topic.replace(topic[0], topic[0].toUpperCase()).replace('_', " ")} Courses</Name>
-                <Duration>{data[platform.name].length} courses</Duration>
+                <Number>{data[platform.name].length} courses</Number>
               </Container>
             </TouchableOpacity>
           )
@@ -51,7 +51,8 @@ export default TopicsByPlatform
 
 
 const CardsContainer = styled.View`
-flex-direction: row;
+  flex-direction: row;
+  margin: 0 auto;
 `;
 
 const Container = styled.View`
@@ -91,7 +92,7 @@ const Img = styled.Image`
   height: 45px;
 `;
 
-const Duration = styled.Text`
+const Number = styled.Text`
   color: white;
   font-weight: 600;
   font-size: 13px;

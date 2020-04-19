@@ -12,10 +12,11 @@ const ResourcesSlideBar = ({navigation}) =>
     >
       {  Recources.map(resource => {
         let topic = resource.name.toLowerCase().replace(" ", "_")
+        let home = "home"
         return (
           <TouchableOpacity
             key={resource.name}
-            onPress={() => navigation.push("Resources")}
+            onPress={() => navigation.push("Resources", {home})}
           >
             <Container>
               {resource.icon}
@@ -36,6 +37,7 @@ const Recources = [
   { name: "Podcasts", icon: <PodcastsIcon />},
   { name: "HTML CSS", icon: <HtmlCssIcon />}
 ]
+
 const Cover = styled.View`
   margin: 0 auto;
 `;

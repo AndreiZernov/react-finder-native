@@ -21,36 +21,48 @@ class VideoScreen extends React.Component {
 
     console.log(videoLink)
     return (
-      <Container>
-        <WebView
-          source={{ uri: videoLink }}
-        />
-        <CloseView>
+      <RootView>
+        <Container>
+          <View>
+            <WebView
+              source={{ uri: videoLink }}
+            />
+          </View>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.goBack();
-            }}
-            style={{ padding: 20 }}
+            onPress={() => navigation.goBack() }
+            style={{ position: "absolute", top: 20, right: 20 }}
           >
-            <Ionicons name="ios-close" size={44} color="white" />
+            <CloseView>
+              <Ionicons name="ios-close" size={36} style={{ marginTop: -2 }} color="black" />
+            </CloseView>
           </TouchableOpacity>
-        </CloseView>
-      </Container>
+        </Container>
+      </RootView>
     );
   }
 }
 
-export default VideoScreen;
+export default VideoScreen
 
-const Container = styled.View`
+
+const RootView = styled.View`
+  background: rgb(20, 20, 20);
   flex: 1;
-  background: black;
-  align-items: center;
-  justify-content: center;
+  padding-top: 40px;
 `;
 
+const Container = styled.View``;
+
+const View = styled.View`
+  height: 300px;
+`
+
 const CloseView = styled.View`
-  position: absolute;
-  top: 0px;
-  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  align-items: center;
 `;

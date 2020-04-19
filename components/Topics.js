@@ -13,10 +13,11 @@ const Topics = ({ data, navigation }) => {
       <CardsContainer>
         {CoursesList.map(course => {
           let topic = course.name
+          let home = "home"
           return (
             <TouchableOpacity
               key={topic}
-              onPress={() => navigation.push("CoursesHomePageScreen", { topic })}
+              onPress={() => navigation.push("Courses", { topic, home })}
             >
               <Container>
                 <Image source={course.image} />
@@ -63,6 +64,7 @@ const Container = styled.View`
 
 const CardsContainer = styled.View`
   flex-direction: row;
+  margin: 0 auto;
 `;
 
 

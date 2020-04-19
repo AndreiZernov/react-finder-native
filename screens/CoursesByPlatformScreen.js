@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView  } from 'react-native'
+import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import TopicsByPlatformCourse from '../components/TopicsByPlatformCourse'
 
 
 const screenHeight = Dimensions.get("window").height
-
 
 
 class CoursesByPlatformScreen extends React.Component {
@@ -29,26 +28,28 @@ class CoursesByPlatformScreen extends React.Component {
     const image = navigation.getParam("image")
 
     return (
+      <RootView>
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
         <Container>
-          <ScrollView style={{ height: "100%" }}>
-            <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-            <Cover>
-              <Img source={image} />
-              <PlatformName>{platform.toUpperCase()} PLATFORM</PlatformName>
+          <SafeAreaView>
+            <ScrollView style={{ height: "100%" }} showsVerticalScrollIndicator={false}>
+              <Cover>
+                <Img source={image} />
+                <PlatformName>{platform.toUpperCase()} PLATFORM</PlatformName>
 
-              <Number>{data[platform].length} courses</Number>
-            </Cover>
-            <TouchableOpacity
-              onPress={() => navigation.goBack() }
-              style={{ position: "absolute", top: 60, right: 20 }}
-            >
-              <CloseView>
-                <Ionicons name="ios-close" size={36} style={{ marginTop: -2 }} color="#4775f2" />
-              </CloseView>
-            </TouchableOpacity>
-            <CoursesContainer>
+                <NumberCourses>{data[platform].length} courses</NumberCourses>
+              </Cover>
+              <TouchableOpacity
+                onPress={() => navigation.goBack() }
+                style={{ position: "absolute", top: 20, right: 20 }}
+              >
+                <CloseView>
+                  <Ionicons name="ios-close" size={36} style={{ marginTop: -2 }} color="black" />
+                </CloseView>
+              </TouchableOpacity>
+              <CoursesContainer>
                 {data[platform].map(course => {
-                    let topic = course.parent1
+                  let topic = course.parent1
                   return (
                     <Wrapper key={course.id+course.name}>
                       <TouchableOpacity
@@ -61,8 +62,9 @@ class CoursesByPlatformScreen extends React.Component {
                 })}
               </CoursesContainer>
             </ScrollView>
-
+          </SafeAreaView>
         </Container>
+      </RootView>
     );
   }
 }
@@ -70,14 +72,16 @@ class CoursesByPlatformScreen extends React.Component {
 export default CoursesByPlatformScreen
 
 
-const Container = styled.View`
+const RootView = styled.View`
+  background: rgb(20, 20, 20);
   flex: 1;
-  height: 100%;
+  padding-top: 30px;
 `;
+
+const Container = styled.View``;
 
 const Cover = styled.View`
   height: 370px;
-  background: #3c4560;
   justify-content: center;
   align-items: center;
 `;
@@ -96,11 +100,11 @@ const PlatformName = styled.Text`
   font-weight: bold;
   width: 70%;
   position: absolute;
-  top: 60px;
+  top: 20px;
   left: 20px;
 `;
 
-const Number = styled.Text`
+const NumberCourses = styled.Text`
   color: #b8bfd4;
   font-size: 17px;
   position: absolute;
@@ -124,6 +128,8 @@ const CoursesContainer = styled.View`
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Wrapper = styled.View`

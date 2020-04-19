@@ -8,9 +8,10 @@ import SectionScreen from "../screens/SectionScreen"
 import CardsScreen from "../screens/CardsScreen"
 import CoursesScreen from "../screens/CoursesScreen"
 import CoursesByPlatformScreen from "../screens/CoursesByPlatformScreen"
-import CoursesHomePageScreen from "../screens/CoursesHomePageScreen"
 import ResourcesScreen from "../screens/ResourcesScreen"
-import VideoScreen from "../screens/VideoScreen";
+import VideoScreen from "../screens/VideoScreen"
+import ArticleScreen from "../screens/ArticleScreen"
+
 
 
 
@@ -24,10 +25,10 @@ const HomeStack = createStackNavigator({
   Cards: CardsScreen,
   Courses: CoursesScreen,
   CoursesByPlatform: CoursesByPlatformScreen,
-  CoursesHomePageScreen: CoursesHomePageScreen,
   Section: SectionScreen,
   Resources: ResourcesScreen,
-  Video: VideoScreen
+  Video: VideoScreen,
+  Article: ArticleScreen
 }, {
   mode: "card"
 });
@@ -57,9 +58,8 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 
 
-
-
 const CoursesStack = createStackNavigator({
+  Courses: CoursesScreen,
   Courses: CoursesScreen,
   Section: SectionScreen
 }, {
@@ -117,24 +117,6 @@ CoursesByPlatformStack.navigationOptions = {
     />
   )
 };
-
-
-const CoursesHomePageScreenStack = createStackNavigator({
-  CoursesHomePageScreen: CoursesHomePageScreen
-});
-
-
-CoursesHomePageScreenStack.navigationOptions = {
-  tabBarLabel: "CoursesHomePageScreen",
-  tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-folder"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
-  )
-};
-
 
 
 

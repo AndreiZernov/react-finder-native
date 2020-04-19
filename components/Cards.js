@@ -142,7 +142,7 @@ class Cards extends React.Component {
             style={{ position: "absolute", top: 20, right: 20 }}
           >
             <AnimatedCloseView style={{ opacity: this.state.opacity }}>
-              <Ionicons name="ios-close" size={32} color="#546bfb" />
+              <Ionicons name="ios-close" size={32} color="black" />
             </AnimatedCloseView>
           </TouchableOpacity>
 
@@ -200,7 +200,7 @@ const Data = styled.Text`
   padding: 5px;
   background: tomato;
   border-radius: 10px;
-  width: 80px;
+  width: 90px;
 `;
 
 const AnimatedTitle = Animated.createAnimatedComponent(Title)
@@ -262,12 +262,14 @@ const Link = styled.Text`
 `;
 
 const CloseView = styled.View`
-  width: 32px;
-  height: 32px;
-  background: white;
-  border-radius: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 22px;
+  background: silver;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   justify-content: center;
   align-items: center;
+  margin: 10px;
 `;
 
 const AnimatedCloseView = Animated.createAnimatedComponent(CloseView);

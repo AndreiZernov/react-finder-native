@@ -94,7 +94,10 @@ class HomeScreen extends React.Component {
               opacity: opacity }}
             >
               <SafeAreaView>
-                <ScrollView style={{ height: "100%" }}>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={{ height: "100%" }}
+                >
 
                   <Header>
                     <TitleBar>
@@ -130,7 +133,7 @@ class HomeScreen extends React.Component {
 
                   <CoursesByTopic data={coursesDataNew} navigation={navigation} topic={"new"}/>
 
-                  <Articles data={articlesData}/>
+                  <Articles data={articlesData} navigation={navigation}/>
 
                 </ScrollView>
               </SafeAreaView>
@@ -151,10 +154,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 const RootView = styled.View`
   background: rgb(27, 31, 38);
   flex: 1;
-  padding-top: 30px;
 `;
 
 const Container = styled.View`
+  padding-top: 30px;
   flex: 1;
   justify-content: center;
   align-items: center;

@@ -2,16 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { Dimensions } from 'react-native';
 
+
 const screenWidth = Dimensions.get('window').width
 
 
 const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 40
-  if (screenWidth >= 700) {
-    cardWidth = (screenWidth - 60) / 2
+  if (screenWidth >= 680) {
+    cardWidth = (screenWidth - 150) / 2
   }
   if (screenWidth >= 1024) {
-    cardWidth = (screenWidth - 80) / 3
+    cardWidth = (screenWidth - 190) / 3
   }
   return cardWidth
 }
@@ -62,7 +63,6 @@ export default TopicsByPlatformCourse;
 
 
 const Container = styled.View`
-  width: 335px;
   height: 335px;
   border-radius: 14px;
   background: white;

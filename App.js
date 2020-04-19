@@ -5,7 +5,7 @@ import { Provider } from "react-redux"
 import AppNavigator from './navigator/AppNavigator'
 import { DataItemsProvider } from './contexts/dataItemsContext'
 import 'react-native-get-random-values'
-import { uuid } from './uuid'
+
 
 const initialState = {
   action: "",

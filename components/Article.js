@@ -8,10 +8,10 @@ const screenWidth = Dimensions.get('window').width
 const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 50
   if (screenWidth >= 700) {
-    cardWidth = (screenWidth - 70) / 2
+    cardWidth = (screenWidth - 150) / 2
   }
   if (screenWidth >= 1024) {
-    cardWidth = (screenWidth - 90) / 3
+    cardWidth = (screenWidth - 190) / 3
   }
   return cardWidth
 }
@@ -37,15 +37,17 @@ class Article extends React.Component {
   render() {
     let { data } = this.props
     return (
-      <Container style={{ width: this.state.cardWidth }}>
-        <Cover>
-          <Image source={{uri:data.img}} />
-        </Cover>
-        <Content>
-          <Name>{data.title}</Name>
-          <Duration>{data.duration}</Duration>
-        </Content>
-      </Container>
+
+        <Container style={{ width: this.state.cardWidth }}>
+          <Cover>
+            <Image source={{uri:data.img}} />
+          </Cover>
+          <Content>
+            <Name>{data.title}</Name>
+            <Duration>{data.duration}</Duration>
+          </Content>
+        </Container>
+
     )
   }
 }
@@ -58,6 +60,7 @@ const Container = styled.View`
   width: 335px;
   height: 335px;
   border-radius: 14px;
+  border: .5px solid silver;
   background: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   margin: 10px auto;

@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { DataItemsContext } from "../contexts/dataItemsContext"
 import QuickFacts from '../data/QuickFacts'
 import LoadingData from "../components/LoadingData"
-import Card from '../components/Card'
+import CourseCard from '../components/CourseCard'
 import { Ionicons } from '@expo/vector-icons'
 
 
@@ -18,17 +18,23 @@ class CoursesScreen extends React.Component {
     const { loading, coursesData } = this.context
     const { navigation } = this.props
     let topic = ''
-    if (navigation.getParam("topic")) {
+    let nextTopic = ''
+    let prevTopic = ''
+    if (navigation.getParam("home") !== "home") {
+      if (navigation.getParam("topic")) {
+        topic = navigation.getParam("topic")
+      } else if (navigation.getParam("nextTopic")) {
+        topic = navigation.getParam("nextTopic")
+      } else if (navigation.getParam("prevTopic")) {
+        topic = navigation.getParam("prevTopic")
+      } else {
+        topic = 'react'
+      }
+      nextTopic = nextTopicFunc(topic)
+      prevTopic = prevTopicFunc(topic)
+    } else if (navigation.getParam("home") === "home") {
       topic = navigation.getParam("topic")
-    } else if (navigation.getParam("nextTopic")) {
-      topic = navigation.getParam("nextTopic")
-    } else if (navigation.getParam("prevTopic")) {
-      topic = navigation.getParam("prevTopic")
-    } else {
-      topic = 'react'
     }
-    const nextTopic = nextTopicFunc(topic)
-    const prevTopic = prevTopicFunc(topic)
     return (
       <RootView>
         <Background source={ require("../assets/background6.jpg") } resizeMode="cover" />
@@ -38,32 +44,47 @@ class CoursesScreen extends React.Component {
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
             <Container>
               <SafeAreaView>
-                <ScrollView style={{ height: "100%" }}>
+                <ScrollView style={{ height: "100%" }} showsVerticalScrollIndicator={false}>
                   <Hero>
                     <Title>{QuickFacts[topic].title}</Title>
                     <Text>{QuickFacts[topic].subtitle}</Text>
                     {QuickFacts[topic].list.map(item =>
                       <TextList key={item}>{item}</TextList>
                     )}
-
                     <Name>Number of courses: {coursesData[topic].length}</Name>
-                    <IconsWrapper>
-                      <TouchableOpacity
-                        onPress={() => navigation.push("Courses", { prevTopic })}
-                      >
-                        <IconView>
-                          <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
-                        </IconView>
 
-                      </TouchableOpacity>
+                    {
+                      navigation.getParam("home") === "home" &&
                       <TouchableOpacity
-                        onPress={() => navigation.push("Courses", { nextTopic })}
+                        onPress={() => navigation.goBack() }
+                        style={{ position: "absolute", top: 15, right: 20 }}
                       >
-                        <IconView>
-                          <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
-                        </IconView>
+                        <CloseView>
+                          <Ionicons name="ios-close" size={36} color="black"  />
+                        </CloseView>
                       </TouchableOpacity>
-                    </IconsWrapper>
+                    }
+
+                    {
+                      navigation.getParam("home") !== "home" &&
+                      <IconsWrapper>
+                        <TouchableOpacity
+                          onPress={() => navigation.push("Courses", { prevTopic })}
+                        >
+                          <IconView>
+                            <Ionicons name="ios-arrow-dropleft-circle" size={50}  color="#d4dffe" />
+                          </IconView>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => navigation.push("Courses", { nextTopic })}
+                        >
+                          <IconView>
+                            <Ionicons name="ios-arrow-dropright-circle" size={50}  color="#d4dffe" />
+                          </IconView>
+                        </TouchableOpacity>
+                      </IconsWrapper>
+                    }
                   </Hero>
                   <CoursesByTopic
                     data={coursesData[topic]}
@@ -98,7 +119,7 @@ export const CoursesByTopic = ({topic, data, navigation}) =>
             <TouchableOpacity
               onPress={() => navigation.push("Section", { course, topic })}
             >
-              <Card data={course} />
+              <CourseCard data={course} />
             </TouchableOpacity>
           </CardsContainer>
         )})}
@@ -132,7 +153,7 @@ const Container = styled.View`
 `;
 
 const Hero = styled.View`
-  height: 450px;
+  height: 420px;
   overflow: hidden;
 `;
 
@@ -143,10 +164,20 @@ const Background = styled.Image`
   top: 0;
 `;
 
+const CloseView = styled.View`
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  align-items: center;
+`;
+
 const IconsWrapper = styled.View`
   flex-direction: row;
   position: absolute;
-  top: 78%;
+  bottom: 50px;
   justify-content: space-between;
   width: 100%;
   padding: 0 10px;
@@ -154,18 +185,22 @@ const IconsWrapper = styled.View`
 
 `;
 const IconView = styled.View``;
-const Cover = styled.View``;
+const Cover = styled.View`
+  margin: 0 auto;
+  background: rgb(20, 20, 20);
+`;
 
 const CardsContainer = styled.View`
   flex-direction: row;
+
 `;
 
 const Title = styled.Text`
   font-size: 30px;
   color: white;
   font-weight: 600;
-  margin: 5px auto 15px;
-  width: 94%;
+  margin: 10px auto 15px;
+  width: 80%;
   text-align: center;
 `;
 
