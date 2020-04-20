@@ -1,36 +1,23 @@
-import React from "react"
-import styled from "styled-components"
-import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions, AsyncStorage } from 'react-native'
+import React from 'react'
+import styled from 'styled-components'
+import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions } from 'react-native'
 import { BlurView } from 'expo-blur'
-import LoadingData from "../components/LoadingData"
-import Success from "../components/Success"
-import LoadingLogin from "../components/LoadingLogin"
+import LoadingData from '../components/LoadingData'
+import Success from '../components/Success'
+import LoadingLogin from '../components/LoadingLogin'
 import { connect } from 'react-redux'
 import firebase from '../firebase'
 
 
 let screenHeight = Dimensions.get("window").height;
 
-
-function mapStateToProps(state) {
-  return { action: state.action };
-}
+function mapStateToProps(state) { return { action: state.action }; }
 
 function mapDispatchToProps(dispatch) {
   return {
-    closeLogin: () =>
-      dispatch({
-        type: "CLOSE_LOGIN"
-      }),
-    openSIngup: () =>
-      dispatch({
-        type: "OPEN_SIGNUP"
-      }),
-    updateName: name =>
-      dispatch({
-        type: "UPDATE_NAME",
-        name
-      })
+    closeLogin: () => dispatch({ type: "CLOSE_LOGIN" }),
+    openSIngup: () => dispatch({ type: "OPEN_SIGNUP" }),
+    updateName: name => dispatch({ type: "UPDATE_NAME", name })
   };
 }
 
@@ -46,8 +33,6 @@ class ModalLogin extends React.Component {
     translateY: new Animated.Value(0)
   }
 
-
-
   handleLogin = () => {
     this.setState({ isLoading: true });
     Keyboard.dismiss()
@@ -58,9 +43,7 @@ class ModalLogin extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
-        Alert.alert("Error", error.message);
-      })
+      .catch(function(error) { Alert.alert("Error", error.message);} )
       .then(response => {
         this.setState({ isLoading: false });
 
@@ -77,36 +60,24 @@ class ModalLogin extends React.Component {
       });
   }
 
-
-
-
   componentDidUpdate() {
     if (this.props.action == "openLogin") {
-      Animated.timing(this.state.top, {
-        toValue: 0,
-        duration: 0
+      Animated.timing(this.state.top, { toValue: 0, duration: 0
       }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
-      Animated.timing(this.state.translateY, {
-        toValue: 0,
-        duration: 0
+      Animated.timing(this.state.translateY, { toValue: 0, duration: 0
       }).start();
 
     }
 
     if (this.props.action == "closeLogin") {
       setTimeout(() => {
-        Animated.timing(this.state.top, {
-          toValue: screenHeight,
-          duration: 0
+        Animated.timing(this.state.top, { toValue: screenHeight, duration: 0
         }).start();
 
-        Animated.spring(this.state.scale, { toValue: 1.3 }).start();
-      }, 500);
-      Animated.timing(this.state.translateY, {
-        toValue: 1000,
-        duration: 500
-      }).start();
+        Animated.spring(this.state.scale, { toValue: 1.3 }).start(); }, 500);
+        Animated.timing(this.state.translateY, { toValue: 1000, duration: 500
+        }).start();
     }
   }
 
@@ -115,7 +86,7 @@ class ModalLogin extends React.Component {
     this.props.closeLogin()
   }
 
-  handleChange = () => {
+  handleWindow = () => {
     Keyboard.dismiss()
     this.props.closeLogin()
     this.props.openSIngup()
@@ -131,14 +102,7 @@ class ModalLogin extends React.Component {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </TouchableWithoutFeedback>
-        <AnimatedModal
-          style={{
-              transform: [
-            { scale: this.state.scale },
-            { translateY: this.state.translateY }
-              ]
-          }}
-        >
+        <AnimatedModal style={{ transform: [ { scale: this.state.scale }, { translateY: this.state.translateY } ] }} >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
           <TextInput onChangeText={email => this.setState({email})} placeholder="Email" keyboardType="email-address" />
@@ -150,9 +114,7 @@ class ModalLogin extends React.Component {
               <ButtonText>Log in</ButtonText>
             </ButtonView>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.handleChange()}
-          >
+          <TouchableOpacity onPress={() => this.handleWindow()} >
             <Text>
               Do not have account yet? Click here!
             </Text>

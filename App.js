@@ -1,8 +1,8 @@
 import React from "react"
 import 'react-native-get-random-values'
 import { createStore } from "redux"
+import TabNavigator from './navigator/TabNavigator'
 import { Provider } from "react-redux"
-import AppNavigator from './navigator/AppNavigator'
 import { DataItemsProvider } from './contexts/dataItemsContext'
 import 'react-native-get-random-values'
 
@@ -20,10 +20,6 @@ const reducer = (state = initialState, action) => {
       return { ...state, action: "closeMenu" };
     case "UPDATE_NAME":
       return { ...state, name: action.name };
-    case "OPEN_CARD":
-      return { ...state, action: "openCard" };
-    case "CLOSE_CARD":
-      return { ...state, action: "closeCard" };
     case "OPEN_LOGIN":
       return { ...state, action: "openLogin" };
     case "CLOSE_LOGIN":
@@ -50,7 +46,7 @@ const App = () => {
   return(
     <DataItemsProvider>
       <Provider store={store}>
-        <AppNavigator />
+        <TabNavigator />
       </Provider>
     </DataItemsProvider>
   )

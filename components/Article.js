@@ -1,16 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import { Dimensions } from 'react-native';
+import React from 'react'
+import styled from 'styled-components'
+import { Dimensions } from 'react-native'
+
 
 const screenWidth = Dimensions.get('window').width
-
 
 const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 50
   if (screenWidth >= 700) {
     cardWidth = (screenWidth - 150) / 2
-  }
-  if (screenWidth >= 1024) {
+  } else if (screenWidth >= 1024) {
     cardWidth = (screenWidth - 190) / 3
   }
   return cardWidth
@@ -37,7 +36,6 @@ class Article extends React.Component {
   render() {
     let { data } = this.props
     return (
-
         <Container style={{ width: this.state.cardWidth }}>
           <Cover>
             <Image source={{uri:data.img}} />
@@ -47,7 +45,6 @@ class Article extends React.Component {
             <Duration>{data.duration}</Duration>
           </Content>
         </Container>
-
     )
   }
 }

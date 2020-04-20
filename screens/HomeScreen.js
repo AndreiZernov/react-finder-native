@@ -1,19 +1,18 @@
-import React from "react"
-import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar } from "react-native"
+import React from 'react'
+import { ScrollView, SafeAreaView, TouchableOpacity, Animated, Easing, StatusBar } from 'react-native'
 import styled from 'styled-components/native'
-import Topics from '../components/Topics'
-import TopicsByPlatform from '../components/TopicsByPlatform'
+import LoadingData from '../components/LoadingData'
+import Menu from '../components/Menu'
+import NotificationButton from '../components/NotificationButton'
 import ResourcesSlideBar from '../components/ResourcesSlideBar'
-import Articles from '../components/Articles'
-import Menu from "../components/Menu"
-import LoadingData from "../components/LoadingData"
-import ModalLogin from "../components/ModalLogin"
-import ModalSignup from "../components/ModalSignup"
-import NotificationButton from "../components/NotificationButton"
-import Notifications from "../components/Notifications"
+import Topics from '../components/Topics'
 import { CoursesByTopic } from './CoursesScreen'
+import TopicsByPlatform from '../components/TopicsByPlatform'
+import Articles from '../components/Articles'
+import ModalLogin from '../components/ModalLogin'
+import ModalSignup from '../components/ModalSignup'
 import { connect } from 'react-redux'
-import { DataItemsContext } from "../contexts/dataItemsContext"
+import { DataItemsContext } from '../contexts/dataItemsContext'
 
 
 const mapStateToProps = state => { return { action: state.action, name: state.name } }
@@ -26,45 +25,35 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+
 class HomeScreen extends React.Component {
   static contextType = DataItemsContext
   static navigationOptions = { headerShown: false };
-
 
   state = {
     scale: new Animated.Value(1),
     opacity: new Animated.Value(1)
   }
 
-
   componentDidUpdate() { this.toggleMenu() }
 
   toggleMenu = () => {
     if (this.props.action === "openMenu") {
       Animated.timing(this.state.scale, {
-        toValue: 0.9,
-        duration: 300,
-        easing: Easing.in()
+        toValue: 0.9, duration: 300, easing: Easing.in()
       }).start()
     }
     if (this.props.action === "openMenu") {
-      Animated.spring(this.state.opacity, {
-        toValue: 0.5
-      }).start()
+      Animated.spring(this.state.opacity, { toValue: 0.5 }).start()
     }
 
     if (this.props.action === "closeMenu") {
       Animated.timing(this.state.scale, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.in()
+        toValue: 1, duration: 300, easing: Easing.in()
       }).start()
     }
     if (this.props.action === "closeMenu") {
-      Animated.spring(this.state.opacity, {
-        toValue: 1
-      }).start()
-
+      Animated.spring(this.state.opacity, { toValue: 1 }).start()
     }
   }
 
@@ -80,7 +69,6 @@ class HomeScreen extends React.Component {
     const { scale, opacity } = this.state
     const { loading, coursesData, coursesDataByPlatform, coursesDataNew, articlesData } = this.context
 
-
     return (
       <RootView>
         { loading ?
@@ -88,11 +76,7 @@ class HomeScreen extends React.Component {
           <>
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
             <Menu />
-            <Notifications />
-            <AnimatedContainer
-              style={{ transform: [{ scale: scale }],
-              opacity: opacity }}
-            >
+            <AnimatedContainer style={{ transform: [{ scale: scale }], opacity: opacity }}>
               <SafeAreaView>
                 <ScrollView
                   showsVerticalScrollIndicator={false}
@@ -103,17 +87,15 @@ class HomeScreen extends React.Component {
                     <TitleBar>
                       <TouchableOpacity
                         onPress={() => this.handleAvatar()}
-                        style={{flexDirection: 'row', }}
+                        style={{ flexDirection: 'row' }}
                       >
-                        <Avatar  source={require('../assets/account.png')} />
+                        <Avatar source={require('../assets/account.png')} />
                         <TitleWrap>
                           <TitleTop>{name === "User" ? "Please Login" : "Welcome back," }</TitleTop>
                           <NameTop>{name}</NameTop>
                         </TitleWrap>
                       </TouchableOpacity>
-                      {/* <TouchableOpacity onPress={openNotif} > */}
-                      <TouchableOpacity   onPress={() => navigation.push("Cards", navigation)} >
-
+                      <TouchableOpacity onPress={() => navigation.push("Cards", navigation)} >
                         <NotificationButton />
                       </TouchableOpacity>
                     </TitleBar>
@@ -126,14 +108,14 @@ class HomeScreen extends React.Component {
                   <ResourcesSlideBar navigation={navigation} />
 
                   <Subtitle>Continue Learning</Subtitle>
-                  <Topics data={coursesData} navigation={navigation}/>
+                  <Topics data={coursesData} navigation={navigation} />
 
                   <Subtitle>Courses By Platform</Subtitle>
-                  <TopicsByPlatform data={coursesDataByPlatform} navigation={navigation}/>
+                  <TopicsByPlatform data={coursesDataByPlatform} navigation={navigation} />
 
-                  <CoursesByTopic data={coursesDataNew} navigation={navigation} topic={"new"}/>
+                  <CoursesByTopic data={coursesDataNew} navigation={navigation} topic={"new"} />
 
-                  <Articles data={articlesData} navigation={navigation}/>
+                  <Articles data={articlesData} navigation={navigation} />
 
                 </ScrollView>
               </SafeAreaView>
@@ -144,7 +126,6 @@ class HomeScreen extends React.Component {
         }
       </RootView>
       );
-
     }
 }
 
@@ -157,12 +138,11 @@ const RootView = styled.View`
 `;
 
 const Container = styled.View`
-  padding-top: 30px;
-  flex: 1;
+  padding-top: 32px;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
-
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container)
 

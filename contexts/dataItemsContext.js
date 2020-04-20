@@ -40,8 +40,8 @@ const DataItemsProvider = ({children}) => {
         setResourcesData({
           resources: FormatData(respResources.items),
           job_search: FormatData(respJobSearch.items),
-          podcasts: FormatData(respHtmlCss.items),
-          html_css: FormatData(respPodcasts.items)
+          podcasts: FormatData(respPodcasts.items),
+          html_css: FormatData(respHtmlCss.items)
         })
 
         setCoursesDataByPlatform({
@@ -74,6 +74,7 @@ const DataItemsProvider = ({children}) => {
     }
     return arr
   }
+
 
   const FiterNewCourses = (data) => {
     let arr = []

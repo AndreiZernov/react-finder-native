@@ -1,42 +1,26 @@
 import React, { Component } from 'react'
 import { BlurView } from 'expo-blur'
-import styled from "styled-components"
-import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions, AsyncStorage } from 'react-native'
+import styled from 'styled-components'
+import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions } from 'react-native'
 import firebase from '../firebase'
-import LoadingData from "../components/LoadingData"
-import Success from "../components/Success"
-import LoadingLogin from "../components/LoadingLogin"
+import LoadingData from '../components/LoadingData'
+import Success from '../components/Success'
+import LoadingLogin from '../components/LoadingLogin'
 import { connect } from 'react-redux'
 
 let screenHeight = Dimensions.get("window").height;
 
 
-function mapStateToProps(state) {
-  return { action: state.action };
-}
+function mapStateToProps(state) { return { action: state.action }; }
 
 function mapDispatchToProps(dispatch) {
   return {
-    closeSignup: () =>
-      dispatch({
-        type: "CLOSE_SIGNUP"
-      }),
-    updateName: name =>
-      dispatch({
-        type: "UPDATE_NAME",
-        name
-      }),
-    openLogin: () =>
-      dispatch({
-        type: "OPEN_LOGIN"
-      }),
-    closeLogin: () =>
-      dispatch({
-        type: "CLOSE_LOGIN"
-      })
+    closeSignup: () => dispatch({ type: "CLOSE_SIGNUP" }),
+    updateName: name => dispatch({ type: "UPDATE_NAME", name }),
+    openLogin: () => dispatch({ type: "OPEN_LOGIN" }),
+    closeLogin: () => dispatch({ type: "CLOSE_LOGIN" })
   };
 }
-
 
 
 class ModalSignup extends Component {
@@ -68,7 +52,6 @@ class ModalSignup extends Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((response) => {
           this.setState({ isLoading: false })
-          console.log(response)
 
           if (response) {
             this.setState({ isSuccessful: true })
@@ -100,30 +83,22 @@ class ModalSignup extends Component {
 
   componentDidUpdate() {
     if (this.props.action === "openSignup") {
-      Animated.timing(this.state.top, {
-        toValue: 0,
-        duration: 0
+      Animated.timing(this.state.top, { toValue: 0, duration: 0
       }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
-      Animated.timing(this.state.translateY, {
-        toValue: 0,
-        duration: 0
+      Animated.timing(this.state.translateY, { toValue: 0, duration: 0
       }).start();
 
     }
 
     if (this.props.action === "closeSignup") {
       setTimeout(() => {
-        Animated.timing(this.state.top, {
-          toValue: screenHeight,
-          duration: 0
+        Animated.timing(this.state.top, { toValue: screenHeight, duration: 0
         }).start();
 
         Animated.spring(this.state.scale, { toValue: 1.3 }).start();
       }, 500);
-      Animated.timing(this.state.translateY, {
-        toValue: 1000,
-        duration: 500
+      Animated.timing(this.state.translateY, { toValue: 1000, duration: 500
       }).start();
     }
   }
@@ -151,14 +126,7 @@ class ModalSignup extends Component {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </TouchableWithoutFeedback>
-        <AnimatedModal
-          style={{
-              transform: [
-            { scale: this.state.scale },
-            { translateY: this.state.translateY }
-              ]
-          }}
-        >
+        <AnimatedModal style={{ transform: [ { scale: this.state.scale }, { translateY: this.state.translateY } ] }} >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
           <TextInput
@@ -183,17 +151,12 @@ class ModalSignup extends Component {
           <IconEmail source={require("../assets/icon-email.png")} />
           <IconPassword source={require("../assets/icon-password.png")} />
 
-          <TouchableOpacity
-            title="Signup"
-            onPress={() => this.registerUser()}
-          >
+          <TouchableOpacity onPress={() => this.registerUser()} >
             <ButtonView>
               <ButtonText>Sign Up</ButtonText>
             </ButtonView>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.handleChange()}
-          >
+          <TouchableOpacity onPress={() => this.handleChange()} >
             <Text>
               Already Registered? Click here to login
             </Text>

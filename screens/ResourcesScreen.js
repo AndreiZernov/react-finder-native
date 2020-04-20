@@ -1,9 +1,9 @@
-import React from "react";
-import { Linking, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
-import styled from "styled-components";
-import { DataItemsContext } from "../contexts/dataItemsContext"
-import { PodcastsIcon, ResourcesIcon, JobSearchIcon, HtmlCssIcon } from "../components/Icons";
-import LoadingData from "../components/LoadingData"
+import React from 'react'
+import { Linking, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native'
+import styled from 'styled-components'
+import { DataItemsContext } from '../contexts/dataItemsContext'
+import { PodcastsIcon, ResourcesIcon, JobSearchIcon, HtmlCssIcon } from '../components/Icons'
+import LoadingData from '../components/LoadingData'
 import { Ionicons } from '@expo/vector-icons'
 
 
@@ -34,9 +34,9 @@ class ResourcesScreen extends React.Component {
             <SafeAreaView>
               <ScrollView style={{ height: "100%" }} showsVerticalScrollIndicator={false}>
                 <Title>Resources Page</Title>
+
                 {
                   navigation.getParam("home") === "home" &&
-
                   <TouchableOpacity
                     onPress={() => navigation.goBack() }
                     style={{ position: "absolute", top: 15, right: 20 }}
@@ -46,7 +46,9 @@ class ResourcesScreen extends React.Component {
                     </CloseView>
                   </TouchableOpacity>
                 }
-                {RecourcesList.map(resource =>
+
+                {
+                  RecourcesList.map(resource =>
                   <Wrapper key={resource.name} style={{backgroundColor: resource.color}}>
                     <SubWrapper>
                       {resource.icon}
@@ -66,8 +68,8 @@ class ResourcesScreen extends React.Component {
                     </ScrollView>
                   </Wrapper>
                 )}
-              </ScrollView>
 
+              </ScrollView>
             </SafeAreaView>
           </Container>
         }
@@ -83,15 +85,15 @@ export default ResourcesScreen;
 const RecourcesList = [
   { name: "resources", icon: <ResourcesIcon />, color: "rgba(244, 151, 168, 0.3)"},
   { name: "job_search", icon: <JobSearchIcon />, color: "rgba(160, 235, 216, 0.3)"},
-  { name: "podcasts", icon: <PodcastsIcon />, color: "rgba(185, 209, 251, 0.3)"},
-  { name: "html_css", icon: <HtmlCssIcon />, color: "rgba(249, 167, 114, 0.3)"}
+  { name: "html_css", icon: <HtmlCssIcon />, color: "rgba(249, 167, 114, 0.3)"},
+  { name: "podcasts", icon: <PodcastsIcon />, color: "rgba(185, 209, 251, 0.3)"}
 ]
 
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);
   flex: 1;
-  padding-top: 30px;
+  padding-top: 32px;
 `;
 
 const Container = styled.View``;
@@ -130,7 +132,6 @@ const SubWrapper = styled.View`
   align-items: center;
   flex-direction: row;
 `;
-
 
 const Subtitle = styled.Text`
   font-size: 20px;

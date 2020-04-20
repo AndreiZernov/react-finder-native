@@ -1,13 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
 import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
-import { PlayIcon } from "../components/Icons";
+import styled from 'styled-components'
+import { Ionicons } from '@expo/vector-icons'
+import { PlayIcon } from '../components/Icons'
+import { BackColor, BackImage } from '../data/BackgroundData'
 
 
 const screenHeight = Dimensions.get("window").height
-
-
 
 class SectionScreen extends React.Component {
   static navigationOptions = { headerShown: false };
@@ -26,31 +25,16 @@ class SectionScreen extends React.Component {
     const { navigation } = this.props
     const course = navigation.getParam("course")
     const topic = navigation.getParam("topic")
-    const BackColor = () => {
-      return topic === "react" ?  "rgb(20, 20, 20)" :
-        topic === "react_native" ?  "rgba(38, 48, 52, 1)" :
-        topic === "redux" ?  "rgb(3, 3, 3)" :
-        topic === "graphql" ?  "rgb(5, 5, 5)" :
-        topic === "pathway" ?  "rgb(4, 4, 4)" : "rgb(20, 20, 20)"
-    }
     const videoLink = navigation.state.params.course.link
-
 
     return (
       <RootView>
-        <Img source={
-          topic === "react" ? require("../assets/background1.jpg") :
-          topic === "react_native" ? require("../assets/background10.jpg") :
-          topic === "redux" ? require("../assets/background9.jpg") :
-          topic === "graphql" ? require("../assets/background8.jpg") :
-          topic === "pathway" ? require("../assets/background4.jpg") :
-          require("../assets/background1.jpg")
-        } />
         <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
         <Container>
           <SafeAreaView>
             <ScrollView style={{ height: "100%" }}>
               <Cover>
+              <Img source={BackImage(topic)} />
                 <LogoWrapper style={{ width: topic==="react_native" ? 83 : 100 }}>
                   <Logo source={{ uri: course.img}} />
                   {videoLink.includes("youtube") &&
@@ -79,7 +63,7 @@ class SectionScreen extends React.Component {
                 </CloseView>
               </TouchableOpacity>
 
-              <Content  style={{backgroundColor: BackColor()}} >
+              <Content style={{backgroundColor: BackColor(topic)}} >
                 <Subtitle>Short Description:</Subtitle>
                 <Text>{course.description}</Text>
                 <Subtitle>Price:</Subtitle>
@@ -103,7 +87,7 @@ export default SectionScreen;
 const RootView = styled.View`
   background: rgb(20, 20, 20);
   flex: 1;
-  padding-top: 30px;
+  padding-top: 32px;
 `;
 
 const Container = styled.View``;
@@ -165,7 +149,7 @@ const Content = styled.View`
   height: 100%;
   width: 100%;
   padding: 0 5%;
-  margin: 10px auto 20%;
+  margin: 0 auto 20%;
 `;
 
 const Subtitle = styled.Text`

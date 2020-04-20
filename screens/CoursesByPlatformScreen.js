@@ -1,25 +1,14 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
 import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
+import styled from 'styled-components'
+import { Ionicons } from '@expo/vector-icons'
 import TopicsByPlatformCourse from '../components/TopicsByPlatformCourse'
 
 
 const screenHeight = Dimensions.get("window").height
 
-
 class CoursesByPlatformScreen extends React.Component {
   static navigationOptions = { headerShown: false };
-
-  _goToURL(url) {
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log('Don\'t know how to open URI: ' + url);
-      }
-    });
-  }
 
   render() {
     const { navigation } = this.props
@@ -36,7 +25,6 @@ class CoursesByPlatformScreen extends React.Component {
               <Cover>
                 <Img source={image} />
                 <PlatformName>{platform.toUpperCase()} PLATFORM</PlatformName>
-
                 <NumberCourses>{data[platform].length} courses</NumberCourses>
               </Cover>
               <TouchableOpacity
@@ -75,7 +63,7 @@ export default CoursesByPlatformScreen
 const RootView = styled.View`
   background: rgb(20, 20, 20);
   flex: 1;
-  padding-top: 30px;
+  padding-top: 32px;
 `;
 
 const Container = styled.View``;

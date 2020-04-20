@@ -1,6 +1,6 @@
-import React from "react"
-import styled from "styled-components"
-import LottieView from "lottie-react-native"
+import React from 'react'
+import styled from 'styled-components'
+import LottieView from 'lottie-react-native'
 import { Animated, Dimensions } from 'react-native'
 
 let screenHeight = Dimensions.get("window").height;
@@ -10,10 +10,6 @@ class Success extends React.Component {
     top: new Animated.Value(0),
     opacity: new Animated.Value(0)
   };
-
-  componentDidMount() {
-
-  }
 
   componentDidUpdate() {
     if (this.props.isActive) {
@@ -28,8 +24,6 @@ class Success extends React.Component {
       this.animation.loop = false;
     }
   }
-
-
 
   render() {
     return (

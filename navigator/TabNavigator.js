@@ -1,23 +1,20 @@
-import React from "react"
-import { createStackNavigator } from "react-navigation-stack"
-import { createBottomTabNavigator } from "react-navigation-tabs"
-import { createAppContainer } from "react-navigation"
+import React from 'react'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createAppContainer } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
-import HomeScreen from "../screens/HomeScreen"
-import SectionScreen from "../screens/SectionScreen"
-import CardsScreen from "../screens/CardsScreen"
-import CoursesScreen from "../screens/CoursesScreen"
-import CoursesByPlatformScreen from "../screens/CoursesByPlatformScreen"
-import ResourcesScreen from "../screens/ResourcesScreen"
-import VideoScreen from "../screens/VideoScreen"
-import ArticleScreen from "../screens/ArticleScreen"
-
-
+import HomeScreen from '../screens/HomeScreen'
+import SectionScreen from '../screens/SectionScreen'
+import CardsScreen from '../screens/CardsScreen'
+import CoursesScreen from '../screens/CoursesScreen'
+import CoursesByPlatformScreen from '../screens/CoursesByPlatformScreen'
+import ResourcesScreen from '../screens/ResourcesScreen'
+import VideoScreen from '../screens/VideoScreen'
+import ArticleScreen from '../screens/ArticleScreen'
 
 
 const activeColor = "#4775f2";
 const inactiveColor = "#b8bece";
-
 
 
 const HomeStack = createStackNavigator({
@@ -100,23 +97,6 @@ ResourcesStack.navigationOptions = {
 
 
 
-const CoursesByPlatformStack = createStackNavigator({
-  CoursesByPlatform: CoursesByPlatformScreen,
-  Section: SectionScreen,
-  Video: VideoScreen
-});
-
-
-CoursesByPlatformStack.navigationOptions = {
-  tabBarLabel: "CoursesByPlatform",
-  tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-folder"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
-  )
-};
 
 
 

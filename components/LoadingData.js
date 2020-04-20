@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { StatusBar } from "react-native";
-import LottieView from "lottie-react-native"
+import { StatusBar } from 'react-native'
+import LottieView from 'lottie-react-native'
 
 
 export default function LoadingData() {

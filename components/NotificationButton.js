@@ -1,7 +1,7 @@
-import React from "react"
-import styled from "styled-components"
-import { NotificationIcon } from "./Icons"
-import { useDataItems } from "../contexts/dataItemsContext"
+import React from 'react'
+import styled from 'styled-components'
+import { NotificationIcon } from './Icons'
+import { useDataItems } from '../contexts/dataItemsContext'
 
 
 const NotificationButton = () => {
@@ -9,9 +9,9 @@ const NotificationButton = () => {
   return(
     <Container>
       <NotificationIcon />
-      <Bubble>
+      <Cover>
         <Text>{coursesDataNew.length}</Text>
-      </Bubble>
+      </Cover>
     </Container>
   )
 }
@@ -27,7 +27,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Bubble = styled.View`
+const Cover = styled.View`
   width: 16px;
   height: 16px;
   background: #3c4560;

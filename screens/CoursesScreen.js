@@ -1,9 +1,9 @@
-import React from "react"
-import { Dimensions, ScrollView, TouchableOpacity, StatusBar, SafeAreaView } from "react-native"
-import styled from "styled-components"
-import { DataItemsContext } from "../contexts/dataItemsContext"
+import React from 'react'
+import { Dimensions, ScrollView, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native'
+import styled from 'styled-components'
+import { DataItemsContext } from '../contexts/dataItemsContext'
 import QuickFacts from '../data/QuickFacts'
-import LoadingData from "../components/LoadingData"
+import LoadingData from '../components/LoadingData'
 import CourseCard from '../components/CourseCard'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -21,9 +21,8 @@ class CoursesScreen extends React.Component {
     let nextTopic = ''
     let prevTopic = ''
     if (navigation.getParam("home") !== "home") {
-      if (navigation.getParam("topic")) {
-        topic = navigation.getParam("topic")
-      } else if (navigation.getParam("nextTopic")) {
+      if (navigation.getParam("topic")) { topic = navigation.getParam("topic") }
+      else if (navigation.getParam("nextTopic")) {
         topic = navigation.getParam("nextTopic")
       } else if (navigation.getParam("prevTopic")) {
         topic = navigation.getParam("prevTopic")
@@ -86,6 +85,7 @@ class CoursesScreen extends React.Component {
                       </IconsWrapper>
                     }
                   </Hero>
+
                   <CoursesByTopic
                     data={coursesData[topic]}
                     navigation={navigation}
@@ -146,11 +146,10 @@ const prevTopicFunc = (topic) => {
 const RootView = styled.View`
   background: rgb(20, 20, 20);
   flex: 1;
-  padding-top: 30px;
+  padding-top: 32px;
 `;
 
-const Container = styled.View`
-`;
+const Container = styled.View``;
 
 const Hero = styled.View`
   height: 420px;
@@ -182,17 +181,17 @@ const IconsWrapper = styled.View`
   width: 100%;
   padding: 0 10px;
   opacity: 0.2;
-
 `;
+
 const IconView = styled.View``;
+
 const Cover = styled.View`
   margin: 0 auto;
-  background: rgb(20, 20, 20);
+  background: rgb(27, 31, 38);
 `;
 
 const CardsContainer = styled.View`
   flex-direction: row;
-
 `;
 
 const Title = styled.Text`
@@ -223,7 +222,6 @@ const Name = styled.Text`
   color: tomato
   margin: 20px;
   margin-top: auto;
-
 `;
 
 const Subtitle = styled.Text`

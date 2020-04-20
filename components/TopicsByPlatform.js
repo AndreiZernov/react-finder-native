@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import React from 'react'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 
 
@@ -85,11 +85,6 @@ const Name = styled.Text`
   font-size: 16px;
   font-weight: bold;
   width: 180px;
-`;
-
-
-const Img = styled.Image`
-  height: 45px;
 `;
 
 const Number = styled.Text`

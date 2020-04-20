@@ -1,9 +1,10 @@
-import React from "react"
-import styled from "styled-components"
-import LottieView from "lottie-react-native"
+import React from 'react'
+import styled from 'styled-components'
+import LottieView from 'lottie-react-native'
 import { Animated, Dimensions } from 'react-native'
 
-let screenHeight = Dimensions.get("window").height;
+
+let screenHeight = Dimensions.get('window').height;
 
 class LoadingLogin extends React.Component {
   state = {
@@ -24,8 +25,6 @@ class LoadingLogin extends React.Component {
       this.animation.loop = false;
     }
   }
-
-
 
   render() {
     return (

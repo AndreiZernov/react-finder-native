@@ -3,18 +3,10 @@ import { PanResponder, Animated, TouchableOpacity, ScrollView, SafeAreaView, Dim
 import styled from "styled-components";
 import Cards from '../components/Cards'
 import { DataItemsContext } from "../contexts/dataItemsContext"
-import { connect } from 'react-redux'
 import { Ionicons } from "@expo/vector-icons";
 
 
 let screenHeight = Dimensions.get("window").height - 40;
-
-
-function mapStateToProps(state) {
-  return {
-    action: state.action
-  };
-}
 
 
 class CardsScreen extends React.Component {
@@ -31,29 +23,13 @@ class CardsScreen extends React.Component {
     opacity: new Animated.Value(0)
   };
 
-  getNextIndex = (index) => {
-    let nextIndex = index + 1
-    if ( nextIndex > this.context.coursesDataNew.length - 1 ) {
-        return 0
-    }
-    return nextIndex
-  }
+  getNextIndex = (index) => (index + 1) > (this.context.coursesDataNew.length - 1) ? 0 : (index + 1)
 
 
   panResponder = PanResponder.create({
-        onStartShouldSetPanResponderCapture: () => true,
+    onStartShouldSetPanResponderCapture: () => true,
     onPanResponderTerminationRequest: () => false,
-    onMoveShouldSetPanResponder: (event, gestureState) => {
-      if (gestureState.dx === 0 && gestureState.dy === 0) {
-          return false;
-      } else {
-        if (this.props.action === "openCard") {
-            return false;
-        } else {
-            return true;
-        }
-      }
-    },
+    onMoveShouldSetPanResponder: (event, gestureState) => gestureState.dx === 0 && gestureState.dy === 0 ? false : true,
 
     onPanResponderGrant: () => {
       this.scrollView.setNativeProps({ scrollEnabled: false })
@@ -66,10 +42,7 @@ class CardsScreen extends React.Component {
       Animated.timing(this.state.opacity, { toValue: 0.5 }).start();
     },
 
-    onPanResponderMove: Animated.event([
-        null,
-      { dx: this.state.pan.x, dy: this.state.pan.y }
-    ]),
+    onPanResponderMove: Animated.event([ null, { dx: this.state.pan.x, dy: this.state.pan.y } ]),
 
     onPanResponderRelease: () => {
       this.scrollView.setNativeProps({ scrollEnabled: true })
@@ -105,6 +78,9 @@ class CardsScreen extends React.Component {
   });
 
   render() {
+    const { pan, scale, translateY, thirdScale, thirdTranslateY, index, opacity} = this.state
+    const { coursesDataNew } = this.context
+    const { navigation } = this.props
 
     return (
       <RootView>
@@ -117,58 +93,26 @@ class CardsScreen extends React.Component {
           >
             <Container>
               <TouchableOpacity
-                onPress={() => this.props.navigation.goBack()}
-                style={{
-                  position: "absolute", top: 35, right: 15
-                }}
+                onPress={() => navigation.goBack()}
+                style={{ position: "absolute", top: 35, right: 15 }}
               >
                 <CloseButton>
                   <Ionicons name="ios-close" size={44} color="black" />
                 </CloseButton>
               </TouchableOpacity>
-              <AnimatedMask style={{ opacity: this.state.opacity }} />
+              <AnimatedMask style={{ opacity: opacity }} />
 
-              <Animated.View
-                style={{
-                  transform: [{ translateX: this.state.pan.x }, { translateY: this.state.pan.y }]
-                }}
-                {...this.panResponder.panHandlers}
-              >
-                <Cards
-                  data={this.context.coursesDataNew[this.state.index]}
-                  canOpen={true}
-                />
+              <Animated.View style={{ transform: [{ translateX: pan.x }, { translateY: pan.y }] }} {...this.panResponder.panHandlers} >
+                <Cards data={coursesDataNew[index]} canOpen={true} />
               </Animated.View>
-              <Animated.View
-                style={{
-                  position: 'absolute', top: 0, left: 0, zIndex: -1,
-                  width: "100%", height: "100%",
-                  justifyContent: 'center', alignItems: 'center',
-                  transform: [
-                  { scale: this.state.scale },
-                  { translateY: this.state.translateY }
-                  ]
-                }}
-              >
-                <Cards
-                  data={this.context.coursesDataNew[this.getNextIndex(this.state.index)]}/>
 
-              </Animated.View>
-              <Animated.View
-                style={{
-                  position: 'absolute', top: 0, left: 0, zIndex: -3,
-                  width: "100%", height: "100%",
-                  justifyContent: 'center', alignItems: 'center',
-                  transform: [
-                  { scale: this.state.thirdScale },
-                  { translateY: this.state.thirdTranslateY }
-                  ]
-                }}
-              >
-                <Cards
-                  data={this.context.coursesDataNew[this.getNextIndex(this.state.index + 1)]}/>
+              <AnimatedCard style={{ zIndex: -1, transform: [ { scale: scale }, { translateY: translateY } ] }}>
+                <Cards data={coursesDataNew[this.getNextIndex(index)]} />
+              </AnimatedCard>
 
-              </Animated.View>
+              <AnimatedCard style={{ zIndex: -3, transform:[{scale: thirdScale},{translateY: thirdTranslateY}] }}>
+                <Cards data={coursesDataNew[this.getNextIndex(index + 1)]}/>
+              </AnimatedCard>
 
             </Container>
           </ScrollView>
@@ -177,12 +121,13 @@ class CardsScreen extends React.Component {
   )}
 }
 
-export default connect(mapStateToProps)(CardsScreen)
+export default CardsScreen
+
 
 const RootView = styled.View`
   background: rgb(27, 31, 38);
   flex: 1;
-  padding-top: 15px;
+  padding-top: 32px;
 `;
 
 const Container = styled.View`
@@ -191,7 +136,7 @@ const Container = styled.View`
   align-items: center;
   width: 100%;
   height: 100%;
-  min-height: ${screenHeight};
+  min-height: ${screenHeight}px;
 `;
 
 const Mask = styled.View`
@@ -204,6 +149,18 @@ const Mask = styled.View`
 `;
 
 const AnimatedMask = Animated.createAnimatedComponent(Mask);
+
+const Card = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AnimatedCard = Animated.createAnimatedComponent(Card);
 
 const CloseButton = styled.View`
   width: 40px;

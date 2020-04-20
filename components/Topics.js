@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import React from 'react'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 
 
@@ -33,10 +33,8 @@ const Topics = ({ data, navigation }) => {
         })}
       </CardsContainer>
     </ScrollView>
-
   )
 }
-
 
 const CoursesList = [
   { name: "react" , image: require("../assets/background1.jpg")},

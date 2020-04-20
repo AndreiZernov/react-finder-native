@@ -3,23 +3,24 @@ import { ScrollView, TouchableOpacity } from "react-native"
 import styled from 'styled-components/native'
 import Article from './Article'
 
+
 const Articles = ({data, navigation}) =>
-  <>
-    <Subtitle>Articles</Subtitle>
-    <ArticlesContainer>
-      {data.map(article => {
-        return (
-          <ArticleWrapper key={article.title}>
-            <TouchableOpacity
-              onPress={() => navigation.push("Article")}
-            >
-              <Article data={article}/>
-            </TouchableOpacity>
-          </ArticleWrapper>
-        )})
-      }
-    </ArticlesContainer>
-  </>
+    <>
+      <Subtitle>Articles</Subtitle>
+      <ArticlesContainer>
+        {data.map(article => {
+          return (
+            <ArticleWrapper key={article.title}>
+              <TouchableOpacity
+                onPress={() => navigation.push("Article", { article })}
+              >
+                <Article data={article}/>
+              </TouchableOpacity>
+            </ArticleWrapper>
+          )})
+        }
+      </ArticlesContainer>
+    </>
 
 
 export default Articles

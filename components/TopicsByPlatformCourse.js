@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { Dimensions } from 'react-native';
+import React from 'react'
+import styled from 'styled-components'
+import { Dimensions } from 'react-native'
+import { BackColor, BackImage } from '../data/BackgroundData'
 
 
 const screenWidth = Dimensions.get('window').width
-
 
 const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 40
@@ -22,17 +22,11 @@ class TopicsByPlatformCourse extends React.Component {
     cardWidth: getCourseWidth(screenWidth)
   }
 
-  componentDidMount() {
-    Dimensions.addEventListener("change", this.adaptLayout)
-  }
-  componentWillUnmoung() {
-    Dimensions.removeEventListener("change", this.adaptLayout)
-  }
+  componentDidMount() { Dimensions.addEventListener("change", this.adaptLayout)}
+  componentWillUnmoung() { Dimensions.removeEventListener("change", this.adaptLayout)}
 
   adaptLayout = dimensions => {
-    this.setState({
-      cardWidth: getCourseWidth(dimensions.window.width)
-    })
+    this.setState({ cardWidth: getCourseWidth(dimensions.window.width) })
   }
 
   render() {
@@ -40,15 +34,7 @@ class TopicsByPlatformCourse extends React.Component {
     return (
       <Container style={{ width: this.state.cardWidth }}>
         <Cover>
-          <Image source={
-            data.parent1 === "react" ? require("../assets/background1.jpg") :
-            data.parent1 === "react_native" ? require("../assets/background10.jpg") :
-            data.parent1 === "redux" ? require("../assets/background9.jpg") :
-            data.parent1 === "graphql" ? require("../assets/background8.jpg") :
-            data.parent1 === "pathway" ? require("../assets/background4.jpg") :
-            require("../assets/background1.jpg")
-          } />
-          {/* <Img source={{uri:data.img}} resizeMode="contain" /> */}
+          <Image source={BackImage(data.parent1)} />
           <Name>{data.name}</Name>
           <Duration>{data.duration}</Duration>
           <Author>Taught by {data.author}</Author>
@@ -60,7 +46,6 @@ class TopicsByPlatformCourse extends React.Component {
 
 
 export default TopicsByPlatformCourse;
-
 
 const Container = styled.View`
   height: 335px;

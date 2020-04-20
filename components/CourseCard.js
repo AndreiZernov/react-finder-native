@@ -1,17 +1,11 @@
-import React from "react";
+import React from "react"
 import styled from 'styled-components/native'
+import { BackImage } from '../data/BackgroundData'
 
 
 const CourseCard = ({data}) => (
   <Container>
-    <Image source={
-      data.parent1 === "react" ? require("../assets/background1.jpg") :
-      data.parent1 === "react_native" ? require("../assets/background10.jpg") :
-      data.parent1 === "redux" ? require("../assets/background9.jpg") :
-      data.parent1 === "graphql" ? require("../assets/background8.jpg") :
-      data.parent1 === "pathway" ? require("../assets/background4.jpg") :
-      require("../assets/background1.jpg")
-    } />
+    <Image source={BackImage(data.parent1)} />
     <Image />
     <Cover>
       <Name>{data.name}</Name>
