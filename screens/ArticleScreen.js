@@ -7,19 +7,8 @@ import Article from '../components/Article'
 
 const screenHeight = Dimensions.get("window").height
 
-
 class ArticleScreen extends React.Component {
   static navigationOptions = { headerShown: false }
-
-  _goToURL(url) {
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log('Don\'t know how to open URI: ' + url);
-      }
-    });
-  }
 
   render() {
     const { navigation } = this.props

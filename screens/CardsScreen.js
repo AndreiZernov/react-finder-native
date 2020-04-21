@@ -8,7 +8,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 let screenHeight = Dimensions.get("window").height - 40;
 
-
 class CardsScreen extends React.Component {
   static contextType = DataItemsContext
   static navigationOptions = { headerShown: false };

@@ -2,7 +2,6 @@ import React from 'react'
 import { Dimensions, ScrollView, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native'
 import styled from 'styled-components'
 import { DataItemsContext } from '../contexts/dataItemsContext'
-import QuickFacts from '../data/QuickFacts'
 import LoadingData from '../components/LoadingData'
 import CourseCard from '../components/CourseCard'
 import { Ionicons } from '@expo/vector-icons'
@@ -45,9 +44,9 @@ class CoursesScreen extends React.Component {
               <SafeAreaView>
                 <ScrollView style={{ height: "100%" }} showsVerticalScrollIndicator={false}>
                   <Hero>
-                    <Title>{QuickFacts[topic].title}</Title>
-                    <Text>{QuickFacts[topic].subtitle}</Text>
-                    {QuickFacts[topic].list.map(item =>
+                    <Title>{coursesData[topic][0].title}</Title>
+                    <Text>{coursesData[topic][0].content}</Text>
+                    {coursesData[topic][0].list.map(item =>
                       <TextList key={item}>{item}</TextList>
                     )}
                     <Name>Number of courses: {coursesData[topic].length}</Name>
@@ -199,7 +198,7 @@ const Title = styled.Text`
   color: white;
   font-weight: 600;
   margin: 10px auto 15px;
-  width: 80%;
+  width: 75%;
   text-align: center;
 `;
 

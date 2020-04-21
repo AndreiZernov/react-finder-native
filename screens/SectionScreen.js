@@ -4,22 +4,13 @@ import styled from 'styled-components'
 import { Ionicons } from '@expo/vector-icons'
 import { PlayIcon } from '../components/Icons'
 import { BackColor, BackImage } from '../data/BackgroundData'
+import { _goToURL } from '../data/LinkFunc'
 
 
 const screenHeight = Dimensions.get("window").height
 
 class SectionScreen extends React.Component {
   static navigationOptions = { headerShown: false };
-
-  _goToURL(url) {
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log('Don\'t know how to open URI: ' + url);
-      }
-    });
-  }
 
   render() {
     const { navigation } = this.props
@@ -71,7 +62,7 @@ class SectionScreen extends React.Component {
                 <Subtitle>Duration:</Subtitle>
                 <Text>{course.duration}</Text>
                 <Subtitle>Link to Resource:</Subtitle>
-                <Link onPress={() => this._goToURL(course.link)}>Start Learning Right Now!</Link>
+                <Link onPress={() => _goToURL(course.link)}>Start Learning Right Now!</Link>
               </Content>
             </ScrollView>
           </SafeAreaView>

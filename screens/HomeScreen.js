@@ -57,12 +57,10 @@ class HomeScreen extends React.Component {
     }
   }
 
-
   handleAvatar = () => {
     if (this.props.name === "User") { this.props.openLogin() }
     else { this.props.openMenu() }
   };
-
 
   render() {
     const { navigation, name, openMenu, openNotif } = this.props
@@ -75,7 +73,7 @@ class HomeScreen extends React.Component {
           <LoadingData /> :
           <>
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-            <Menu />
+            <Menu navigation={navigation} />
             <AnimatedContainer style={{ transform: [{ scale: scale }], opacity: opacity }}>
               <SafeAreaView>
                 <ScrollView

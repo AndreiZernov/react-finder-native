@@ -5,23 +5,12 @@ import { DataItemsContext } from '../contexts/dataItemsContext'
 import { PodcastsIcon, ResourcesIcon, JobSearchIcon, HtmlCssIcon } from '../components/Icons'
 import LoadingData from '../components/LoadingData'
 import { Ionicons } from '@expo/vector-icons'
-
+import { _goToURL } from '../data/LinkFunc'
 
 
 class ResourcesScreen extends React.Component {
   static navigationOptions = { headerShown: false  };
   static contextType = DataItemsContext
-
-  _goToURL(url) {
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log('Don\'t know how to open URI: ' + url);
-      }
-    });
-  }
-
 
   render() {
     const { navigation } = this.props
@@ -60,7 +49,7 @@ class ResourcesScreen extends React.Component {
                     >
                       {this.context.resourcesData[resource.name].map(item =>
                         <CardsContainer key={item.name}>
-                          <Link onPress={() => this._goToURL(item.link)}>
+                          <Link onPress={() => _goToURL(item.link)}>
                             <Name>{item.name}</Name>
                           </Link>
                         </CardsContainer>

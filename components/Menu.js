@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import MenuItem from './MenuItem'
 import { connect } from 'react-redux'
 import firebase from '../firebase'
+import { _goToURL } from '../data/LinkFunc'
 
 
 const screenWidth = Dimensions.get("window").width
@@ -35,7 +36,6 @@ class Menu extends React.Component {
     if (this.props.action === "openMenu") {
       Animated.spring(this.state.top, { toValue: 54 }).start();
     }
-
     if (this.props.action === "closeMenu") {
       Animated.spring(this.state.top, { toValue: screenHeight+54 }).start()
     }
@@ -48,7 +48,13 @@ class Menu extends React.Component {
   }
 
   handleMenu = index => {
-    if (index === 3) {
+    if (index === 0) {
+      this.props.closeMenu();
+    } else if (index === 1) {
+      this.props.navigation.push('Courses')
+    } else if (index === 2) {
+      this.props.navigation.push('Resources')
+    } else if (index === 3) {
       this.props.closeMenu();
       this.props.updateName("User");
       firebase.auth().signOut().then(() => {
@@ -86,6 +92,13 @@ class Menu extends React.Component {
                 <MenuItem icon={item.icon} title={item.title} text={item.text} />
               </TouchableOpacity>
             ))}
+            <Text>This App fully developed on React Native Javascript Library with the integration of tools such as Redux, React Context and Hooks, Styled Components, Lottie Animations. Firebase Authentication, QraphQl (all data published and managed at Contentful).</Text>
+            <Text>Project fully ready for IOS, Android deployment. Responsive Design for Tablets and Phones. Published at Google Play.</Text>
+            <Wrap>
+              <Ionicons name="ios-laptop" size={34} color="rgb(110, 225, 245)" />
+
+              <Link onPress={() => _goToURL('https://react-finder.netlify.app/')}>Web Version available!</Link>
+            </Wrap>
           </Content>
         </ScrollView>
       </AnimatedContainer>
@@ -93,8 +106,8 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
 const Container = styled.View`
   position: absolute;
@@ -131,17 +144,15 @@ const Title = styled.Text`
 const Subtitle = styled.Text`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  margin-top: 8px;
+  margin-top: 5px;
   color: white;
 `;
 
-
 const Content = styled.View`
   height: ${screenHeight}px;
-  padding: 30px;
+  padding: 15px 10px;
   height: 100%;
 `;
-
 
 const CloseView = styled.View`
   width: 44px;
@@ -153,10 +164,29 @@ const CloseView = styled.View`
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 `;
 
+const Text = styled.Text`
+  text-align: justify;
+  font-size: 14px;
+  color: #b8bece;
+`
+
+const Wrap = styled.View`
+  flex-direction: row;
+  margin: 0 0 50px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Link = styled.Text`
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(110, 225, 245);
+  padding-left: 5px;
+`;
 
 const items = [
-  { icon: "ios-settings", title: "Account", text: "settings" },
+  { icon: "ios-settings", title: "Home", text: "back to home page" },
   { icon: "ios-school", title: "Courses", text: "start learning" },
-  { icon: "ios-folder", title: "Helpful Resources", text: "start Using" },
+  { icon: "ios-folder", title: "Helpful Resources", text: "check this out" },
   { icon: "ios-exit", title: "Log out", text: "see you soon!" }
 ];

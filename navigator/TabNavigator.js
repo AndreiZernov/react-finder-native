@@ -27,20 +27,10 @@ const HomeStack = createStackNavigator({
   Video: VideoScreen,
   Article: ArticleScreen
 }, {
-  mode: "card"
+  mode: "modal"
 });
 
-
-
-HomeStack.navigationOptions = ({ navigation }) => {
-
-  const routeName = navigation.state.routes[navigation.state.index].routeName
-
-  if (routeName == "Section" || routeName == "Video") {
-    tabBarVisible = false;
-  }
-
-
+HomeStack.navigationOptions = () => {
   return {
     tabBarLabel: "Home",
     tabBarIcon: ({ focused }) => (
@@ -54,36 +44,28 @@ HomeStack.navigationOptions = ({ navigation }) => {
 };
 
 
-
 const CoursesStack = createStackNavigator({
   Courses: CoursesScreen,
   Courses: CoursesScreen,
   Section: SectionScreen
 }, {
-  mode: "card"
+  mode: "modal"
 });
 
 
-CoursesStack.navigationOptions = ({ navigation }) => {
-  return {
-    tabBarLabel: "Courses",
-    tabBarIcon: ({ focused }) => (
-      <Ionicons
-        name="ios-school"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-      />
-    )
-  }
+CoursesStack.navigationOptions = {
+  tabBarLabel: "Courses",
+  tabBarIcon: ({ focused }) => (
+    <Ionicons
+      name="ios-school"
+    size={26}
+    color={focused ? activeColor : inactiveColor}
+    />
+  )
 };
 
 
-
-const ResourcesStack = createStackNavigator({
-  Resources: ResourcesScreen
-});
-
-
+const ResourcesStack = createStackNavigator({ Resources: ResourcesScreen });
 ResourcesStack.navigationOptions = {
   tabBarLabel: "Resources",
   tabBarIcon: ({ focused }) => (
@@ -94,10 +76,6 @@ ResourcesStack.navigationOptions = {
     />
   )
 };
-
-
-
-
 
 
 const TabNavigator = createBottomTabNavigator(
