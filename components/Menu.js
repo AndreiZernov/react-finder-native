@@ -92,7 +92,7 @@ class Menu extends React.Component {
                 <MenuItem icon={item.icon} title={item.title} text={item.text} />
               </TouchableOpacity>
             ))}
-            <Text>This App fully developed on React Native Javascript Library with the integration of tools such as Redux, React Context and Hooks, Styled Components, Lottie Animations. Firebase Authentication, QraphQl (all data published and managed at Contentful).</Text>
+            <Text>This is React Native Application with the integration of tools such as Redux, React Context and Hooks, Styled Components, Lottie Animations. Firebase Authentication, QraphQl (all data published and managed at Contentful).</Text>
             <Text>Project fully ready for IOS, Android deployment. Responsive Design for Tablets and Phones. Published at Google Play.</Text>
             <Wrap>
               <Ionicons name="ios-laptop" size={34} color="rgb(110, 225, 245)" />
