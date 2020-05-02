@@ -33,7 +33,7 @@ Project is created with:
 <h2 align="center"> Launch and Content</h2>
 
 <p align="center">To launch this project, go to https://expo.io/@andrewzer/react-finder</p>
-<div align="center">Or scan the QR code in Expo Client <img src="./assets/readme1.gif"></div>
+<div align="center">Or scan the QR code in Expo Client <img src="./assets/readme1.png"></div>
 
 <h3 align="center"> Navigation</h3>
 
@@ -82,7 +82,8 @@ Formspree form backend email service was used.</p>
 
 ---
 
-<h2> Support</h2> [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/AndreiZernov)
+<h2> Support</h2> 
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/AndreiZernov)
 
 Reach out to me at one of the following places!
 
