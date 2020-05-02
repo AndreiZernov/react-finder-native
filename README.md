@@ -19,13 +19,13 @@ Application created for community as links to Free Helpful Resources, which cove
 
 Project is created with:
 
-- React: ~16.9.0
-- React Redux: ^7.2.0
-- Expo: ~37.0.3
-- Styled Components: ^5.1.0
-- Contentful: ^7.14.2
-- Firebase: ^7.14.0
-- Lottie: ^3.3.2
+- React: 16.9.0
+- React Redux: 7.2.0
+- Expo: 37.0.3
+- Styled Components: 5.1.0
+- Contentful: 7.14.2
+- Firebase: 7.14.0
+- Lottie: 3.3.2
 
 ---
 
