@@ -2,7 +2,7 @@
   <img src="./assets/logo-react.png"></img>
 </div>
 
-<h1 align="center">React Finder App - guide to React Native JavaScript library</h1>
+<h1 align="center">React Finder App - guide to React JavaScript library</h1>
 
 [![Build Status](https://travis-ci.com/AndreiZernov/react-finder.svg?branch=master)](https://travis-ci.com/AndreiZernov/react-finder-app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AndreiZernov/react-finder/blob/master/LICENSE)
@@ -10,6 +10,8 @@
 [![npm version](https://badge.fury.io/js/npm.svg)](https://badge.fury.io/js/npm)
 [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues/)
 
+This is React Native Application with the integration of tools such as Redux, React Context and Hooks, Styled Components, Lottie Animations. Firebase Authentication, QraphQl (all data published and managed at Contentful).
+Project fully ready for IOS, Android deployment. Responsive Design for Tablets and Phones. Published at Expo Store.
 Application created for community as links to Free Helpful Resources, which cover React, React Native, Redux and GraphQl materials.
 
 ---
