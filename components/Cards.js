@@ -1,29 +1,31 @@
-import React from "react"
-import styled from "styled-components"
-import { Animated, Dimensions } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient';
-import { BackColor, BackImage } from '../data/BackgroundData'
+import React from "react";
+import styled from "styled-components";
+import { Animated, Dimensions } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { BackColor, BackImage } from "../data/BackgroundData";
 
 class Cards extends React.Component {
   state = {
     textHeight: new Animated.Value(128)
-  }
+  };
 
   render() {
-    const { data } = this.props
+    const { data } = this.props;
 
     return (
       <AnimatedContainer style={{ backgroundColor: BackColor(data.parent1) }}>
         <Cover>
-          <Image source={BackImage(data.parent1)}/>
+          <Image source={BackImage(data.parent1)} />
           <AnimatedTitle>{data.name}</AnimatedTitle>
-          <LogoWrapper style={{ width: data.parent1==="react_native" ? 83 : 100 }}>
-            <Img source={{uri: data.img}} />
+          <LogoWrapper
+            style={{ width: data.parent1 === "react_native" ? 83 : 100 }}
+          >
+            <Img source={{ uri: data.img }} />
           </LogoWrapper>
 
           <Author>{data.author}</Author>
-          <Data>{data.date.split('T')[0]}</Data>
+          <Data>{data.date.split("T")[0]}</Data>
         </Cover>
         <AnimatedContent style={{ height: this.state.textHeight }}>
           <Subtitle>Short Description:</Subtitle>
@@ -31,16 +33,20 @@ class Cards extends React.Component {
         </AnimatedContent>
         <AnimatedLinearGradient
           colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 1)"]}
-          style={{ position: "absolute", zIndex: 1000, top: 330, width: "100%", height: this.state.textHeight }}
+          style={{
+            position: "absolute",
+            zIndex: 1000,
+            top: 330,
+            width: "100%",
+            height: this.state.textHeight
+          }}
         />
       </AnimatedContainer>
-    )
+    );
   }
 }
 
-
-export default Cards
-
+export default Cards;
 
 const Container = styled.View`
   width: 315px;
@@ -51,7 +57,7 @@ const Container = styled.View`
   overflow: hidden;
 `;
 
-const AnimatedContainer = Animated.createAnimatedComponent(Container)
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Cover = styled.View`
   height: 290px;
@@ -74,7 +80,7 @@ const Title = styled.Text`
   width: 200px;
 `;
 
-const AnimatedTitle = Animated.createAnimatedComponent(Title)
+const AnimatedTitle = Animated.createAnimatedComponent(Title);
 
 const LogoWrapper = styled.View`
   width: 100px;

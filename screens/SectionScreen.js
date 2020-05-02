@@ -1,68 +1,82 @@
-import React from 'react'
-import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
-import styled from 'styled-components'
-import { Ionicons } from '@expo/vector-icons'
-import { PlayIcon } from '../components/Icons'
-import { BackColor, BackImage } from '../data/BackgroundData'
-import { _goToURL } from '../data/LinkFunc'
+import React from "react";
+import {
+  TouchableOpacity,
+  StatusBar,
+  Linking,
+  Dimensions,
+  ScrollView,
+  SafeAreaView
+} from "react-native";
+import styled from "styled-components";
+import { Ionicons } from "@expo/vector-icons";
+import { PlayIcon } from "../components/Icons";
+import { BackColor, BackImage } from "../data/BackgroundData";
+import { _goToURL } from "../data/LinkFunc";
 
-
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 class SectionScreen extends React.Component {
   static navigationOptions = { headerShown: false };
 
   render() {
-    const { navigation } = this.props
-    const course = navigation.getParam("course")
-    const topic = navigation.getParam("topic")
-    const videoLink = navigation.state.params.course.link
+    const { navigation } = this.props;
+    const course = navigation.getParam("course");
+    const topic = navigation.getParam("topic");
+    const videoLink = navigation.state.params.course.link;
 
     return (
       <RootView>
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="light-content"
+        />
         <Container>
           <SafeAreaView>
             <ScrollView style={{ height: "100%" }}>
               <Cover>
-              <Img source={BackImage(topic)} />
-                <LogoWrapper style={{ width: topic==="react_native" ? 83 : 100 }}>
-                  <Logo source={{ uri: course.img}} />
-                  {videoLink.includes("youtube") &&
+                <Img source={BackImage(topic)} />
+                <LogoWrapper
+                  style={{ width: topic === "react_native" ? 83 : 100 }}
+                >
+                  <Logo source={{ uri: course.img }} />
+                  {videoLink.includes("youtube") && (
                     <PlayWrapper>
                       <TouchableOpacity
                         underlayColor="transparent"
-                        onPress={() => navigation.push("Video", {videoLink})}
+                        onPress={() => navigation.push("Video", { videoLink })}
                       >
                         <PlayView>
                           <PlayIcon style={{ marginLeft: -10 }} />
                         </PlayView>
                       </TouchableOpacity>
                     </PlayWrapper>
-                  }
+                  )}
                 </LogoWrapper>
                 <Name>{course.name}</Name>
                 <Author>{course.author}</Author>
               </Cover>
 
               <TouchableOpacity
-                onPress={() => navigation.goBack() }
+                onPress={() => navigation.goBack()}
                 style={{ position: "absolute", top: 15, right: 20 }}
               >
                 <CloseView>
-                  <Ionicons name="ios-close" size={34} color="black"  />
+                  <Ionicons name="ios-close" size={34} color="black" />
                 </CloseView>
               </TouchableOpacity>
 
-              <Content style={{backgroundColor: BackColor(topic)}} >
+              <Content style={{ backgroundColor: BackColor(topic) }}>
                 <Subtitle>Short Description:</Subtitle>
                 <Text>{course.description}</Text>
                 <Subtitle>Price:</Subtitle>
-                <Text style={{color:"tomato"}}>{course.price}</Text>
+                <Text style={{ color: "tomato" }}>{course.price}</Text>
                 <Subtitle>Duration:</Subtitle>
                 <Text>{course.duration}</Text>
                 <Subtitle>Link to Resource:</Subtitle>
-                <Link onPress={() => _goToURL(course.link)}>Start Learning Right Now!</Link>
+                <Link onPress={() => _goToURL(course.link)}>
+                  Start Learning Right Now!
+                </Link>
               </Content>
             </ScrollView>
           </SafeAreaView>
@@ -73,7 +87,6 @@ class SectionScreen extends React.Component {
 }
 
 export default SectionScreen;
-
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);
@@ -164,7 +177,6 @@ const Link = styled.Text`
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
 `;
-
 
 const PlayWrapper = styled.View`
   position: absolute;

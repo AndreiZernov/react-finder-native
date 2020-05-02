@@ -1,10 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Video } from 'expo-av'
-import { Ionicons } from '@expo/vector-icons'
-import { TouchableOpacity, Dimensions } from "react-native"
-import { WebView } from "react-native-webview"
-
+import React from "react";
+import styled from "styled-components";
+import { Video } from "expo-av";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity, Dimensions } from "react-native";
+import { WebView } from "react-native-webview";
 
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
@@ -12,10 +11,9 @@ let screenHeight = Dimensions.get("window").height;
 class VideoScreen extends React.Component {
   static navigationOptions = { headerShown: false };
 
-
   render() {
-    const { navigation } = this.props
-    const videoLink = navigation.getParam("videoLink")
+    const { navigation } = this.props;
+    const videoLink = navigation.getParam("videoLink");
 
     return (
       <RootView>
@@ -24,7 +22,7 @@ class VideoScreen extends React.Component {
             <WebView source={{ uri: videoLink }} />
           </View>
           <TouchableOpacity
-            onPress={() => navigation.goBack() }
+            onPress={() => navigation.goBack()}
             style={{ position: "absolute", top: 20, right: 20 }}
           >
             <CloseView>
@@ -37,8 +35,7 @@ class VideoScreen extends React.Component {
   }
 }
 
-export default VideoScreen
-
+export default VideoScreen;
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);

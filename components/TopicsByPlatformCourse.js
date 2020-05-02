@@ -1,36 +1,39 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Dimensions } from 'react-native'
-import { BackColor, BackImage } from '../data/BackgroundData'
+import React from "react";
+import styled from "styled-components";
+import { Dimensions } from "react-native";
+import { BackColor, BackImage } from "../data/BackgroundData";
 
+const screenWidth = Dimensions.get("window").width;
 
-const screenWidth = Dimensions.get('window').width
-
-const getCourseWidth = (screenWidth) => {
-  let cardWidth = screenWidth - 40
+const getCourseWidth = screenWidth => {
+  let cardWidth = screenWidth - 40;
   if (screenWidth >= 680) {
-    cardWidth = (screenWidth - 150) / 2
+    cardWidth = (screenWidth - 150) / 2;
   }
   if (screenWidth >= 1024) {
-    cardWidth = (screenWidth - 190) / 3
+    cardWidth = (screenWidth - 190) / 3;
   }
-  return cardWidth
-}
+  return cardWidth;
+};
 
 class TopicsByPlatformCourse extends React.Component {
   state = {
     cardWidth: getCourseWidth(screenWidth)
-  }
+  };
 
-  componentDidMount() { Dimensions.addEventListener("change", this.adaptLayout)}
-  componentWillUnmoung() { Dimensions.removeEventListener("change", this.adaptLayout)}
+  componentDidMount() {
+    Dimensions.addEventListener("change", this.adaptLayout);
+  }
+  componentWillUnmoung() {
+    Dimensions.removeEventListener("change", this.adaptLayout);
+  }
 
   adaptLayout = dimensions => {
-    this.setState({ cardWidth: getCourseWidth(dimensions.window.width) })
-  }
+    this.setState({ cardWidth: getCourseWidth(dimensions.window.width) });
+  };
 
   render() {
-    let { data } = this.props
+    let { data } = this.props;
     return (
       <Container style={{ width: this.state.cardWidth }}>
         <Cover>
@@ -40,10 +43,9 @@ class TopicsByPlatformCourse extends React.Component {
           <Author>Taught by {data.author}</Author>
         </Cover>
       </Container>
-    )
+    );
   }
 }
-
 
 export default TopicsByPlatformCourse;
 

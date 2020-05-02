@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import LottieView from 'lottie-react-native'
-import { Animated, Dimensions } from 'react-native'
+import React from "react";
+import styled from "styled-components";
+import LottieView from "lottie-react-native";
+import { Animated, Dimensions } from "react-native";
 
 let screenHeight = Dimensions.get("window").height;
 
@@ -18,7 +18,10 @@ class Success extends React.Component {
 
       this.animation.play();
     } else {
-      Animated.timing(this.state.top, { toValue: screenHeight, duration: 0 }).start();
+      Animated.timing(this.state.top, {
+        toValue: screenHeight,
+        duration: 0
+      }).start();
       Animated.timing(this.state.opacity, { toValue: 0 }).start();
 
       this.animation.loop = false;
@@ -34,10 +37,12 @@ class Success extends React.Component {
           source={require("../assets/lottie-checked-done.json")}
           autoPlay={false}
           loop={false}
-          ref={animation => { this.animation = animation }}
+          ref={animation => {
+            this.animation = animation;
+          }}
         />
       </AnimatedContainer>
-    )
+    );
   }
 }
 
@@ -53,6 +58,5 @@ const Container = styled.View`
   top: 0;
   left: 0;
 `;
-
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);

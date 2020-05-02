@@ -1,17 +1,25 @@
-import React, { Component } from 'react'
-import { BlurView } from 'expo-blur'
-import styled from 'styled-components'
-import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions } from 'react-native'
-import firebase from '../firebase'
-import LoadingData from '../components/LoadingData'
-import Success from '../components/Success'
-import LoadingLogin from '../components/LoadingLogin'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { BlurView } from "expo-blur";
+import styled from "styled-components";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert,
+  Animated,
+  Dimensions
+} from "react-native";
+import firebase from "../firebase";
+import LoadingData from "../components/LoadingData";
+import Success from "../components/Success";
+import LoadingLogin from "../components/LoadingLogin";
+import { connect } from "react-redux";
 
 let screenHeight = Dimensions.get("window").height;
 
-
-function mapStateToProps(state) { return { action: state.action }; }
+function mapStateToProps(state) {
+  return { action: state.action };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -22,103 +30,108 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-
 class ModalSignup extends Component {
   state = {
-      displayName: '',
-      email: '',
-      password: '',
-      isSuccessful: false,
-      isLoading: false,
-      top: new Animated.Value(screenHeight),
-      scale: new Animated.Value(1.3),
-      translateY: new Animated.Value(0),
-    }
+    displayName: "",
+    email: "",
+    password: "",
+    isSuccessful: false,
+    isLoading: false,
+    top: new Animated.Value(screenHeight),
+    scale: new Animated.Value(1.3),
+    translateY: new Animated.Value(0)
+  };
 
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-  }
-
+  };
 
   registerUser = () => {
-    if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signup!')
+    if (this.state.email === "" && this.state.password === "") {
+      Alert.alert("Enter details to signup!");
     } else {
-      this.setState({ isLoading: true })
+      this.setState({ isLoading: true });
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then((response) => {
-          this.setState({ isLoading: false })
+        .then(response => {
+          this.setState({ isLoading: false });
 
           if (response) {
-            this.setState({ isSuccessful: true })
+            this.setState({ isSuccessful: true });
 
-            this.props.updateName(this.state.displayName)
+            this.props.updateName(this.state.displayName);
 
             setTimeout(() => {
-              Alert.alert("Congrats", "You've Sign up successfuly!")
-              this.props.closeSignup()
-              this.props.closeLogin()
-              this.setState({ isSuccessful: false })
+              Alert.alert("Congrats", "You've Sign up successfuly!");
+              this.props.closeSignup();
+              this.props.closeLogin();
+              this.setState({ isSuccessful: false });
             }, 1000);
           }
           if (firebase.auth().currentUser != null) {
-            firebase.auth().currentUser.updateProfile({
+            firebase
+              .auth()
+              .currentUser.updateProfile({
                 displayName: this.state.displayName
-            }).then(function () {
-                    console.log("Updated");
-                }, function (error) {
-                    console.log("Error happened");
-                });
+              })
+              .then(
+                function() {
+                  console.log("Updated");
+                },
+                function(error) {
+                  console.log("Error happened");
+                }
+              );
           }
-          console.log('User registered successfully!')
-      })
-      .catch(error => this.setState({ errorMessage: error.message }))
+          console.log("User registered successfully!");
+        })
+        .catch(error => this.setState({ errorMessage: error.message }));
     }
-  }
-
+  };
 
   componentDidUpdate() {
     if (this.props.action === "openSignup") {
-      Animated.timing(this.state.top, { toValue: 0, duration: 0
-      }).start();
+      Animated.timing(this.state.top, { toValue: 0, duration: 0 }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
-      Animated.timing(this.state.translateY, { toValue: 0, duration: 0
+      Animated.timing(this.state.translateY, {
+        toValue: 0,
+        duration: 0
       }).start();
-
     }
 
     if (this.props.action === "closeSignup") {
       setTimeout(() => {
-        Animated.timing(this.state.top, { toValue: screenHeight, duration: 0
+        Animated.timing(this.state.top, {
+          toValue: screenHeight,
+          duration: 0
         }).start();
 
         Animated.spring(this.state.scale, { toValue: 1.3 }).start();
       }, 500);
-      Animated.timing(this.state.translateY, { toValue: 1000, duration: 500
+      Animated.timing(this.state.translateY, {
+        toValue: 1000,
+        duration: 500
       }).start();
     }
   }
 
-
   tapBackground = () => {
-    Keyboard.dismiss()
-    this.props.closeSignup()
-  }
+    Keyboard.dismiss();
+    this.props.closeSignup();
+  };
 
   handleChange = () => {
-    Keyboard.dismiss()
-    this.props.openLogin()
-    this.props.closeSignup()
-  }
-
+    Keyboard.dismiss();
+    this.props.openLogin();
+    this.props.closeSignup();
+  };
 
   render() {
     return (
-      <AnimatedContainer style={{ top: this.state.top }} >
+      <AnimatedContainer style={{ top: this.state.top }}>
         <TouchableWithoutFeedback onPress={this.tapBackground}>
           <BlurView
             tint="default"
@@ -126,24 +139,31 @@ class ModalSignup extends Component {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </TouchableWithoutFeedback>
-        <AnimatedModal style={{ transform: [ { scale: this.state.scale }, { translateY: this.state.translateY } ] }} >
+        <AnimatedModal
+          style={{
+            transform: [
+              { scale: this.state.scale },
+              { translateY: this.state.translateY }
+            ]
+          }}
+        >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
           <TextInput
             placeholder="Name"
             value={this.state.displayName}
-            onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+            onChangeText={val => this.updateInputVal(val, "displayName")}
           />
           <TextInput
             placeholder="Email"
             value={this.state.email}
-            onChangeText={(val) => this.updateInputVal(val, 'email')}
+            onChangeText={val => this.updateInputVal(val, "email")}
             keyboardType="email-address"
           />
           <TextInput
             placeholder="Password"
             value={this.state.password}
-            onChangeText={(val) => this.updateInputVal(val, 'password')}
+            onChangeText={val => this.updateInputVal(val, "password")}
             maxLength={15}
             secureTextEntry={true}
           />
@@ -151,28 +171,26 @@ class ModalSignup extends Component {
           <IconEmail source={require("../assets/icon-email.png")} />
           <IconPassword source={require("../assets/icon-password.png")} />
 
-          <TouchableOpacity onPress={() => this.registerUser()} >
+          <TouchableOpacity onPress={() => this.registerUser()}>
             <ButtonView>
               <ButtonText>Sign Up</ButtonText>
             </ButtonView>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.handleChange()} >
-            <Text>
-              Already Registered? Click here to login
-            </Text>
+          <TouchableOpacity onPress={() => this.handleChange()}>
+            <Text>Already Registered? Click here to login</Text>
           </TouchableOpacity>
-
         </AnimatedModal>
-        <Success isActive={this.state.isSuccessful}/>
+        <Success isActive={this.state.isSuccessful} />
         <LoadingLogin isActive={this.state.isLoading} />
       </AnimatedContainer>
     );
   }
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalSignup);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalSignup);
 
 const Container = styled.View`
   position: absolute;
@@ -186,7 +204,6 @@ const Container = styled.View`
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
-
 
 const TextInput = styled.TextInput`
   border: 1px solid rgb(47, 54, 65);

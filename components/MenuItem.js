@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Ionicons } from '@expo/vector-icons'
+import React from "react";
+import styled from "styled-components";
+import { Ionicons } from "@expo/vector-icons";
 
-const MenuItem = props =>
+const MenuItem = props => (
   <Container>
     <IconView>
       <Ionicons name={props.icon} size={24} color="#b8bece" />
@@ -12,7 +12,7 @@ const MenuItem = props =>
       <Text>{props.text}</Text>
     </Content>
   </Container>
-
+);
 
 export default MenuItem;
 
@@ -33,13 +33,13 @@ const Content = styled.View`
 `;
 
 const Title = styled.Text`
-color: white;
+  color: white;
   font-size: 24px;
   font-weight: 600;
 `;
 
 const Text = styled.Text`
-color: #b8bece;
+  color: #b8bece;
   font-weight: 600;
   opacity: 0.6;
   margin-top: 5px;

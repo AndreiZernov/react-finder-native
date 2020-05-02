@@ -1,7 +1,6 @@
-import React from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native'
-import styled from 'styled-components/native'
-
+import React from "react";
+import { ScrollView, TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
 
 const Topics = ({ data, navigation }) => {
   return (
@@ -12,8 +11,8 @@ const Topics = ({ data, navigation }) => {
     >
       <CardsContainer>
         {CoursesList.map(course => {
-          let topic = course.name
-          let home = "home"
+          let topic = course.name;
+          let home = "home";
           return (
             <TouchableOpacity
               key={topic}
@@ -21,50 +20,52 @@ const Topics = ({ data, navigation }) => {
             >
               <Container>
                 <Image source={course.image} />
-                <Name>{topic.replace(topic[0], topic[0].toUpperCase()).replace('_', " ")} Courses</Name>
+                <Name>
+                  {topic
+                    .replace(topic[0], topic[0].toUpperCase())
+                    .replace("_", " ")}{" "}
+                  Courses
+                </Name>
                 <Img
-                  source={{uri: data[topic][0].img}}
-                  style={{ width: topic==="react_native" ? 42 : 50 }}
+                  source={{ uri: data[topic][0].img }}
+                  style={{ width: topic === "react_native" ? 42 : 50 }}
                 />
                 <Duration>{data[topic].length} courses</Duration>
               </Container>
             </TouchableOpacity>
-          )
+          );
         })}
       </CardsContainer>
     </ScrollView>
-  )
-}
+  );
+};
 
 const CoursesList = [
-  { name: "react" , image: require("../assets/background1.jpg")},
-  { name: "react_native" , image: require("../assets/background10.jpg")},
-  { name: "redux" , image: require("../assets/background9.jpg")},
-  { name: "graphql" , image: require("../assets/background8.jpg")},
-  { name: "pathway" , image: require("../assets/background4.jpg")}
-]
+  { name: "react", image: require("../assets/background1.jpg") },
+  { name: "react_native", image: require("../assets/background1.jpg") },
+  { name: "redux", image: require("../assets/background9.jpg") },
+  { name: "graphql", image: require("../assets/background8.jpg") },
+  { name: "pathway", image: require("../assets/background4.jpg") }
+];
 
-
-export default Topics
-
+export default Topics;
 
 const Container = styled.View`
   width: 210px;
   height: 200px;
-  border: .5px solid rgb(44, 48, 55);
+  border: 0.5px solid rgb(44, 48, 55);
   justify-content: center;
   align-items: center;
   border-radius: 20px;
   margin-left: 20px;
   margin-top: 10px;
   overflow: hidden;
-`
+`;
 
 const CardsContainer = styled.View`
   flex-direction: row;
   margin: 0 auto;
 `;
-
 
 const Image = styled.Image`
   position: absolute;
@@ -85,7 +86,6 @@ const Name = styled.Text`
   font-weight: bold;
   width: 180px;
 `;
-
 
 const Img = styled.Image`
   height: 45px;

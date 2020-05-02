@@ -1,9 +1,8 @@
-import React from "react"
-import styled from 'styled-components/native'
-import { BackImage } from '../data/BackgroundData'
+import React from "react";
+import styled from "styled-components/native";
+import { BackImage } from "../data/BackgroundData";
 
-
-const CourseCard = ({data}) => (
+const CourseCard = ({ data }) => (
   <Container>
     <Image source={BackImage(data.parent1)} />
     <Image />
@@ -11,7 +10,7 @@ const CourseCard = ({data}) => (
       <Name>{data.name}</Name>
     </Cover>
     <Content>
-      <Img source={{uri: data.img}} />
+      <Img source={{ uri: data.img }} />
       <Wrapper>
         <Author>{data.author}</Author>
         <Duration>{data.duration}</Duration>
@@ -20,16 +19,15 @@ const CourseCard = ({data}) => (
   </Container>
 );
 
-
 const Container = styled.View`
   width: 210px;
   height: 200px;
-  border: .5px solid rgb(60, 60, 60);
+  border: 0.5px solid rgb(60, 60, 60);
   border-radius: 20px;
   margin-left: 20px;
   margin-top: 10px;
   overflow: hidden;
-`
+`;
 
 const Cover = styled.View`
   width: 100%;
@@ -57,7 +55,6 @@ const Name = styled.Text`
   font-weight: bold;
   width: 125px;
   margin-right: 10px;
-
 `;
 
 const Content = styled.View`
@@ -91,5 +88,4 @@ const Duration = styled.Text`
   margin-top: 4px;
 `;
 
-
-export default CourseCard
+export default CourseCard;

@@ -1,17 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import { TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, Animated, Dimensions } from 'react-native'
-import { BlurView } from 'expo-blur'
-import LoadingData from '../components/LoadingData'
-import Success from '../components/Success'
-import LoadingLogin from '../components/LoadingLogin'
-import { connect } from 'react-redux'
-import firebase from '../firebase'
-
+import React from "react";
+import styled from "styled-components";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert,
+  Animated,
+  Dimensions
+} from "react-native";
+import { BlurView } from "expo-blur";
+import LoadingData from "../components/LoadingData";
+import Success from "../components/Success";
+import LoadingLogin from "../components/LoadingLogin";
+import { connect } from "react-redux";
+import firebase from "../firebase";
 
 let screenHeight = Dimensions.get("window").height;
 
-function mapStateToProps(state) { return { action: state.action }; }
+function mapStateToProps(state) {
+  return { action: state.action };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -21,21 +29,20 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-
 class ModalLogin extends React.Component {
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     isSuccessful: false,
     isLoading: false,
     top: new Animated.Value(screenHeight),
     scale: new Animated.Value(1.3),
     translateY: new Animated.Value(0)
-  }
+  };
 
   handleLogin = () => {
     this.setState({ isLoading: true });
-    Keyboard.dismiss()
+    Keyboard.dismiss();
 
     const email = this.state.email;
     const password = this.state.password;
@@ -43,13 +50,15 @@ class ModalLogin extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(function(error) { Alert.alert("Error", error.message);} )
+      .catch(function(error) {
+        Alert.alert("Error", error.message);
+      })
       .then(response => {
         this.setState({ isLoading: false });
 
         if (response) {
           this.setState({ isSuccessful: true });
-          this.props.updateName(response.user.displayName)
+          this.props.updateName(response.user.displayName);
 
           setTimeout(() => {
             Alert.alert("Congrats", "You've logged in successfuly!");
@@ -58,39 +67,44 @@ class ModalLogin extends React.Component {
           }, 1000);
         }
       });
-  }
+  };
 
   componentDidUpdate() {
     if (this.props.action == "openLogin") {
-      Animated.timing(this.state.top, { toValue: 0, duration: 0
-      }).start();
+      Animated.timing(this.state.top, { toValue: 0, duration: 0 }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
-      Animated.timing(this.state.translateY, { toValue: 0, duration: 0
+      Animated.timing(this.state.translateY, {
+        toValue: 0,
+        duration: 0
       }).start();
-
     }
 
     if (this.props.action == "closeLogin") {
       setTimeout(() => {
-        Animated.timing(this.state.top, { toValue: screenHeight, duration: 0
+        Animated.timing(this.state.top, {
+          toValue: screenHeight,
+          duration: 0
         }).start();
 
-        Animated.spring(this.state.scale, { toValue: 1.3 }).start(); }, 500);
-        Animated.timing(this.state.translateY, { toValue: 1000, duration: 500
-        }).start();
+        Animated.spring(this.state.scale, { toValue: 1.3 }).start();
+      }, 500);
+      Animated.timing(this.state.translateY, {
+        toValue: 1000,
+        duration: 500
+      }).start();
     }
   }
 
   tapBackground = () => {
-    Keyboard.dismiss()
-    this.props.closeLogin()
-  }
+    Keyboard.dismiss();
+    this.props.closeLogin();
+  };
 
   handleWindow = () => {
-    Keyboard.dismiss()
-    this.props.closeLogin()
-    this.props.openSIngup()
-  }
+    Keyboard.dismiss();
+    this.props.closeLogin();
+    this.props.openSIngup();
+  };
 
   render() {
     return (
@@ -102,11 +116,26 @@ class ModalLogin extends React.Component {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </TouchableWithoutFeedback>
-        <AnimatedModal style={{ transform: [ { scale: this.state.scale }, { translateY: this.state.translateY } ] }} >
+        <AnimatedModal
+          style={{
+            transform: [
+              { scale: this.state.scale },
+              { translateY: this.state.translateY }
+            ]
+          }}
+        >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
-          <TextInput onChangeText={email => this.setState({email})} placeholder="Email" keyboardType="email-address" />
-          <TextInput onChangeText={password => this.setState({password})} placeholder="Password" secureTextEntry={true}/>
+          <TextInput
+            onChangeText={email => this.setState({ email })}
+            placeholder="Email"
+            keyboardType="email-address"
+          />
+          <TextInput
+            onChangeText={password => this.setState({ password })}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
           <IconEmail source={require("../assets/icon-email.png")} />
           <IconPassword source={require("../assets/icon-password.png")} />
           <TouchableOpacity onPress={this.handleLogin}>
@@ -114,22 +143,22 @@ class ModalLogin extends React.Component {
               <ButtonText>Log in</ButtonText>
             </ButtonView>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.handleWindow()} >
-            <Text>
-              Do not have account yet? Click here!
-            </Text>
+          <TouchableOpacity onPress={() => this.handleWindow()}>
+            <Text>Do not have account yet? Click here!</Text>
           </TouchableOpacity>
         </AnimatedModal>
 
-        <Success isActive={this.state.isSuccessful}/>
+        <Success isActive={this.state.isSuccessful} />
         <LoadingLogin isActive={this.state.isLoading} />
       </AnimatedContainer>
     );
   }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps)(ModalLogin);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalLogin);
 
 const Container = styled.View`
   position: absolute;
@@ -143,7 +172,6 @@ const Container = styled.View`
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
-
 
 const TextInput = styled.TextInput`
   border: 1px solid rgb(47, 54, 65);
@@ -191,13 +219,13 @@ const Logo = styled.Image`
 `;
 
 const Text = styled.Text`
-margin-top: 20px;
-font-size: 13px;
-font-weight: 600;
-text-transform: uppercase;
-width: 200px;
-color: #b8bece;
-text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 200px;
+  color: #b8bece;
+  text-align: center;
 `;
 
 const ButtonView = styled.View`

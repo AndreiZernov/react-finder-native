@@ -1,63 +1,60 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Dimensions } from 'react-native'
+import React from "react";
+import styled from "styled-components";
+import { Dimensions } from "react-native";
 
+const screenWidth = Dimensions.get("window").width;
 
-const screenWidth = Dimensions.get('window').width
-
-const getCourseWidth = (screenWidth) => {
-  let cardWidth = screenWidth - 50
+const getCourseWidth = screenWidth => {
+  let cardWidth = screenWidth - 50;
   if (screenWidth >= 700) {
-    cardWidth = (screenWidth - 150) / 2
+    cardWidth = (screenWidth - 150) / 2;
   } else if (screenWidth >= 1024) {
-    cardWidth = (screenWidth - 190) / 3
+    cardWidth = (screenWidth - 190) / 3;
   }
-  return cardWidth
-}
+  return cardWidth;
+};
 
 class Article extends React.Component {
   state = {
     cardWidth: getCourseWidth(screenWidth)
-  }
+  };
 
   componentDidMount() {
-    Dimensions.addEventListener("change", this.adaptLayout)
+    Dimensions.addEventListener("change", this.adaptLayout);
   }
   componentWillUnmoung() {
-    Dimensions.removeEventListener("change", this.adaptLayout)
+    Dimensions.removeEventListener("change", this.adaptLayout);
   }
 
   adaptLayout = dimensions => {
     this.setState({
       cardWidth: getCourseWidth(dimensions.window.width)
-    })
-  }
+    });
+  };
 
   render() {
-    let { data } = this.props
+    let { data } = this.props;
     return (
-        <Container style={{ width: this.state.cardWidth }}>
-          <Cover>
-            <Image source={{uri:data.img}} />
-          </Cover>
-          <Content>
-            <Name>{data.title}</Name>
-            <Duration>{data.duration}</Duration>
-          </Content>
-        </Container>
-    )
+      <Container style={{ width: this.state.cardWidth }}>
+        <Cover>
+          <Image source={{ uri: data.img }} />
+        </Cover>
+        <Content>
+          <Name>{data.title}</Name>
+          <Duration>{data.duration}</Duration>
+        </Content>
+      </Container>
+    );
   }
 }
 
-
 export default Article;
-
 
 const Container = styled.View`
   width: 335px;
   height: 335px;
   border-radius: 14px;
-  border: .5px solid silver;
+  border: 0.5px solid silver;
   background: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   margin: 10px auto;

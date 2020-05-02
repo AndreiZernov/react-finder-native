@@ -1,15 +1,14 @@
-import React from "react"
-import 'react-native-get-random-values'
-import { createStore } from "redux"
-import TabNavigator from './navigator/TabNavigator'
-import { Provider } from "react-redux"
-import { DataItemsProvider } from './contexts/dataItemsContext'
-import 'react-native-get-random-values'
-
+import React from "react";
+import "react-native-get-random-values";
+import { createStore } from "redux";
+import TabNavigator from "./navigator/TabNavigator";
+import { Provider } from "react-redux";
+import { DataItemsProvider } from "./contexts/dataItemsContext";
+import "react-native-get-random-values";
 
 const initialState = {
   action: "",
-  name: 'User'
+  name: "User"
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,20 +36,16 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-
 const store = createStore(reducer);
 
 const App = () => {
-
-
-  return(
+  return (
     <DataItemsProvider>
       <Provider store={store}>
         <TabNavigator />
       </Provider>
     </DataItemsProvider>
-  )
-}
-
+  );
+};
 
 export default App;

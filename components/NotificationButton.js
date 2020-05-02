@@ -1,24 +1,21 @@
-import React from 'react'
-import styled from 'styled-components'
-import { NotificationIcon } from './Icons'
-import { useDataItems } from '../contexts/dataItemsContext'
-
+import React from "react";
+import styled from "styled-components";
+import { NotificationIcon } from "./Icons";
+import { useDataItems } from "../contexts/dataItemsContext";
 
 const NotificationButton = () => {
-  const { coursesDataNew } = useDataItems()
-  return(
+  const { coursesDataNew } = useDataItems();
+  return (
     <Container>
       <NotificationIcon />
       <Cover>
         <Text>{coursesDataNew.length}</Text>
       </Cover>
     </Container>
-  )
-}
-
+  );
+};
 
 export default NotificationButton;
-
 
 const Container = styled.View`
   width: 44px;

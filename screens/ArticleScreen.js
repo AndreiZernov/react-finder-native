@@ -1,35 +1,45 @@
-import React from "react"
-import { TouchableOpacity, StatusBar, Linking, Dimensions, ScrollView, SafeAreaView  } from 'react-native'
-import styled from "styled-components"
-import { Ionicons } from '@expo/vector-icons'
-import Article from '../components/Article'
+import React from "react";
+import {
+  TouchableOpacity,
+  StatusBar,
+  Linking,
+  Dimensions,
+  ScrollView,
+  SafeAreaView
+} from "react-native";
+import styled from "styled-components";
+import { Ionicons } from "@expo/vector-icons";
+import Article from "../components/Article";
 
-
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 class ArticleScreen extends React.Component {
-  static navigationOptions = { headerShown: false }
+  static navigationOptions = { headerShown: false };
 
   render() {
-    const { navigation } = this.props
-    const data = navigation.getParam("article")
+    const { navigation } = this.props;
+    const data = navigation.getParam("article");
     return (
       <RootView>
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="light-content"
+        />
         <Container>
           <SafeAreaView>
             <ScrollView style={{ height: "100%" }}>
               <Cover>
-                <Img source={{uri: data.img }} />
+                <Img source={{ uri: data.img }} />
                 <Name>{data.title}</Name>
                 <Duration>{data.duration}</Duration>
               </Cover>
               <TouchableOpacity
-                onPress={() => navigation.goBack() }
+                onPress={() => navigation.goBack()}
                 style={{ position: "absolute", top: 15, right: 20 }}
               >
                 <CloseView>
-                  <Ionicons name="ios-close" size={34} color="black"  />
+                  <Ionicons name="ios-close" size={34} color="black" />
                 </CloseView>
               </TouchableOpacity>
               <Content>
@@ -44,7 +54,6 @@ class ArticleScreen extends React.Component {
 }
 
 export default ArticleScreen;
-
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);
@@ -66,7 +75,7 @@ const Img = styled.Image`
   top: 0;
   position: absolute;
   justify-content: center;
-  opacity: .5;
+  opacity: 0.5;
 `;
 
 const Name = styled.Text`

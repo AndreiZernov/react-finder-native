@@ -1,7 +1,6 @@
-import React from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native'
-import styled from 'styled-components/native'
-
+import React from "react";
+import { ScrollView, TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
 
 const TopicsByPlatform = ({ data, navigation }) => {
   return (
@@ -12,42 +11,45 @@ const TopicsByPlatform = ({ data, navigation }) => {
     >
       <CardsContainer>
         {PlatformList.map(platform => {
-          let topic = platform.name
-          let image = platform.image
+          let topic = platform.name;
+          let image = platform.image;
           return (
             <TouchableOpacity
               key={topic}
-              onPress={() => navigation.push("CoursesByPlatform", { topic, image, data })}
+              onPress={() =>
+                navigation.push("CoursesByPlatform", { topic, image, data })
+              }
             >
               <Container>
                 <Image source={platform.image} />
-                <Name>{topic.replace(topic[0], topic[0].toUpperCase()).replace('_', " ")} Courses</Name>
+                <Name>
+                  {topic
+                    .replace(topic[0], topic[0].toUpperCase())
+                    .replace("_", " ")}{" "}
+                  Courses
+                </Name>
                 <Number>{data[platform.name].length} courses</Number>
               </Container>
             </TouchableOpacity>
-          )
+          );
         })}
       </CardsContainer>
     </ScrollView>
-
-  )
-}
-
+  );
+};
 
 const PlatformList = [
-  { name: "youtube" , image: require("../assets/youtube.jpg")},
-  { name: "udemy" , image: require("../assets/udemy.jpg")},
-  { name: "egghead" , image: require("../assets/egghead.png")},
-  { name: "freecodecamp" , image: require("../assets/freecodecamp.jpg")},
-  { name: "codecademy" , image: require("../assets/codecademy.png")},
-  { name: "coursera" , image: require("../assets/coursera.png")},
-  { name: "edx" , image: require("../assets/edx.jpg")},
-  { name: "treehouse" , image: require("../assets/treehouse.jpg")}
-]
+  { name: "youtube", image: require("../assets/youtube.jpg") },
+  { name: "udemy", image: require("../assets/udemy.jpg") },
+  { name: "egghead", image: require("../assets/egghead.png") },
+  { name: "freecodecamp", image: require("../assets/freecodecamp.jpg") },
+  { name: "codecademy", image: require("../assets/codecademy.png") },
+  { name: "coursera", image: require("../assets/coursera.png") },
+  { name: "edx", image: require("../assets/edx.jpg") },
+  { name: "treehouse", image: require("../assets/treehouse.jpg") }
+];
 
-
-export default TopicsByPlatform
-
+export default TopicsByPlatform;
 
 const CardsContainer = styled.View`
   flex-direction: row;
@@ -57,14 +59,14 @@ const CardsContainer = styled.View`
 const Container = styled.View`
   width: 210px;
   height: 200px;
-  border: .5px solid rgb(70, 70, 70);
+  border: 0.5px solid rgb(70, 70, 70);
   justify-content: center;
   align-items: center;
   border-radius: 20px;
   margin-left: 20px;
   margin-top: 10px;
   overflow: hidden;
-`
+`;
 
 const Image = styled.Image`
   position: absolute;

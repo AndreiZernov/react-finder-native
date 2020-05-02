@@ -1,26 +1,37 @@
-import React from 'react'
-import styled from 'styled-components/native'
-import { StatusBar } from 'react-native'
-import LottieView from 'lottie-react-native'
-
+import React from "react";
+import styled from "styled-components/native";
+import { StatusBar } from "react-native";
+import LottieView from "lottie-react-native";
 
 export default function LoadingData() {
   return (
     <Container>
-        <BackImg source={require("../assets/background6.jpg")} resizeMode="cover" />
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-        <LottieView
-          source={require("../assets/lottie-react-logo.json")}
-          autoPlay={true}
-          loop={true}
-          ref={animation => { this.animation = animation }}
-        />
-        <TitleBar>
-          <Title>React Finder</Title>
-          <Name>Your guide to React JavaScript library Everything about Learning React for Free at one place</Name>
-        </TitleBar>
+      <BackImg
+        source={require("../assets/background6.jpg")}
+        resizeMode="cover"
+      />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
+      <LottieView
+        source={require("../assets/lottie-react-logo.json")}
+        autoPlay={true}
+        loop={true}
+        ref={animation => {
+          this.animation = animation;
+        }}
+      />
+      <TitleBar>
+        <Title>React Finder</Title>
+        <Name>
+          Your guide to React JavaScript library Everything about Learning React
+          for Free at one place
+        </Name>
+      </TitleBar>
     </Container>
-  )
+  );
 }
 
 const Container = styled.View`

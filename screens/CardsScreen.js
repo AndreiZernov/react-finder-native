@@ -1,15 +1,21 @@
 import React from "react";
-import { PanResponder, Animated, TouchableOpacity, ScrollView, SafeAreaView, Dimensions } from 'react-native'
+import {
+  PanResponder,
+  Animated,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  Dimensions
+} from "react-native";
 import styled from "styled-components";
-import Cards from '../components/Cards'
-import { DataItemsContext } from "../contexts/dataItemsContext"
+import Cards from "../components/Cards";
+import { DataItemsContext } from "../contexts/dataItemsContext";
 import { Ionicons } from "@expo/vector-icons";
-
 
 let screenHeight = Dimensions.get("window").height - 40;
 
 class CardsScreen extends React.Component {
-  static contextType = DataItemsContext
+  static contextType = DataItemsContext;
   static navigationOptions = { headerShown: false };
 
   state = {
@@ -22,16 +28,17 @@ class CardsScreen extends React.Component {
     opacity: new Animated.Value(0)
   };
 
-  getNextIndex = (index) => (index + 1) > (this.context.coursesDataNew.length - 1) ? 0 : (index + 1)
-
+  getNextIndex = index =>
+    index + 1 > this.context.coursesDataNew.length - 1 ? 0 : index + 1;
 
   panResponder = PanResponder.create({
     onStartShouldSetPanResponderCapture: () => true,
     onPanResponderTerminationRequest: () => false,
-    onMoveShouldSetPanResponder: (event, gestureState) => gestureState.dx === 0 && gestureState.dy === 0 ? false : true,
+    onMoveShouldSetPanResponder: (event, gestureState) =>
+      gestureState.dx === 0 && gestureState.dy === 0 ? false : true,
 
     onPanResponderGrant: () => {
-      this.scrollView.setNativeProps({ scrollEnabled: false })
+      this.scrollView.setNativeProps({ scrollEnabled: false });
       Animated.spring(this.state.scale, { toValue: 1 }).start();
       Animated.spring(this.state.translateY, { toValue: 0 }).start();
 
@@ -41,10 +48,13 @@ class CardsScreen extends React.Component {
       Animated.timing(this.state.opacity, { toValue: 0.5 }).start();
     },
 
-    onPanResponderMove: Animated.event([ null, { dx: this.state.pan.x, dy: this.state.pan.y } ]),
+    onPanResponderMove: Animated.event([
+      null,
+      { dx: this.state.pan.x, dy: this.state.pan.y }
+    ]),
 
     onPanResponderRelease: () => {
-      this.scrollView.setNativeProps({ scrollEnabled: true })
+      this.scrollView.setNativeProps({ scrollEnabled: true });
       const positionY = this.state.pan.y.__getValue();
       const positionX = this.state.pan.x.__getValue();
       Animated.timing(this.state.opacity, { toValue: 0 }).start();
@@ -55,15 +65,23 @@ class CardsScreen extends React.Component {
         this.state.thirdScale.setValue(0.8);
         this.state.thirdTranslateY.setValue(-50);
         this.setState({ index: this.getNextIndex(this.state.index) });
-      }
+      };
       if (positionY > 250) {
-        Animated.timing(this.state.pan, {   toValue: { x: 0, y: 1000 }   }).start(() => Reverse());
+        Animated.timing(this.state.pan, { toValue: { x: 0, y: 1000 } }).start(
+          () => Reverse()
+        );
       } else if (positionY < -250) {
-        Animated.timing(this.state.pan, {  toValue: { x: 0, y: -1000 }  }).start(() => Reverse());
+        Animated.timing(this.state.pan, { toValue: { x: 0, y: -1000 } }).start(
+          () => Reverse()
+        );
       } else if (positionX > 150) {
-        Animated.timing(this.state.pan, { toValue: { x: 1000, y: 0 } }).start(() => Reverse());
+        Animated.timing(this.state.pan, { toValue: { x: 1000, y: 0 } }).start(
+          () => Reverse()
+        );
       } else if (positionX < -150) {
-        Animated.timing(this.state.pan, { toValue: { x: -1000, y: 0 } }).start(() => Reverse());
+        Animated.timing(this.state.pan, { toValue: { x: -1000, y: 0 } }).start(
+          () => Reverse()
+        );
       } else {
         Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }).start();
 
@@ -77,16 +95,26 @@ class CardsScreen extends React.Component {
   });
 
   render() {
-    const { pan, scale, translateY, thirdScale, thirdTranslateY, index, opacity} = this.state
-    const { coursesDataNew } = this.context
-    const { navigation } = this.props
+    const {
+      pan,
+      scale,
+      translateY,
+      thirdScale,
+      thirdTranslateY,
+      index,
+      opacity
+    } = this.state;
+    const { coursesDataNew } = this.context;
+    const { navigation } = this.props;
 
     return (
       <RootView>
         <BackImg source={require("../assets/background6.jpg")} />
         <SafeAreaView>
           <ScrollView
-            ref={(c) => { this.scrollView = c; }}
+            ref={c => {
+              this.scrollView = c;
+            }}
             showsVerticalScrollIndicator={false}
             style={{ height: "100%" }}
           >
@@ -101,27 +129,44 @@ class CardsScreen extends React.Component {
               </TouchableOpacity>
               <AnimatedMask style={{ opacity: opacity }} />
 
-              <Animated.View style={{ transform: [{ translateX: pan.x }, { translateY: pan.y }] }} {...this.panResponder.panHandlers} >
+              <Animated.View
+                style={{
+                  transform: [{ translateX: pan.x }, { translateY: pan.y }]
+                }}
+                {...this.panResponder.panHandlers}
+              >
                 <Cards data={coursesDataNew[index]} canOpen={true} />
               </Animated.View>
 
-              <AnimatedCard style={{ zIndex: -1, transform: [ { scale: scale }, { translateY: translateY } ] }}>
+              <AnimatedCard
+                style={{
+                  zIndex: -1,
+                  transform: [{ scale: scale }, { translateY: translateY }]
+                }}
+              >
                 <Cards data={coursesDataNew[this.getNextIndex(index)]} />
               </AnimatedCard>
 
-              <AnimatedCard style={{ zIndex: -3, transform:[{scale: thirdScale},{translateY: thirdTranslateY}] }}>
-                <Cards data={coursesDataNew[this.getNextIndex(index + 1)]}/>
+              <AnimatedCard
+                style={{
+                  zIndex: -3,
+                  transform: [
+                    { scale: thirdScale },
+                    { translateY: thirdTranslateY }
+                  ]
+                }}
+              >
+                <Cards data={coursesDataNew[this.getNextIndex(index + 1)]} />
               </AnimatedCard>
-
             </Container>
           </ScrollView>
         </SafeAreaView>
       </RootView>
-  )}
+    );
+  }
 }
 
-export default CardsScreen
-
+export default CardsScreen;
 
 const RootView = styled.View`
   background: rgb(27, 31, 38);
@@ -176,5 +221,5 @@ const BackImg = styled.Image`
   height: 100%;
   position: absolute;
   z-index: -20;
-  opacity: .7;
+  opacity: 0.7;
 `;

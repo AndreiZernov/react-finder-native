@@ -1,34 +1,35 @@
-import React from 'react'
-import { createStackNavigator } from 'react-navigation-stack'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { createAppContainer } from 'react-navigation'
-import { Ionicons } from '@expo/vector-icons'
-import HomeScreen from '../screens/HomeScreen'
-import SectionScreen from '../screens/SectionScreen'
-import CardsScreen from '../screens/CardsScreen'
-import CoursesScreen from '../screens/CoursesScreen'
-import CoursesByPlatformScreen from '../screens/CoursesByPlatformScreen'
-import ResourcesScreen from '../screens/ResourcesScreen'
-import VideoScreen from '../screens/VideoScreen'
-import ArticleScreen from '../screens/ArticleScreen'
-
+import React from "react";
+import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createAppContainer } from "react-navigation";
+import { Ionicons } from "@expo/vector-icons";
+import HomeScreen from "../screens/HomeScreen";
+import SectionScreen from "../screens/SectionScreen";
+import CardsScreen from "../screens/CardsScreen";
+import CoursesScreen from "../screens/CoursesScreen";
+import CoursesByPlatformScreen from "../screens/CoursesByPlatformScreen";
+import ResourcesScreen from "../screens/ResourcesScreen";
+import VideoScreen from "../screens/VideoScreen";
+import ArticleScreen from "../screens/ArticleScreen";
 
 const activeColor = "#4775f2";
 const inactiveColor = "#b8bece";
 
-
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Cards: CardsScreen,
-  Courses: CoursesScreen,
-  CoursesByPlatform: CoursesByPlatformScreen,
-  Section: SectionScreen,
-  Resources: ResourcesScreen,
-  Video: VideoScreen,
-  Article: ArticleScreen
-}, {
-  mode: "modal"
-});
+const HomeStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Cards: CardsScreen,
+    Courses: CoursesScreen,
+    CoursesByPlatform: CoursesByPlatformScreen,
+    Section: SectionScreen,
+    Resources: ResourcesScreen,
+    Video: VideoScreen,
+    Article: ArticleScreen
+  },
+  {
+    mode: "modal"
+  }
+);
 
 HomeStack.navigationOptions = () => {
   return {
@@ -40,30 +41,30 @@ HomeStack.navigationOptions = () => {
         color={focused ? activeColor : inactiveColor}
       />
     )
-  }
+  };
 };
 
-
-const CoursesStack = createStackNavigator({
-  Courses: CoursesScreen,
-  Courses: CoursesScreen,
-  Section: SectionScreen
-}, {
-  mode: "modal"
-});
-
+const CoursesStack = createStackNavigator(
+  {
+    Courses: CoursesScreen,
+    Courses: CoursesScreen,
+    Section: SectionScreen
+  },
+  {
+    mode: "modal"
+  }
+);
 
 CoursesStack.navigationOptions = {
   tabBarLabel: "Courses",
   tabBarIcon: ({ focused }) => (
     <Ionicons
       name="ios-school"
-    size={26}
-    color={focused ? activeColor : inactiveColor}
+      size={26}
+      color={focused ? activeColor : inactiveColor}
     />
   )
 };
-
 
 const ResourcesStack = createStackNavigator({ Resources: ResourcesScreen });
 ResourcesStack.navigationOptions = {
@@ -76,7 +77,6 @@ ResourcesStack.navigationOptions = {
     />
   )
 };
-
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -91,7 +91,5 @@ const TabNavigator = createBottomTabNavigator(
     }
   }
 );
-
-
 
 export default createAppContainer(TabNavigator);

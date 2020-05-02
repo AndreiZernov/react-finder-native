@@ -1,29 +1,28 @@
-import React from "react"
-import { ScrollView, TouchableOpacity } from "react-native"
-import styled from 'styled-components/native'
-import Article from './Article'
+import React from "react";
+import { ScrollView, TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
+import Article from "./Article";
 
+const Articles = ({ data, navigation }) => (
+  <>
+    <Subtitle>Articles</Subtitle>
+    <ArticlesContainer>
+      {data.map(article => {
+        return (
+          <ArticleWrapper key={article.title}>
+            <TouchableOpacity
+              onPress={() => navigation.push("Article", { article })}
+            >
+              <Article data={article} />
+            </TouchableOpacity>
+          </ArticleWrapper>
+        );
+      })}
+    </ArticlesContainer>
+  </>
+);
 
-const Articles = ({data, navigation}) =>
-    <>
-      <Subtitle>Articles</Subtitle>
-      <ArticlesContainer>
-        {data.map(article => {
-          return (
-            <ArticleWrapper key={article.title}>
-              <TouchableOpacity
-                onPress={() => navigation.push("Article", { article })}
-              >
-                <Article data={article}/>
-              </TouchableOpacity>
-            </ArticleWrapper>
-          )})
-        }
-      </ArticlesContainer>
-    </>
-
-
-export default Articles
+export default Articles;
 
 const ArticlesContainer = styled.View`
   flex-direction: row;
