@@ -4,7 +4,7 @@
 
 <h1 align="center">React Finder App - guide to React JavaScript library</h1>
 
-[![Build Status](https://travis-ci.com/AndreiZernov/react-finder.svg?branch=master)](https://travis-ci.com/AndreiZernov/react-finder-app)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/144b2df86d5c438c9295f89e46545369)](https://www.codacy.com/manual/AndreiZernov/react-finder-native?utm_source=github.com&utm_medium=referral&utm_content=AndreiZernov/react-finder-native&utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AndreiZernov/react-finder-native/blob/master/LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![npm version](https://badge.fury.io/js/npm.svg)](https://badge.fury.io/js/npm)
