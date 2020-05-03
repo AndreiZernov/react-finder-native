@@ -37,60 +37,104 @@ Project is created with:
   <img src="./assets/readme1.png">
 </div>
 
-<h3 align="center"> Navigation</h3>
+<h3 align="center">Main Page Navigation</h3>
+
+<p align="center">Loading page for upload content from Contentful, Basic Main page Navigation with horizontal and vertical slides.</p>
 
 <div align="center">
-  <!-- <img src="./assets/readme1.gif"> -->
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  <tr>
+    <td>
+      <img src="./assets/readme1.1.gif">
+    </td>
+    <td>
+      <img src="./assets/readme1.2.gif">
+    </td>
+  </tr>
+  </table
 </div>
 
-<h3 align="center"> Login</h3>
+<h3 align="center">SignUp and Login</h3>
 
-<p align="center">Auth0 Authentication with easy Github and Google Login.</p>
+<p align="center">Firebase Authentication with Lottie Success Login Animation. Personal Account.</p>
 
 <div align="center">
-  <!-- <img src="./assets/readme2.gif"> -->
+  <table>
+    <tr>
+      <th>Sign Up</th>
+      <th>Log In</th>
+    </tr>
+    <tr>
+      <td>
+        <img src="./assets/readme2.1.gif">
+      </td>
+      <td>
+        <img src="./assets/readme2.2.gif">
+      </td>
+    </tr>
+  </table
 </div>
 
-<h3 align="center"> Personal Account</h3>
+<h3 align="center">Courses and Resources Navigation</h3>
 
-<p align="center">Search functionality, Adding interesting resources and courses to account, Managing resources, Customize account.</p>
+<p align="center">React, React Native, Redux and GraphQl courses and helpful resources.</p>
 
 <div align="center">
-  <!-- <img src="./assets/readme3.gif"> -->
+  <table>
+    <tr>
+      <th>Courses Page</th>
+      <th>Resources Page</th>
+    </tr>
+    <tr>
+      <td>
+        <img src="./assets/readme3.1.gif">
+      </td>
+      <td>
+        <img src="./assets/readme3.2.gif">
+      </td>
+    </tr>
+  </table
 </div>
 
-<h3 align="center"> Edit more personal helpful links</h3>
+<h3 align="center">Extra Main Page Functionality</h3>
 
-<p align="center">(editing, removing, adding) resources and courses.</p>
-
-<div align="center">
-  <!-- <img src="./assets/readme4.gif"> -->
-</div>
-
-<h3 align="center"> Recommend</h3>
-
-<p align="center">Recommend additional materials for everyone, all your recommendations will be added ASAP.
-Formspree form backend email service was used.</p>
+<p align="center">Articles, Notifications with Card's Animation, Filtered courses by platform</p>
 
 <div align="center">
-  <!-- <img src="./assets/readme5.gif"> -->
-</div>
-
-<h3 align="center">Responsive Design</h3>
-
-<div align="center">
-  <img src="./assets/readme6.gif">
+  <table>
+    <tr>
+      <th>Articles</th>
+      <th>Notifications</th>
+      <th>Courses by platform</th>
+    </tr>
+    <tr>
+      <td>
+        <img src="./assets/readme4.1.gif">
+      </td>
+      <td>
+        <img src="./assets/readme4.2.gif">
+      </td>
+      <td>
+        <img src="./assets/readme4.3.gif">
+      </td>
+    </tr>
+  </table
 </div>
 
 ---
 
 <h2> Support</h2>
+
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/AndreiZernov)
 
 Reach out to me at one of the following places!
 
 - Website at [React Finder](https://react-finder.netlify.app/)
-- Twitter at [AndrewZ](https://twitter.com/AndrewZer)
+- Twitter at [AndrewZer](https://twitter.com/AndrewZer)
 - LinkedIn at [Andrew Zernov](https://www.linkedin.com/in/andrei-zernov/)
 
 ---
