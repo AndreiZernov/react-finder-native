@@ -33,7 +33,7 @@ Project is created with:
 
 <p align="center">To launch this project, go to https://expo.io/@andrewzer/react-finder</p>
 <div align="center">
-  <p>Or scan the QR code in Expo Client </p>
+  <p>Or scan the QR code in Expo Client Right Away</p>
   <img src="./assets/readme1.png">
 </div>
 
