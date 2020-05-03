@@ -70,10 +70,10 @@ Project is created with:
     </tr>
     <tr>
       <td>
-        <img src="./assets/readme2.1.gif">
+        <img src="./assets/readme2.2.gif">
       </td>
       <td>
-        <img src="./assets/readme2.2.gif">
+        <img src="./assets/readme2.1.gif">
       </td>
     </tr>
   </table
