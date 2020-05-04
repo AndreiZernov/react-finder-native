@@ -70,7 +70,7 @@ class ModalLogin extends React.Component {
   };
 
   componentDidUpdate() {
-    if (this.props.action == "openLogin") {
+    if (this.props.action === "openLogin") {
       Animated.timing(this.state.top, { toValue: 0, duration: 0 }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
       Animated.timing(this.state.translateY, {
@@ -79,7 +79,7 @@ class ModalLogin extends React.Component {
       }).start();
     }
 
-    if (this.props.action == "closeLogin") {
+    if (this.props.action === "closeLogin") {
       setTimeout(() => {
         Animated.timing(this.state.top, {
           toValue: screenHeight,

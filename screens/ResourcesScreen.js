@@ -17,6 +17,29 @@ import LoadingData from "../components/LoadingData";
 import { Ionicons } from "@expo/vector-icons";
 import { _goToURL } from "../data/LinkFunc";
 
+const RecourcesList = [
+  {
+    name: "resources",
+    icon: <ResourcesIcon />,
+    color: "rgba(244, 151, 168, 0.3)"
+  },
+  {
+    name: "job_search",
+    icon: <JobSearchIcon />,
+    color: "rgba(160, 235, 216, 0.3)"
+  },
+  {
+    name: "html_css",
+    icon: <HtmlCssIcon />,
+    color: "rgba(249, 167, 114, 0.3)"
+  },
+  {
+    name: "podcasts",
+    icon: <PodcastsIcon />,
+    color: "rgba(185, 209, 251, 0.3)"
+  }
+];
+
 class ResourcesScreen extends React.Component {
   static navigationOptions = { headerShown: false };
   static contextType = DataItemsContext;
@@ -86,29 +109,6 @@ class ResourcesScreen extends React.Component {
 }
 
 export default ResourcesScreen;
-
-const RecourcesList = [
-  {
-    name: "resources",
-    icon: <ResourcesIcon />,
-    color: "rgba(244, 151, 168, 0.3)"
-  },
-  {
-    name: "job_search",
-    icon: <JobSearchIcon />,
-    color: "rgba(160, 235, 216, 0.3)"
-  },
-  {
-    name: "html_css",
-    icon: <HtmlCssIcon />,
-    color: "rgba(249, 167, 114, 0.3)"
-  },
-  {
-    name: "podcasts",
-    icon: <PodcastsIcon />,
-    color: "rgba(185, 209, 251, 0.3)"
-  }
-];
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);

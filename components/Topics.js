@@ -2,6 +2,14 @@ import React from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
+const CoursesList = [
+  { name: "react", image: require("../assets/background1.jpg") },
+  { name: "react_native", image: require("../assets/background1.jpg") },
+  { name: "redux", image: require("../assets/background9.jpg") },
+  { name: "graphql", image: require("../assets/background8.jpg") },
+  { name: "pathway", image: require("../assets/background4.jpg") }
+];
+
 const Topics = ({ data, navigation }) => {
   return (
     <ScrollView
@@ -39,14 +47,6 @@ const Topics = ({ data, navigation }) => {
     </ScrollView>
   );
 };
-
-const CoursesList = [
-  { name: "react", image: require("../assets/background1.jpg") },
-  { name: "react_native", image: require("../assets/background1.jpg") },
-  { name: "redux", image: require("../assets/background9.jpg") },
-  { name: "graphql", image: require("../assets/background8.jpg") },
-  { name: "pathway", image: require("../assets/background4.jpg") }
-];
 
 export default Topics;
 

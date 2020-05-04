@@ -71,22 +71,11 @@ class ModalSignup extends Component {
               this.setState({ isSuccessful: false });
             }, 1000);
           }
-          if (firebase.auth().currentUser != null) {
-            firebase
-              .auth()
-              .currentUser.updateProfile({
-                displayName: this.state.displayName
-              })
-              .then(
-                function() {
-                  console.log("Updated");
-                },
-                function(error) {
-                  console.log("Error happened");
-                }
-              );
+          if (firebase.auth().currentUser !== null) {
+            firebase.auth().currentUser.updateProfile({
+              displayName: this.state.displayName
+            });
           }
-          console.log("User registered successfully!");
         })
         .catch(error => this.setState({ errorMessage: error.message }));
     }

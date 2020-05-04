@@ -47,7 +47,6 @@ HomeStack.navigationOptions = () => {
 const CoursesStack = createStackNavigator(
   {
     Courses: CoursesScreen,
-    Courses: CoursesScreen,
     Section: SectionScreen
   },
   {

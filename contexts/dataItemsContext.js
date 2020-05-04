@@ -13,6 +13,31 @@ const DataItemsProvider = ({ children }) => {
   const [articlesData, setArticlesData] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const filterByPlatform = (data, name) => {
+    let arr = [];
+    for (let [key, value] of Object.entries(data)) {
+      arr.push(value.filter(course => course.link.includes(name)));
+    }
+    return arr;
+  };
+
+  const fiterNewCourses = data => {
+    let arr = [];
+    for (let [key, value] of Object.entries(data)) {
+      arr.push(value.filter(course => course.new === true));
+    }
+    return arr[0];
+  };
+
+  const formatData = items => {
+    let tempItems = items.map(item => {
+      let img = "http:" + item.fields.img.fields.file.url;
+      let course = { ...item.fields, img };
+      return course;
+    });
+    return tempItems;
+  };
+
   useEffect(() => {
     async function getData() {
       try {
@@ -40,35 +65,35 @@ const DataItemsProvider = ({ children }) => {
         });
 
         let courseObj = {
-          react: FormatData(respReact.items),
-          react_native: FormatData(respReactNative.items),
-          redux: FormatData(respRedux.items),
-          graphql: FormatData(respGraphQl.items),
-          pathway: FormatData(respPathway.items)
+          react: formatData(respReact.items),
+          react_native: formatData(respReactNative.items),
+          redux: formatData(respRedux.items),
+          graphql: formatData(respGraphQl.items),
+          pathway: formatData(respPathway.items)
         };
 
         setCoursesData(courseObj);
         setResourcesData({
-          resources: FormatData(respResources.items),
-          job_search: FormatData(respJobSearch.items),
-          podcasts: FormatData(respPodcasts.items),
-          html_css: FormatData(respHtmlCss.items)
+          resources: formatData(respResources.items),
+          job_search: formatData(respJobSearch.items),
+          podcasts: formatData(respPodcasts.items),
+          html_css: formatData(respHtmlCss.items)
         });
 
         setCoursesDataByPlatform({
-          youtube: FilterByPlatform(courseObj, "youtube").flat(),
-          udemy: FilterByPlatform(courseObj, "udemy").flat(),
-          egghead: FilterByPlatform(courseObj, "egghead").flat(),
-          freecodecamp: FilterByPlatform(courseObj, "freecodecamp").flat(),
-          codecademy: FilterByPlatform(courseObj, "codecademy").flat(),
-          edx: FilterByPlatform(courseObj, "edx").flat(),
-          coursera: FilterByPlatform(courseObj, "coursera").flat(),
-          treehouse: FilterByPlatform(courseObj, "treehouse").flat()
+          youtube: filterByPlatform(courseObj, "youtube").flat(),
+          udemy: filterByPlatform(courseObj, "udemy").flat(),
+          egghead: filterByPlatform(courseObj, "egghead").flat(),
+          freecodecamp: filterByPlatform(courseObj, "freecodecamp").flat(),
+          codecademy: filterByPlatform(courseObj, "codecademy").flat(),
+          edx: filterByPlatform(courseObj, "edx").flat(),
+          coursera: filterByPlatform(courseObj, "coursera").flat(),
+          treehouse: filterByPlatform(courseObj, "treehouse").flat()
         });
 
-        setCoursesDataNew(FiterNewCourses(courseObj));
+        setCoursesDataNew(fiterNewCourses(courseObj));
 
-        setArticlesData(FormatData(respArticles.items));
+        setArticlesData(formatData(respArticles.items));
 
         setLoading(false);
       } catch (e) {
@@ -77,31 +102,6 @@ const DataItemsProvider = ({ children }) => {
     }
     getData();
   }, []);
-
-  const FilterByPlatform = (data, name) => {
-    let arr = [];
-    for (let [key, value] of Object.entries(data)) {
-      arr.push(value.filter(course => course.link.includes(name)));
-    }
-    return arr;
-  };
-
-  const FiterNewCourses = data => {
-    let arr = [];
-    for (let [key, value] of Object.entries(data)) {
-      arr.push(value.filter(course => course.new === true));
-    }
-    return arr[0];
-  };
-
-  const FormatData = items => {
-    let tempItems = items.map(item => {
-      let img = "http:" + item.fields.img.fields.file.url;
-      let course = { ...item.fields, img };
-      return course;
-    });
-    return tempItems;
-  };
 
   return (
     <DataItemsContext.Provider

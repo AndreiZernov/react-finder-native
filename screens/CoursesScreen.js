@@ -12,6 +12,34 @@ import LoadingData from "../components/LoadingData";
 import CourseCard from "../components/CourseCard";
 import { Ionicons } from "@expo/vector-icons";
 
+const nextTopicFunc = topic => {
+  return topic === "react"
+    ? "react_native"
+    : topic === "react_native"
+    ? "redux"
+    : topic === "redux"
+    ? "graphql"
+    : topic === "graphql"
+    ? "pathway"
+    : topic === "pathway"
+    ? "react"
+    : "react";
+};
+
+const prevTopicFunc = topic => {
+  return topic === "react"
+    ? "pathway"
+    : topic === "pathway"
+    ? "graphql"
+    : topic === "graphql"
+    ? "redux"
+    : topic === "redux"
+    ? "react_native"
+    : topic === "react_native"
+    ? "react"
+    : "react";
+};
+
 let screenWidth = Dimensions.get("window").width;
 
 class CoursesScreen extends React.Component {
@@ -154,34 +182,6 @@ export const CoursesByTopic = ({ topic, data, navigation }) => (
     </ScrollView>
   </Cover>
 );
-
-const nextTopicFunc = topic => {
-  return topic === "react"
-    ? "react_native"
-    : topic === "react_native"
-    ? "redux"
-    : topic === "redux"
-    ? "graphql"
-    : topic === "graphql"
-    ? "pathway"
-    : topic === "pathway"
-    ? "react"
-    : "react";
-};
-
-const prevTopicFunc = topic => {
-  return topic === "react"
-    ? "pathway"
-    : topic === "pathway"
-    ? "graphql"
-    : topic === "graphql"
-    ? "redux"
-    : topic === "redux"
-    ? "react_native"
-    : topic === "react_native"
-    ? "react"
-    : "react";
-};
 
 const RootView = styled.View`
   background: rgb(20, 20, 20);
