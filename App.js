@@ -8,7 +8,7 @@ import "react-native-get-random-values";
 
 const initialState = {
   action: "",
-  name: "User"
+  name: "User",
 };
 
 const reducer = (state = initialState, action) => {

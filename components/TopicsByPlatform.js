@@ -10,7 +10,7 @@ const TopicsByPlatform = ({ data, navigation }) => {
       showsHorizontalScrollIndicator={false}
     >
       <CardsContainer>
-        {PlatformList.map(platform => {
+        {PlatformList.map((platform) => {
           let topic = platform.name;
           let image = platform.image;
           return (
@@ -46,7 +46,7 @@ const PlatformList = [
   { name: "codecademy", image: require("../assets/codecademy.png") },
   { name: "coursera", image: require("../assets/coursera.png") },
   { name: "edx", image: require("../assets/edx.jpg") },
-  { name: "treehouse", image: require("../assets/treehouse.jpg") }
+  { name: "treehouse", image: require("../assets/treehouse.jpg") },
 ];
 
 export default TopicsByPlatform;

@@ -4,7 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import styled from "styled-components";
 import { DataItemsContext } from "../contexts/dataItemsContext";
@@ -12,7 +12,7 @@ import LoadingData from "../components/LoadingData";
 import CourseCard from "../components/CourseCard";
 import { Ionicons } from "@expo/vector-icons";
 
-const nextTopicFunc = topic => {
+const nextTopicFunc = (topic) => {
   return topic === "react"
     ? "react_native"
     : topic === "react_native"
@@ -26,7 +26,7 @@ const nextTopicFunc = topic => {
     : "react";
 };
 
-const prevTopicFunc = topic => {
+const prevTopicFunc = (topic) => {
   return topic === "react"
     ? "pathway"
     : topic === "pathway"
@@ -91,7 +91,7 @@ class CoursesScreen extends React.Component {
                   <Hero>
                     <Title>{coursesData[topic][0].title}</Title>
                     <Text>{coursesData[topic][0].content}</Text>
-                    {coursesData[topic][0].list.map(item => (
+                    {coursesData[topic][0].list.map((item) => (
                       <TextList key={item}>{item}</TextList>
                     ))}
                     <Name>Number of courses: {coursesData[topic].length}</Name>
@@ -167,7 +167,7 @@ export const CoursesByTopic = ({ topic, data, navigation }) => (
       style={{ paddingBottom: 30 }}
       showsHorizontalScrollIndicator={false}
     >
-      {data.map(course => {
+      {data.map((course) => {
         let topic = course.parent1;
         return (
           <CardsContainer key={course.id}>

@@ -16,21 +16,21 @@ const DataItemsProvider = ({ children }) => {
   const filterByPlatform = (data, name) => {
     let arr = [];
     for (let [key, value] of Object.entries(data)) {
-      arr.push(value.filter(course => course.link.includes(name)));
+      arr.push(value.filter((course) => course.link.includes(name)));
     }
     return arr;
   };
 
-  const fiterNewCourses = data => {
+  const fiterNewCourses = (data) => {
     let arr = [];
     for (let [key, value] of Object.entries(data)) {
-      arr.push(value.filter(course => course.new === true));
+      arr.push(value.filter((course) => course.new === true));
     }
     return arr[0];
   };
 
-  const formatData = items => {
-    let tempItems = items.map(item => {
+  const formatData = (items) => {
+    let tempItems = items.map((item) => {
       let img = "http:" + item.fields.img.fields.file.url;
       let course = { ...item.fields, img };
       return course;
@@ -42,26 +42,26 @@ const DataItemsProvider = ({ children }) => {
     async function getData() {
       try {
         let respReact = await Client.getEntries({
-          content_type: "coursesData"
+          content_type: "coursesData",
         });
         let respReactNative = await Client.getEntries({
-          content_type: "reactNative"
+          content_type: "reactNative",
         });
         let respRedux = await Client.getEntries({ content_type: "redux" });
         let respGraphQl = await Client.getEntries({ content_type: "graphql" });
         let respPathway = await Client.getEntries({ content_type: "pathway" });
         let respResources = await Client.getEntries({
-          content_type: "resources"
+          content_type: "resources",
         });
         let respJobSearch = await Client.getEntries({
-          content_type: "jobSearch"
+          content_type: "jobSearch",
         });
         let respHtmlCss = await Client.getEntries({ content_type: "htmlCss" });
         let respPodcasts = await Client.getEntries({
-          content_type: "podcasts"
+          content_type: "podcasts",
         });
         let respArticles = await Client.getEntries({
-          content_type: "articles"
+          content_type: "articles",
         });
 
         let courseObj = {
@@ -69,7 +69,7 @@ const DataItemsProvider = ({ children }) => {
           react_native: formatData(respReactNative.items),
           redux: formatData(respRedux.items),
           graphql: formatData(respGraphQl.items),
-          pathway: formatData(respPathway.items)
+          pathway: formatData(respPathway.items),
         };
 
         setCoursesData(courseObj);
@@ -77,7 +77,7 @@ const DataItemsProvider = ({ children }) => {
           resources: formatData(respResources.items),
           job_search: formatData(respJobSearch.items),
           podcasts: formatData(respPodcasts.items),
-          html_css: formatData(respHtmlCss.items)
+          html_css: formatData(respHtmlCss.items),
         });
 
         setCoursesDataByPlatform({
@@ -88,7 +88,7 @@ const DataItemsProvider = ({ children }) => {
           codecademy: filterByPlatform(courseObj, "codecademy").flat(),
           edx: filterByPlatform(courseObj, "edx").flat(),
           coursera: filterByPlatform(courseObj, "coursera").flat(),
-          treehouse: filterByPlatform(courseObj, "treehouse").flat()
+          treehouse: filterByPlatform(courseObj, "treehouse").flat(),
         });
 
         setCoursesDataNew(fiterNewCourses(courseObj));
@@ -97,7 +97,7 @@ const DataItemsProvider = ({ children }) => {
 
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     getData();
@@ -111,7 +111,7 @@ const DataItemsProvider = ({ children }) => {
         loading,
         coursesDataByPlatform,
         coursesDataNew,
-        articlesData
+        articlesData,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ const CoursesList = [
   { name: "react_native", image: require("../assets/background1.jpg") },
   { name: "redux", image: require("../assets/background9.jpg") },
   { name: "graphql", image: require("../assets/background8.jpg") },
-  { name: "pathway", image: require("../assets/background4.jpg") }
+  { name: "pathway", image: require("../assets/background4.jpg") },
 ];
 
 const Topics = ({ data, navigation }) => {
@@ -18,7 +18,7 @@ const Topics = ({ data, navigation }) => {
       showsHorizontalScrollIndicator={false}
     >
       <CardsContainer>
-        {CoursesList.map(course => {
+        {CoursesList.map((course) => {
           let topic = course.name;
           let home = "home";
           return (

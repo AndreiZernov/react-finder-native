@@ -7,7 +7,7 @@ import { BackColor, BackImage } from "../data/BackgroundData";
 
 class Cards extends React.Component {
   state = {
-    textHeight: new Animated.Value(128)
+    textHeight: new Animated.Value(128),
   };
 
   render() {
@@ -38,7 +38,7 @@ class Cards extends React.Component {
             zIndex: 1000,
             top: 330,
             width: "100%",
-            height: this.state.textHeight
+            height: this.state.textHeight,
           }}
         />
       </AnimatedContainer>

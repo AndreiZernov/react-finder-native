@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import styled from "styled-components";
 import Cards from "../components/Cards";
@@ -25,10 +25,10 @@ class CardsScreen extends React.Component {
     thirdScale: new Animated.Value(0.8),
     thirdTranslateY: new Animated.Value(-50),
     index: 0,
-    opacity: new Animated.Value(0)
+    opacity: new Animated.Value(0),
   };
 
-  getNextIndex = index =>
+  getNextIndex = (index) =>
     index + 1 > this.context.coursesDataNew.length - 1 ? 0 : index + 1;
 
   panResponder = PanResponder.create({
@@ -50,7 +50,7 @@ class CardsScreen extends React.Component {
 
     onPanResponderMove: Animated.event([
       null,
-      { dx: this.state.pan.x, dy: this.state.pan.y }
+      { dx: this.state.pan.x, dy: this.state.pan.y },
     ]),
 
     onPanResponderRelease: () => {
@@ -67,21 +67,21 @@ class CardsScreen extends React.Component {
         this.setState({ index: this.getNextIndex(this.state.index) });
       };
       if (positionY > 250) {
-        Animated.timing(this.state.pan, { toValue: { x: 0, y: 1000 } }).start(
-          () => Reverse()
-        );
+        Animated.timing(this.state.pan, {
+          toValue: { x: 0, y: 1000 },
+        }).start(() => Reverse());
       } else if (positionY < -250) {
-        Animated.timing(this.state.pan, { toValue: { x: 0, y: -1000 } }).start(
-          () => Reverse()
-        );
+        Animated.timing(this.state.pan, {
+          toValue: { x: 0, y: -1000 },
+        }).start(() => Reverse());
       } else if (positionX > 150) {
-        Animated.timing(this.state.pan, { toValue: { x: 1000, y: 0 } }).start(
-          () => Reverse()
-        );
+        Animated.timing(this.state.pan, {
+          toValue: { x: 1000, y: 0 },
+        }).start(() => Reverse());
       } else if (positionX < -150) {
-        Animated.timing(this.state.pan, { toValue: { x: -1000, y: 0 } }).start(
-          () => Reverse()
-        );
+        Animated.timing(this.state.pan, {
+          toValue: { x: -1000, y: 0 },
+        }).start(() => Reverse());
       } else {
         Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }).start();
 
@@ -91,7 +91,7 @@ class CardsScreen extends React.Component {
         Animated.spring(this.state.thirdScale, { toValue: 0.8 }).start();
         Animated.spring(this.state.thirdTranslateY, { toValue: -50 }).start();
       }
-    }
+    },
   });
 
   render() {
@@ -102,7 +102,7 @@ class CardsScreen extends React.Component {
       thirdScale,
       thirdTranslateY,
       index,
-      opacity
+      opacity,
     } = this.state;
     const { coursesDataNew } = this.context;
     const { navigation } = this.props;
@@ -112,7 +112,7 @@ class CardsScreen extends React.Component {
         <BackImg source={require("../assets/background6.jpg")} />
         <SafeAreaView>
           <ScrollView
-            ref={c => {
+            ref={(c) => {
               this.scrollView = c;
             }}
             showsVerticalScrollIndicator={false}
@@ -131,7 +131,7 @@ class CardsScreen extends React.Component {
 
               <Animated.View
                 style={{
-                  transform: [{ translateX: pan.x }, { translateY: pan.y }]
+                  transform: [{ translateX: pan.x }, { translateY: pan.y }],
                 }}
                 {...this.panResponder.panHandlers}
               >
@@ -141,7 +141,7 @@ class CardsScreen extends React.Component {
               <AnimatedCard
                 style={{
                   zIndex: -1,
-                  transform: [{ scale: scale }, { translateY: translateY }]
+                  transform: [{ scale: scale }, { translateY: translateY }],
                 }}
               >
                 <Cards data={coursesDataNew[this.getNextIndex(index)]} />
@@ -152,8 +152,8 @@ class CardsScreen extends React.Component {
                   zIndex: -3,
                   transform: [
                     { scale: thirdScale },
-                    { translateY: thirdTranslateY }
-                  ]
+                    { translateY: thirdTranslateY },
+                  ],
                 }}
               >
                 <Cards data={coursesDataNew[this.getNextIndex(index + 1)]} />

@@ -8,7 +8,7 @@ let screenHeight = Dimensions.get("window").height;
 class Success extends React.Component {
   state = {
     top: new Animated.Value(0),
-    opacity: new Animated.Value(0)
+    opacity: new Animated.Value(0),
   };
 
   componentDidUpdate() {
@@ -20,7 +20,7 @@ class Success extends React.Component {
     } else {
       Animated.timing(this.state.top, {
         toValue: screenHeight,
-        duration: 0
+        duration: 0,
       }).start();
       Animated.timing(this.state.opacity, { toValue: 0 }).start();
 
@@ -37,7 +37,7 @@ class Success extends React.Component {
           source={require("../assets/lottie-checked-done.json")}
           autoPlay={false}
           loop={false}
-          ref={animation => {
+          ref={(animation) => {
             this.animation = animation;
           }}
         />

@@ -5,13 +5,13 @@ import {
   PodcastsIcon,
   ResourcesIcon,
   JobSearchIcon,
-  HtmlCssIcon
+  HtmlCssIcon,
 } from "./Icons";
 
 const ResourcesSlideBar = ({ navigation }) => (
   <Cover>
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      {Recources.map(resource => {
+      {Recources.map((resource) => {
         let topic = resource.name.toLowerCase().replace(" ", "_");
         let home = "home";
         return (
@@ -36,7 +36,7 @@ const Recources = [
   { name: "Resources", icon: <ResourcesIcon /> },
   { name: "Job Search", icon: <JobSearchIcon /> },
   { name: "Podcasts", icon: <PodcastsIcon /> },
-  { name: "HTML CSS", icon: <HtmlCssIcon /> }
+  { name: "HTML CSS", icon: <HtmlCssIcon /> },
 ];
 
 const Cover = styled.View`

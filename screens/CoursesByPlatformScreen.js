@@ -5,7 +5,7 @@ import {
   Linking,
   Dimensions,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
@@ -54,7 +54,7 @@ class CoursesByPlatformScreen extends React.Component {
                 </CloseView>
               </TouchableOpacity>
               <CoursesContainer>
-                {data[platform].map(course => {
+                {data[platform].map((course) => {
                   let topic = course.parent1;
                   return (
                     <Wrapper key={course.id + course.name}>
@@ -62,7 +62,7 @@ class CoursesByPlatformScreen extends React.Component {
                         onPress={() =>
                           this.props.navigation.push("Section", {
                             course,
-                            topic
+                            topic,
                           })
                         }
                       >

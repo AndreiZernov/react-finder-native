@@ -8,7 +8,7 @@ let screenHeight = Dimensions.get("window").height;
 class LoadingLogin extends React.Component {
   state = {
     top: new Animated.Value(0),
-    opacity: new Animated.Value(0)
+    opacity: new Animated.Value(0),
   };
 
   componentDidUpdate() {
@@ -20,7 +20,7 @@ class LoadingLogin extends React.Component {
     } else {
       Animated.timing(this.state.top, {
         toValue: screenHeight,
-        duration: 0
+        duration: 0,
       }).start();
       Animated.timing(this.state.opacity, { toValue: 0 }).start();
 
@@ -37,7 +37,7 @@ class LoadingLogin extends React.Component {
           source={require("../assets/lottie-react-firebase.json")}
           autoPlay={false}
           loop={true}
-          ref={animation => {
+          ref={(animation) => {
             this.animation = animation;
           }}
         />

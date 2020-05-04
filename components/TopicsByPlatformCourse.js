@@ -5,7 +5,7 @@ import { BackColor, BackImage } from "../data/BackgroundData";
 
 const screenWidth = Dimensions.get("window").width;
 
-const getCourseWidth = screenWidth => {
+const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 40;
   if (screenWidth >= 680) {
     cardWidth = (screenWidth - 150) / 2;
@@ -18,7 +18,7 @@ const getCourseWidth = screenWidth => {
 
 class TopicsByPlatformCourse extends React.Component {
   state = {
-    cardWidth: getCourseWidth(screenWidth)
+    cardWidth: getCourseWidth(screenWidth),
   };
 
   componentDidMount() {
@@ -28,7 +28,7 @@ class TopicsByPlatformCourse extends React.Component {
     Dimensions.removeEventListener("change", this.adaptLayout);
   }
 
-  adaptLayout = dimensions => {
+  adaptLayout = (dimensions) => {
     this.setState({ cardWidth: getCourseWidth(dimensions.window.width) });
   };
 

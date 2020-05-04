@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 
 const screenWidth = Dimensions.get("window").width;
 
-const getCourseWidth = screenWidth => {
+const getCourseWidth = (screenWidth) => {
   let cardWidth = screenWidth - 50;
   if (screenWidth >= 700) {
     cardWidth = (screenWidth - 150) / 2;
@@ -16,7 +16,7 @@ const getCourseWidth = screenWidth => {
 
 class Article extends React.Component {
   state = {
-    cardWidth: getCourseWidth(screenWidth)
+    cardWidth: getCourseWidth(screenWidth),
   };
 
   componentDidMount() {
@@ -26,9 +26,9 @@ class Article extends React.Component {
     Dimensions.removeEventListener("change", this.adaptLayout);
   }
 
-  adaptLayout = dimensions => {
+  adaptLayout = (dimensions) => {
     this.setState({
-      cardWidth: getCourseWidth(dimensions.window.width)
+      cardWidth: getCourseWidth(dimensions.window.width),
     });
   };
 

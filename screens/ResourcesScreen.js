@@ -3,7 +3,7 @@ import {
   Linking,
   ScrollView,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import styled from "styled-components";
 import { DataItemsContext } from "../contexts/dataItemsContext";
@@ -11,7 +11,7 @@ import {
   PodcastsIcon,
   ResourcesIcon,
   JobSearchIcon,
-  HtmlCssIcon
+  HtmlCssIcon,
 } from "../components/Icons";
 import LoadingData from "../components/LoadingData";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,23 +21,23 @@ const RecourcesList = [
   {
     name: "resources",
     icon: <ResourcesIcon />,
-    color: "rgba(244, 151, 168, 0.3)"
+    color: "rgba(244, 151, 168, 0.3)",
   },
   {
     name: "job_search",
     icon: <JobSearchIcon />,
-    color: "rgba(160, 235, 216, 0.3)"
+    color: "rgba(160, 235, 216, 0.3)",
   },
   {
     name: "html_css",
     icon: <HtmlCssIcon />,
-    color: "rgba(249, 167, 114, 0.3)"
+    color: "rgba(249, 167, 114, 0.3)",
   },
   {
     name: "podcasts",
     icon: <PodcastsIcon />,
-    color: "rgba(185, 209, 251, 0.3)"
-  }
+    color: "rgba(185, 209, 251, 0.3)",
+  },
 ];
 
 class ResourcesScreen extends React.Component {
@@ -74,7 +74,7 @@ class ResourcesScreen extends React.Component {
                   </TouchableOpacity>
                 )}
 
-                {RecourcesList.map(resource => (
+                {RecourcesList.map((resource) => (
                   <Wrapper
                     key={resource.name}
                     style={{ backgroundColor: resource.color }}
@@ -89,7 +89,7 @@ class ResourcesScreen extends React.Component {
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
                     >
-                      {this.context.resourcesData[resource.name].map(item => (
+                      {this.context.resourcesData[resource.name].map((item) => (
                         <CardsContainer key={item.name}>
                           <Link onPress={() => _goToURL(item.link)}>
                             <Name>{item.name}</Name>

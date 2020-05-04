@@ -6,7 +6,7 @@ import {
   Keyboard,
   Alert,
   Animated,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import LoadingData from "../components/LoadingData";
@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
   return {
     closeLogin: () => dispatch({ type: "CLOSE_LOGIN" }),
     openSIngup: () => dispatch({ type: "OPEN_SIGNUP" }),
-    updateName: name => dispatch({ type: "UPDATE_NAME", name })
+    updateName: (name) => dispatch({ type: "UPDATE_NAME", name }),
   };
 }
 
@@ -37,7 +37,7 @@ class ModalLogin extends React.Component {
     isLoading: false,
     top: new Animated.Value(screenHeight),
     scale: new Animated.Value(1.3),
-    translateY: new Animated.Value(0)
+    translateY: new Animated.Value(0),
   };
 
   handleLogin = () => {
@@ -50,10 +50,10 @@ class ModalLogin extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
+      .catch(function (error) {
         Alert.alert("Error", error.message);
       })
-      .then(response => {
+      .then((response) => {
         this.setState({ isLoading: false });
 
         if (response) {
@@ -75,7 +75,7 @@ class ModalLogin extends React.Component {
       Animated.spring(this.state.scale, { toValue: 1 }).start();
       Animated.timing(this.state.translateY, {
         toValue: 0,
-        duration: 0
+        duration: 0,
       }).start();
     }
 
@@ -83,14 +83,14 @@ class ModalLogin extends React.Component {
       setTimeout(() => {
         Animated.timing(this.state.top, {
           toValue: screenHeight,
-          duration: 0
+          duration: 0,
         }).start();
 
         Animated.spring(this.state.scale, { toValue: 1.3 }).start();
       }, 500);
       Animated.timing(this.state.translateY, {
         toValue: 1000,
-        duration: 500
+        duration: 500,
       }).start();
     }
   }
@@ -120,19 +120,19 @@ class ModalLogin extends React.Component {
           style={{
             transform: [
               { scale: this.state.scale },
-              { translateY: this.state.translateY }
-            ]
+              { translateY: this.state.translateY },
+            ],
           }}
         >
           <Logo source={require("../assets/react.png")} />
           <Text>Explore All Learning Content</Text>
           <TextInput
-            onChangeText={email => this.setState({ email })}
+            onChangeText={(email) => this.setState({ email })}
             placeholder="Email"
             keyboardType="email-address"
           />
           <TextInput
-            onChangeText={password => this.setState({ password })}
+            onChangeText={(password) => this.setState({ password })}
             placeholder="Password"
             secureTextEntry={true}
           />
@@ -155,10 +155,7 @@ class ModalLogin extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalLogin);
 
 const Container = styled.View`
   position: absolute;

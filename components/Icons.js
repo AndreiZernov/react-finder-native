@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
-export const NotificationIcon = props => {
+export const NotificationIcon = (props) => {
   return (
     <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
       <G clipPath="url(#prefix__clip0)" fill="white">
@@ -16,7 +16,7 @@ export const NotificationIcon = props => {
   );
 };
 
-export const PodcastsIcon = props => {
+export const PodcastsIcon = (props) => {
   return (
     <Svg width={24} height={24} viewBox="0 0 24 24" {...props}>
       <Path
@@ -27,7 +27,7 @@ export const PodcastsIcon = props => {
   );
 };
 
-export const ResourcesIcon = props => {
+export const ResourcesIcon = (props) => {
   return (
     <Svg
       width={24}
@@ -50,7 +50,7 @@ export const ResourcesIcon = props => {
   );
 };
 
-export const JobSearchIcon = props => {
+export const JobSearchIcon = (props) => {
   return (
     <Svg
       width={24}
@@ -69,7 +69,7 @@ export const JobSearchIcon = props => {
   );
 };
 
-export const HtmlCssIcon = props => {
+export const HtmlCssIcon = (props) => {
   return (
     <Svg
       width={24}
@@ -88,7 +88,7 @@ export const HtmlCssIcon = props => {
   );
 };
 
-export const PlayIcon = props => {
+export const PlayIcon = (props) => {
   return (
     <Svg height={38.15} width={38.15} {...props}>
       <Path

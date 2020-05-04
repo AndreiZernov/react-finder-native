@@ -7,7 +7,7 @@ import {
   Keyboard,
   Alert,
   Animated,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import firebase from "../firebase";
 import LoadingData from "../components/LoadingData";
@@ -24,9 +24,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     closeSignup: () => dispatch({ type: "CLOSE_SIGNUP" }),
-    updateName: name => dispatch({ type: "UPDATE_NAME", name }),
+    updateName: (name) => dispatch({ type: "UPDATE_NAME", name }),
     openLogin: () => dispatch({ type: "OPEN_LOGIN" }),
-    closeLogin: () => dispatch({ type: "CLOSE_LOGIN" })
+    closeLogin: () => dispatch({ type: "CLOSE_LOGIN" }),
   };
 }
 
@@ -39,7 +39,7 @@ class ModalSignup extends Component {
     isLoading: false,
     top: new Animated.Value(screenHeight),
     scale: new Animated.Value(1.3),
-    translateY: new Animated.Value(0)
+    translateY: new Animated.Value(0),
   };
 
   updateInputVal = (val, prop) => {
@@ -56,7 +56,7 @@ class ModalSignup extends Component {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(response => {
+        .then((response) => {
           this.setState({ isLoading: false });
 
           if (response) {
@@ -73,11 +73,11 @@ class ModalSignup extends Component {
           }
           if (firebase.auth().currentUser !== null) {
             firebase.auth().currentUser.updateProfile({
-              displayName: this.state.displayName
+              displayName: this.state.displayName,
             });
           }
         })
-        .catch(error => this.setState({ errorMessage: error.message }));
+        .catch((error) => this.setState({ errorMessage: error.message }));
     }
   };
 
@@ -87,7 +87,7 @@ class ModalSignup extends Component {
       Animated.spring(this.state.scale, { toValue: 1 }).start();
       Animated.timing(this.state.translateY, {
         toValue: 0,
-        duration: 0
+        duration: 0,
       }).start();
     }
 
@@ -95,14 +95,14 @@ class ModalSignup extends Component {
       setTimeout(() => {
         Animated.timing(this.state.top, {
           toValue: screenHeight,
-          duration: 0
+          duration: 0,
         }).start();
 
         Animated.spring(this.state.scale, { toValue: 1.3 }).start();
       }, 500);
       Animated.timing(this.state.translateY, {
         toValue: 1000,
-        duration: 500
+        duration: 500,
       }).start();
     }
   }
@@ -132,8 +132,8 @@ class ModalSignup extends Component {
           style={{
             transform: [
               { scale: this.state.scale },
-              { translateY: this.state.translateY }
-            ]
+              { translateY: this.state.translateY },
+            ],
           }}
         >
           <Logo source={require("../assets/react.png")} />
@@ -141,18 +141,18 @@ class ModalSignup extends Component {
           <TextInput
             placeholder="Name"
             value={this.state.displayName}
-            onChangeText={val => this.updateInputVal(val, "displayName")}
+            onChangeText={(val) => this.updateInputVal(val, "displayName")}
           />
           <TextInput
             placeholder="Email"
             value={this.state.email}
-            onChangeText={val => this.updateInputVal(val, "email")}
+            onChangeText={(val) => this.updateInputVal(val, "email")}
             keyboardType="email-address"
           />
           <TextInput
             placeholder="Password"
             value={this.state.password}
-            onChangeText={val => this.updateInputVal(val, "password")}
+            onChangeText={(val) => this.updateInputVal(val, "password")}
             maxLength={15}
             secureTextEntry={true}
           />
@@ -176,10 +176,7 @@ class ModalSignup extends Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalSignup);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSignup);
 
 const Container = styled.View`
   position: absolute;

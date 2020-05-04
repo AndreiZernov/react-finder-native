@@ -24,10 +24,10 @@ const HomeStack = createStackNavigator(
     Section: SectionScreen,
     Resources: ResourcesScreen,
     Video: VideoScreen,
-    Article: ArticleScreen
+    Article: ArticleScreen,
   },
   {
-    mode: "modal"
+    mode: "modal",
   }
 );
 
@@ -40,17 +40,17 @@ HomeStack.navigationOptions = () => {
         size={26}
         color={focused ? activeColor : inactiveColor}
       />
-    )
+    ),
   };
 };
 
 const CoursesStack = createStackNavigator(
   {
     Courses: CoursesScreen,
-    Section: SectionScreen
+    Section: SectionScreen,
   },
   {
-    mode: "modal"
+    mode: "modal",
   }
 );
 
@@ -62,7 +62,7 @@ CoursesStack.navigationOptions = {
       size={26}
       color={focused ? activeColor : inactiveColor}
     />
-  )
+  ),
 };
 
 const ResourcesStack = createStackNavigator({ Resources: ResourcesScreen });
@@ -74,20 +74,20 @@ ResourcesStack.navigationOptions = {
       size={26}
       color={focused ? activeColor : inactiveColor}
     />
-  )
+  ),
 };
 
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
     CoursesStack,
-    ResourcesStack
+    ResourcesStack,
   },
   {
     tabBarOptions: {
       activeTintColor: activeColor,
-      inactiveTintColor: inactiveColor
-    }
+      inactiveTintColor: inactiveColor,
+    },
   }
 );
 

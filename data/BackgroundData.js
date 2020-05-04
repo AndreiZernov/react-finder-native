@@ -1,4 +1,4 @@
-export const BackColor = data => {
+export const BackColor = (data) => {
   return data === "react"
     ? "rgb(20, 20, 20)"
     : data === "react_native"
@@ -12,7 +12,7 @@ export const BackColor = data => {
     : "rgb(20, 20, 20)";
 };
 
-export const BackImage = data => {
+export const BackImage = (data) => {
   return data === "react"
     ? require("../assets/background1.jpg")
     : data === "react_native"

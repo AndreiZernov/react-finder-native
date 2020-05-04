@@ -4,7 +4,7 @@ import {
   Animated,
   TouchableOpacity,
   Dimensions,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from "./MenuItem";
@@ -19,14 +19,14 @@ if (screenWidth > 500) {
   cardWidth = 500;
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { action: state.action, name: state.name };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     closeMenu: () => dispatch({ type: "CLOSE_MENU" }),
-    updateName: name => dispatch({ type: "UPDATE_NAME", name })
+    updateName: (name) => dispatch({ type: "UPDATE_NAME", name }),
   };
 };
 
@@ -56,10 +56,10 @@ class Menu extends React.Component {
       .then(() => {
         this.props.navigation.navigate("Login");
       })
-      .catch(error => this.setState({ errorMessage: error.message }));
+      .catch((error) => this.setState({ errorMessage: error.message }));
   };
 
-  handleMenu = index => {
+  handleMenu = (index) => {
     if (index === 0) {
       this.props.closeMenu();
     } else if (index === 1) {
@@ -75,7 +75,7 @@ class Menu extends React.Component {
         .then(() => {
           this.props.navigation.navigate("Login");
         })
-        .catch(error => this.setState({ errorMessage: error.message }));
+        .catch((error) => this.setState({ errorMessage: error.message }));
     }
   };
 
@@ -98,7 +98,7 @@ class Menu extends React.Component {
               top: 120,
               left: "50%",
               marginLeft: -22,
-              zIndex: 1
+              zIndex: 1,
             }}
           >
             <CloseView>
@@ -150,10 +150,7 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
 const Container = styled.View`
   position: absolute;
@@ -234,5 +231,5 @@ const items = [
   { icon: "ios-settings", title: "Home", text: "back to home page" },
   { icon: "ios-school", title: "Courses", text: "start learning" },
   { icon: "ios-folder", title: "Helpful Resources", text: "check this out" },
-  { icon: "ios-exit", title: "Log out", text: "see you soon!" }
+  { icon: "ios-exit", title: "Log out", text: "see you soon!" },
 ];

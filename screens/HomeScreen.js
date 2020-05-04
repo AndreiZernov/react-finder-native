@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import styled from "styled-components/native";
 import LoadingData from "../components/LoadingData";
@@ -21,15 +21,15 @@ import ModalSignup from "../components/ModalSignup";
 import { connect } from "react-redux";
 import { DataItemsContext } from "../contexts/dataItemsContext";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { action: state.action, name: state.name };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     openMenu: () => dispatch({ type: "OPEN_MENU" }),
     openLogin: () => dispatch({ type: "OPEN_LOGIN" }),
-    openNotif: () => dispatch({ type: "OPEN_NOTIF" })
+    openNotif: () => dispatch({ type: "OPEN_NOTIF" }),
   };
 };
 
@@ -39,7 +39,7 @@ class HomeScreen extends React.Component {
 
   state = {
     scale: new Animated.Value(1),
-    opacity: new Animated.Value(1)
+    opacity: new Animated.Value(1),
   };
 
   componentDidUpdate() {
@@ -51,7 +51,7 @@ class HomeScreen extends React.Component {
       Animated.timing(this.state.scale, {
         toValue: 0.9,
         duration: 300,
-        easing: Easing.in()
+        easing: Easing.in(),
       }).start();
     }
     if (this.props.action === "openMenu") {
@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
       Animated.timing(this.state.scale, {
         toValue: 1,
         duration: 300,
-        easing: Easing.in()
+        easing: Easing.in(),
       }).start();
     }
     if (this.props.action === "closeMenu") {
@@ -86,7 +86,7 @@ class HomeScreen extends React.Component {
       coursesData,
       coursesDataByPlatform,
       coursesDataNew,
-      articlesData
+      articlesData,
     } = this.context;
 
     return (
@@ -170,10 +170,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const RootView = styled.View`
   background: rgb(27, 31, 38);

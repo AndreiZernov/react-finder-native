@@ -5,7 +5,7 @@ import {
   Linking,
   Dimensions,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";

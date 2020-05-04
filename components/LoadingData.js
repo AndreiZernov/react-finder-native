@@ -19,7 +19,7 @@ export default function LoadingData() {
         source={require("../assets/lottie-react-logo.json")}
         autoPlay={true}
         loop={true}
-        ref={animation => {
+        ref={(animation) => {
           this.animation = animation;
         }}
       />

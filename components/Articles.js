@@ -7,7 +7,7 @@ const Articles = ({ data, navigation }) => (
   <>
     <Subtitle>Articles</Subtitle>
     <ArticlesContainer>
-      {data.map(article => {
+      {data.map((article) => {
         return (
           <ArticleWrapper key={article.title}>
             <TouchableOpacity
