@@ -37,7 +37,7 @@ Project is created with:
   <img src="./assets/readme1.png">
 </div>
 
-<h3 align="center">Main Page Navigation</h3>
+<h3 align="center">Main Screen Navigation</h3>
 
 <p align="center">Loading page for upload content from Contentful, Basic Main page Navigation with horizontal and vertical slides.</p>
 
@@ -86,8 +86,8 @@ Project is created with:
 <div align="center">
   <table>
     <tr>
-      <th>Courses Page</th>
-      <th>Resources Page</th>
+      <th>Courses Screen</th>
+      <th>Resources Screen</th>
     </tr>
     <tr>
       <td>
@@ -100,7 +100,7 @@ Project is created with:
   </table
 </div>
 
-<h3 align="center">Extra Main Page Functionality</h3>
+<h3 align="center">Extra Main Screen Functionality</h3>
 
 <p align="center">Articles, Notifications with Card's Animation, Filtered courses by platform</p>
 
