@@ -10,7 +10,7 @@
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
     "@react-native-community/masked-view": "^0.1.8",
-    "contentful": "^7.14.2",
+    "contentful": "^9.2.15",
     "expo": "~37.0.3",
     "expo-av": "~8.1.0",
     "expo-blur": "~8.1.0",
